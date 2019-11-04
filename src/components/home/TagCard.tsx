@@ -56,18 +56,23 @@ export default class TagCard extends  React.Component<IProps> {
                       <div className='aciton-title'>新建标签</div>
                     </Col>
                     <Col md={2} xs={6}>
+                      <Card horizontal />
                       <div className='aciton-title'>共享标签2</div>
                     </Col>
                     <Col md={2} xs={6}>
+                      <Card horizontal />
                       <div className='aciton-title'>共享标签3</div>
                     </Col>
                     <Col md={2} xs={6}>
+                      <Card horizontal />
                       <div className='aciton-title'>共享标签4</div>
                     </Col>
                     <Col md={2} xs={6}>
+                      <Card horizontal />
                       <div className='aciton-title'>共享标签5</div>
                     </Col>
                     <Col md={2} xs={6}>
+                      <Card horizontal />
                       <div className='aciton-title'>共享标签6</div>
                     </Col>
                   </Row>
