@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { CommandBarButton, IIconProps } from 'office-ui-fabric-react';
 import { panelKeys } from 'constants/headConstants';
 import UserPanel from './UserPanel';
+import NoticePanel from './NoticePanel';
 import { User, System } from 'store';
 
 const menuIcon: IIconProps = { iconName: 'WaffleOffice365' };
@@ -60,6 +61,7 @@ export default class Head extends  React.Component<IProps, IState> {
           </div>
         </div>
         <UserPanel activePanel={activePanel} dismissPanel={this.dismissPanel} user={user}/>
+        <NoticePanel activePanel={activePanel} dismissPanel={this.dismissPanel} user={user}/>
       </div>
     )
   }
