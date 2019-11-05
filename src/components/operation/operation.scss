@@ -1,0 +1,80 @@
+.operation {
+  .toolbar {
+    background-color: rgb(243, 242, 241);
+    border-color: #d6d6d6;
+    color: #505050;
+    .ms-Stack {
+      height: 100%;
+      .ms-Button {
+        background-color: transparent;
+      }
+      .ms-Button:hover {
+        background-color: #d4e0f4 !important;
+      }
+    }
+  }
+  .body {
+    overflow: hidden;
+    background-color: #EDEBE9;
+    .left-sider {
+      overflow-y: auto;
+      background-color: #fff;
+      .left-sider-bar {
+        position: absolute;
+        width: 30px;
+        height: 100%;
+        background-color: #edecea;
+        left: 0;
+        line-height: 24px;
+        word-wrap: break-word;
+        color: #7a7a7a;
+        font-size: 12px;
+        padding: 0;
+        margin: 0;
+        ul {
+          list-style: none;
+          margin: 0;
+          width: 100%;
+          padding-left: 0;
+          li {
+            margin-bottom: 2px;
+            a {
+              text-decoration: none;
+              padding: 10px 0;
+              color: #696969;
+              position: relative;
+              text-align: center;
+              word-break: break-all;
+              display: inline-block;
+              white-space: normal;
+              width: 100%;
+              span {
+                width: 16px;
+                white-space: normal;
+                word-break: break-all;
+                display: inline-block;
+                line-height: 16px;
+                font-size: 12px;
+              }
+            }
+            a:hover{
+              background-color: #d4e0f4;
+              cursor: pointer;
+            }
+            a.active {
+              border-left: 4px solid #48aff0;
+              background-color: #fff;
+              color: #444444;
+              span {
+                margin-left: -8px;
+              }
+            }
+            a.active:hover {
+              background-color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ import Login from 'components/login';
 import InJect from './util/InJect';
 import { System, User, App as AppStore } from './store';
 import Home from 'components/home';
+import OperationDom from 'components/operation';
 const browserHistory = createBrowserHistory();
 const routerStore =  new RouterStore();
 // 同步路由与mobx的数据状态
@@ -46,7 +47,8 @@ class Entry extends React.Component<IProps> {
           <Head user={user} system={system} />
           <Router history={history}>
             <Switch>
-              <Route path="/" component={Home}/>
+              <Route exact path="/" component={Home}/>
+              <Route exact path="/operation" component={OperationDom}/>
             </Switch>
           </Router>
         </div>
