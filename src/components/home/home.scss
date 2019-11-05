@@ -3,9 +3,13 @@
   padding: 30px 12% 10px;
   background-color: #faf9f8;
   .tag-card {
+    margin-bottom: 30px;
     .create-new-header {
       height: 48px;
       line-height: 48px;
+      .add-tag-button {
+        margin-top: 8px;
+      }
       .button-right-group {
         float: right;
         padding-top: 6px;
@@ -26,7 +30,7 @@
       border-bottom: 1px solid #a8b1b6;
       transition: height 0.5s;
       .content {
-        height: 90%;
+        height: 95%;
         .container-fluid {
           height: 100%;
           .row {

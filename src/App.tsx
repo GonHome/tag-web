@@ -37,12 +37,13 @@ class Entry extends React.Component<IProps> {
   }
 
   render() {
+    const { user, system } = this.props;
     const { height, width } = this.props.system;
     const { isLogin } = this.props.user;
     if (isLogin) {
       return (
         <div style={{ height, width }}>
-          <Head />
+          <Head user={user} system={system} />
           <Router history={history}>
             <Switch>
               <Route path="/" component={Home}/>

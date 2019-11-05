@@ -19,13 +19,13 @@ const addIcon: IIconProps = { iconName: 'Add' };
 @observer
 export default class TagCard extends  React.Component<IProps> {
 
-  addTagButton = <PrimaryButton text='添加标签' iconProps={addIcon} className="add-tag-button"/>;
+  addTagButton = <PrimaryButton text='新建标签' iconProps={addIcon} className="add-tag-button"/>;
 
   render() {
     const { system, _changeIsShow, isShow } = this.props;
     const { width } = system;
     const itemWidth = width * 0.8 / 6;
-    const itemHeight = itemWidth * 1.1;
+    const itemHeight = itemWidth;
     return (
       <div className="tag-card">
         <div className="create-new-header">
