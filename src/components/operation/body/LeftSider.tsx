@@ -1,8 +1,10 @@
 import { observer } from "mobx-react";
 import React from "react";
+import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import classNames from 'classnames';
 import { Operation } from "../../../store";
 import { leftSideTypes } from 'constants/operationConstants';
+import LeftDragItem from './LeftDragItem';
 
 interface IProps {
   operation: Operation,
@@ -28,6 +30,23 @@ export default class LeftSider extends  React.Component<IProps> {
               );
             })}
           </ul>
+        </div>
+        <div className="left-body">
+          <SearchBox
+            placeholder="搜索"
+            underlined={true}
+          />
+          <div className="left-drag-content">
+            <LeftDragItem operation={operation}/>
+            <LeftDragItem operation={operation}/>
+            <LeftDragItem operation={operation}/>
+            <LeftDragItem operation={operation}/>
+            <LeftDragItem operation={operation}/>
+            <LeftDragItem operation={operation}/>
+            <LeftDragItem operation={operation}/>
+            <LeftDragItem operation={operation}/>
+            <LeftDragItem operation={operation}/>
+          </div>
         </div>
       </div>
     );
