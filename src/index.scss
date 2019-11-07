@@ -83,3 +83,59 @@ body {
 .ms-Button--primary:active {
   background-color: #2b569a;
 }
+
+.ms-FocusZone {
+  padding-top: 0;
+}
+
+.popover-operator {
+  height: 40px;
+  width: 90px;
+  .container-fluid {
+    height: 100%;
+    padding: 0 8px;
+    .row {
+      height: 100%;
+      .col-md-6 {
+        padding-right: 0;
+        .operator-selector {
+          height: 24px;
+          width: 24px;
+          line-height: 24px;
+          border-radius: 12px;
+          background-color: #989ca2;
+          cursor: pointer;
+          float: left;
+          margin-left: 5px;
+          margin-top: 9px;
+          text-align: center;
+          i, span {
+            font-weight: 600;
+            color: #fff;
+            display: table;
+          }
+          i {
+            margin-left: 6px;
+          }
+          span {
+            margin-left: 13px;
+            font-size: 18px;
+          }
+        }
+        .operator-selector:not(.active):hover {
+          background-color: #55698e;
+        }
+        .active {
+          background-color: rgba(61, 120, 213, 1);
+        }
+        .slider {
+          height: 30px;
+          width: 1px;
+          float: right;
+          background: #bbb5b5;
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+}

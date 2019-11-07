@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import React from "react";
-import { Icon, Image } from 'office-ui-fabric-react';
+import { Icon } from 'office-ui-fabric-react';
 import { Operation } from "../../../store";
 import { Card } from "@uifabric/react-cards";
 

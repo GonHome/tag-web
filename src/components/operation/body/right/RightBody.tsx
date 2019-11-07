@@ -2,6 +2,7 @@ import { observer } from "mobx-react";
 import React from "react";
 import { Operation, System } from "../../../../store";
 import Board from './board/Board';
+import Bottom from './bottom/Bottom';
 interface IProps {
   operation: Operation,
   system: System,
@@ -49,6 +50,7 @@ export default class RightBody extends  React.Component<IProps> {
           onMouseDown={this.mouseDownMoveSide}
           onMouseUp={this.mouseUpMoveSide}
         />
+        <Bottom system={system} operation={operation} width={width} />
       </div>
     );
   }

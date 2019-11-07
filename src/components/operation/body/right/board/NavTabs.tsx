@@ -20,7 +20,7 @@ export default class NavTabs extends  React.Component<IProps> {
   render() {
     const { width, operation } = this.props;
     return (
-      <div style={{ width }} className="nav-tabs">
+      <div className="nav-tabs">
         {tabs.map((tab: { code: string, text: string }) => {
           return <NavTab key={tab.code} operation={operation} tab={tab}/>
         })}
