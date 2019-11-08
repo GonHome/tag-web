@@ -90,13 +90,13 @@ body {
 
 .popover-operator {
   height: 40px;
-  width: 90px;
+  width: 140px;
   .container-fluid {
     height: 100%;
     padding: 0 8px;
     .row {
       height: 100%;
-      .col-md-6 {
+      .col-md-4, .col-md-6 {
         padding-right: 0;
         .operator-selector {
           height: 24px;
@@ -113,20 +113,41 @@ body {
             font-weight: 600;
             color: #fff;
             display: table;
+            font-size: 12px;
           }
           i {
             margin-left: 6px;
           }
-          span {
-            margin-left: 13px;
-            font-size: 18px;
-          }
         }
-        .operator-selector:not(.active):hover {
-          background-color: #55698e;
+        .function-selector {
+          height: 24px;
+          width: 18px;
+          line-height: 24px;
+          background-color: #989ca2;
+          cursor: pointer;
+          float: left;
+          margin-left: 5px;
+          margin-top: 9px;
+          text-align: center;
+          i, span {
+            font-weight: 600;
+            color: #fff;
+            display: table;
+          }
+          i {
+            margin-left: 2px;
+          }
+          span {
+            margin-left: 5px;
+            font-size: 16px;
+            margin-top: -1px;
+          }
         }
         .active {
           background-color: rgba(61, 120, 213, 1);
+        }
+        .operator-selector:not(.active):hover, .function-selector:not(.active):hover {
+          background-color: #55698e;
         }
         .slider {
           height: 30px;

@@ -298,6 +298,22 @@
               margin-left: -12px;
               margin-top: 4px;
             }
+            .close-icon {
+              position: absolute;
+              margin-left: -5px;
+              margin-top: -15px;
+              font-size: 14px;
+              display: none;
+            }
+            .close-icon:hover {
+              color: red;
+            }
+            .show {
+              display: block;
+            }
+          }
+          .active {
+            border: 2px solid red;
           }
           .tag-item:hover,.operator-item:hover {
             background-color: #2661bf;
@@ -306,6 +322,9 @@
             }
             .circle:hover {
               background-color: #2a4a7d;
+            }
+            .close-icon {
+              display: inline-block;
             }
           }
           .tag-item,.operator-item {
@@ -320,13 +339,16 @@
             width: 24px;
             line-height: 24px;
             border-radius: 12px;
-            margin-top: 13px;
-            i {
-              margin-left: 7px;
-              font-size: 12px;
-              font-weight: 600;
-              color: #fff;
-              display: table;
+            margin-top: 15px;
+            .operator-center {
+              text-align: center;
+              display: grid;
+              i {
+                font-size: 12px;
+                font-weight: 600;
+                color: #fff;
+                display: table;
+              }
             }
           }
         }

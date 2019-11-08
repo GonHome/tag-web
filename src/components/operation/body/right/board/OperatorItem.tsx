@@ -3,7 +3,8 @@ import React from "react";
 import { Callout, getId, Icon, DirectionalHint } from 'office-ui-fabric-react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Operation } from "store";
-
+import { IOperator } from 'models/operation';
+import { rightOperators } from 'constants/operationConstants';
 interface IProps {
   operation: Operation,
   width: number,
@@ -30,7 +31,7 @@ export default class OperatorItem extends  React.Component<IProps, IState> {
     const { isCalloutVisible  } = this.state;
     return (
       <div className="operator-item" onClick={() => this.setState({ isCalloutVisible: true })} >
-        <div ref={this._menuButtonElement}>
+        <div ref={this._menuButtonElement} className="operator-center">
           <Icon iconName='Add'/>
         </div>
         {isCalloutVisible  ?
@@ -47,18 +48,25 @@ export default class OperatorItem extends  React.Component<IProps, IState> {
             <div className="popover-operator">
               <Grid fluid>
                 <Row>
-                  <Col md={6} xs={6}>
-                    <div className="operator-selector active">
-                      <Icon iconName='Add'/>
-                    </div>
-                    <div className="slider" />
-                  </Col>
-                  <Col md={6} xs={6}>
-                    <div className="operator-selector">
-                      <Icon iconName='CalculatorSubtract'/>
-                    </div>
-                    <div className="slider" />
-                  </Col>
+                  {rightOperators.map((item: IOperator ,index: number) => {
+                    if (rightOperators.length === index + 1) {
+                      return (
+                        <Col md={4} xs={6} key={item.code}>
+                          <div className="operator-selector" title={item.name}>
+                            {item.iconName ? <Icon iconName={item.iconName} /> : <span>{item.text}</span>}
+                          </div>
+                        </Col>
+                      );
+                    }
+                    return (
+                      <Col md={4} xs={6} key={item.code}>
+                        <div className="operator-selector" title={item.name}>
+                          {item.iconName ? <Icon iconName={item.iconName} /> : <span>{item.text}</span>}
+                        </div>
+                        <div className="slider" />
+                      </Col>
+                    );
+                  })}
                 </Row>
               </Grid>
             </div>
