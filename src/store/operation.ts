@@ -1,6 +1,6 @@
-import { observable, action } from 'mobx';
+import { action, observable } from 'mobx';
 import { IGraphValue } from 'models/operation';
-import { operator } from "../constants/operationConstants";
+import { operator, side } from "../constants/operationConstants";
 
 // 工作台
 class Operation {
@@ -20,11 +20,12 @@ class Operation {
     this.activeGraphId = undefined;
     this.graphIds = ['n-1', 'n-2', 'n-3'];
     this.graphMap = {
-      'n-1': { name: '标签1', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3', 'v-4'], tagMap: {
+      'n-1': { name: '标签1', activeVId: 'v-1', vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4'], tagMap: {
+          'v-0': { operator: operator.NON, side: side.LEFT },
           'v-1': { name: '常口1', config: {} },
           'v-2': { name: '常口2', config: {} },
           'v-3': { name: '常口3', config: {} },
-          'v-4': operator.MIX,
+          'v-4': { operator: operator.MIX, side: side.RIGHT },
         }
       },
       'n-2': { name: '标签2', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
@@ -75,7 +76,24 @@ class Operation {
     }
     delete this.graphMap[graphId];
     this.graphIds = this.graphIds.filter((id: string) => id !== graphId);
-  }
+  };
+
+  @action changeRightOperator = (rightOperator: operator, vId: string) => {
+    if (this.activeGraphId) {
+      this.graphMap[this.activeGraphId].tagMap[vId] = { operator: rightOperator, side: side.RIGHT };
+    }
+  };
+
+  @action delNonOperator = (vId: string) => {
+    if (this.activeGraphId) {
+      delete this.graphMap[this.activeGraphId].tagMap[vId];
+      const vIds = this.graphMap[this.activeGraphId].vIds;
+      this.graphMap[this.activeGraphId].vIds = vIds.filter((item: string) => {
+        return item !== vId;
+      });
+    }
+  };
+
 }
 
 export default Operation;

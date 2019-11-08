@@ -2,9 +2,10 @@ import { observer } from "mobx-react";
 import React from "react";
 import TagItem from './TagItem';
 import { Operation } from "store";
-import OperatorItem from "./OperatorItem";
-import { IGraphValue, ITagValue } from "models/operation";
-import { operator } from "constants/operationConstants";
+import RightOperatorItem from "./RightOperatorItem";
+import LeftOperatorItem from "./LeftOperatorItem";
+import { IGraphValue, IOperatorValue, ITagValue } from "models/operation";
+import { operator, side } from "../../../../../constants/operationConstants";
 
 interface IProps {
   operation: Operation,
@@ -22,14 +23,24 @@ export default class BoardCenter extends  React.Component<IProps> {
       const { activeVId, vIds, tagMap } = graph;
       return (
         <div className="board-center" style={{ height: boardHeight - 28 }}>
-          {vIds.map((vId: string) => {
-            const tag: ITagValue | operator = tagMap[vId];
-            if (typeof tag === 'number') {
-              return <OperatorItem operation={operation} width={width} key={vId} />
+          {vIds.map((vId: string, index: number) => {
+            const tag: ITagValue | IOperatorValue = tagMap[vId];
+            const prevVId = vIds[index - 1];
+            const prevTag = prevVId ? tagMap[prevVId] : undefined;
+            let isNon = false;
+            if (prevTag) {
+              if ((prevTag as IOperatorValue).operator && (prevTag as IOperatorValue).operator === operator.NON) {
+                isNon = true;
+              }
             }
-            return <TagItem operation={operation} width={width} tag={tag} activeVId={activeVId} vId={vId} key={vId}/>
+            if (tag.hasOwnProperty("name")) {
+              return <TagItem operation={operation} width={width} tag={tag as ITagValue} activeVId={activeVId} vId={vId} key={vId} isNon={isNon}/>
+            }
+            if ((tag as IOperatorValue).side === side.LEFT) {
+              return <LeftOperatorItem operation={operation} width={width} key={vId} vId={vId} operator={tag as IOperatorValue} />
+            }
+            return <RightOperatorItem operation={operation} width={width} key={vId} vId={vId} operator={tag as IOperatorValue} />
           })}
-
         </div>
       )
     }

@@ -11,6 +11,10 @@ export enum operator {
   MIX, JOIN, REDUCE, NON, LEFT, RIGHT,
 }
 
+export enum side {
+  LEFT, RIGHT
+}
+
 export const leftOperators: IOperator[] = [
   { code: operator.LEFT, name: '左侧括号', text: '(' },
   { code: operator.NON, name: '非', iconName: 'Important' }

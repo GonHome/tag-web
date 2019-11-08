@@ -351,6 +351,26 @@
               }
             }
           }
+          .left {
+            border-radius: 0;
+            width: 18px;
+            height: 28px;
+            line-height: 28px;
+            margin: 13px 2px 0;
+            i {
+              font-size: 14px;
+            }
+            .close-icon {
+              position: absolute;
+              margin-left: 11px;
+              margin-top: -41px;
+              font-size: 14px;
+              display: none;
+            }
+            .close-icon:hover {
+              color: red;
+            }
+          }
         }
       }
       .sash-down {

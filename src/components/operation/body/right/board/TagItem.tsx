@@ -1,17 +1,19 @@
 import { observer } from "mobx-react";
 import React from "react";
 import classNames from 'classnames';
-import { Callout, DirectionalHint, Icon, getId } from "office-ui-fabric-react";
+import { Callout, DirectionalHint, getId, Icon } from "office-ui-fabric-react";
 import { Col, Grid, Row } from "react-flexbox-grid";
 import { Operation } from "store";
-import { ITagValue, IOperator } from "../../../../../models/operation";
-import { leftOperators, rightOperators } from "constants/operationConstants";
+import { IOperator, ITagValue } from "../../../../../models/operation";
+import { leftOperators, operator, rightOperators } from "constants/operationConstants";
+
 interface IProps {
   operation: Operation,
   width: number,
   tag: ITagValue,
   activeVId: string;
   vId: string;
+  isNon: boolean;
 }
 
 interface IState {
@@ -32,8 +34,15 @@ export default class TagItem extends  React.Component<IProps, IState> {
     this.setState({ isCalloutVisible: false });
   };
 
+  _operatorClick = (item: IOperator) => {
+    const { isNon, operation } = this.props;
+    if (item.code === operator.NON) {
+
+    }
+  };
+
   render() {
-    const { tag, operation, activeVId, vId } = this.props;
+    const { tag, operation, activeVId, vId, isNon } = this.props;
     const { changeActiveVId } = operation;
     const { isCalloutVisible } = this.state;
     return (
@@ -62,21 +71,16 @@ export default class TagItem extends  React.Component<IProps, IState> {
               <Grid fluid>
                 <Row>
                   {leftOperators.map((item: IOperator, index: number) => {
-                    if (rightOperators.length === index + 1) {
-                      return (
-                        <Col md={6} xs={6} key={item.code}>
-                          <div className="function-selector" title={item.name}>
-                            {item.iconName ? <Icon iconName={item.iconName} /> : <span>{item.text}</span>}
-                          </div>
-                        </Col>
-                      )
-                    }
                     return (
                       <Col md={6} xs={6} key={item.code}>
-                        <div className="function-selector" title={item.name}>
+                        <div
+                          className={classNames("function-selector", { active: isNon && item.code === operator.NON } )}
+                          title={item.name}
+                          onClick={() => this._operatorClick(item)}
+                        >
                           {item.iconName ? <Icon iconName={item.iconName} /> : <span>{item.text}</span>}
                         </div>
-                        <div className="slider" />
+                        {rightOperators.length === index + 1 ? null : <div className="slider" />}
                       </Col>
                     )
                   })}

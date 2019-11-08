@@ -238,3 +238,39 @@
   path: 'E:\\newspace\\tag-web\\src\\routers' }
 [2019-11-04T14:13:52.166] [INFO] Mock.router.ts - mockPath is E:\newspace\tag-web\mock\
 [2019-11-04T14:13:52.178] [WARN] src/init/initRouter - 加载路由prefix为:/mock
+[2019-11-06T17:04:58.699] [DEBUG] src/init/initRouter - projectPath:E:\newspace\tag-web
+[2019-11-06T17:04:58.712] [DEBUG] src/init/initRouter - extRouterPath:undefined
+[2019-11-06T17:04:58.732] [INFO] main.ts - mock server is started at port: 3333!
+[2019-11-06T17:04:58.739] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\src\routers
+[2019-11-06T17:04:58.741] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\node_modules\@zhili\server-mock\src\routers
+[2019-11-06T17:04:58.743] [ERROR] src/init/initRouter - { [Error: ENOENT: no such file or directory, scandir 'E:\newspace\tag-web\src\routers']
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'E:\\newspace\\tag-web\\src\\routers' }
+[2019-11-06T17:04:58.816] [INFO] Mock.router.ts - mockPath is E:\newspace\tag-web\mock\
+[2019-11-06T17:04:58.822] [WARN] src/init/initRouter - 加载路由prefix为:/mock
+[2019-11-07T08:57:56.975] [DEBUG] src/init/initRouter - projectPath:E:\newspace\tag-web
+[2019-11-07T08:57:56.989] [DEBUG] src/init/initRouter - extRouterPath:undefined
+[2019-11-07T08:57:57.002] [INFO] main.ts - mock server is started at port: 3333!
+[2019-11-07T08:57:57.008] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\src\routers
+[2019-11-07T08:57:57.010] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\node_modules\@zhili\server-mock\src\routers
+[2019-11-07T08:57:57.013] [ERROR] src/init/initRouter - { [Error: ENOENT: no such file or directory, scandir 'E:\newspace\tag-web\src\routers']
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'E:\\newspace\\tag-web\\src\\routers' }
+[2019-11-07T08:57:57.081] [INFO] Mock.router.ts - mockPath is E:\newspace\tag-web\mock\
+[2019-11-07T08:57:57.088] [WARN] src/init/initRouter - 加载路由prefix为:/mock
+[2019-11-07T13:52:02.421] [DEBUG] src/init/initRouter - projectPath:E:\newspace\tag-web
+[2019-11-07T13:52:02.436] [DEBUG] src/init/initRouter - extRouterPath:undefined
+[2019-11-07T13:52:02.450] [INFO] main.ts - mock server is started at port: 3333!
+[2019-11-07T13:52:02.458] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\src\routers
+[2019-11-07T13:52:02.462] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\node_modules\@zhili\server-mock\src\routers
+[2019-11-07T13:52:02.465] [ERROR] src/init/initRouter - { [Error: ENOENT: no such file or directory, scandir 'E:\newspace\tag-web\src\routers']
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'E:\\newspace\\tag-web\\src\\routers' }
+[2019-11-07T13:52:02.542] [INFO] Mock.router.ts - mockPath is E:\newspace\tag-web\mock\
+[2019-11-07T13:52:02.549] [WARN] src/init/initRouter - 加载路由prefix为:/mock

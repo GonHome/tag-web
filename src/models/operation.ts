@@ -1,12 +1,15 @@
-import { operator } from "../constants/operationConstants";
+import { operator, side } from "../constants/operationConstants";
 
 export interface IGraphValue {
   name: string;
   activeVId: string;
   vIds: string[];
-  tagMap: { [key: string]: ITagValue | operator }
+  tagMap: { [key: string]: ITagValue | IOperatorValue }
 }
-
+export interface IOperatorValue {
+  operator: operator,
+  side: side,
+}
 export interface ITagValue {
   config: any;
   name: string;
