@@ -1,4 +1,4 @@
-import { operator, side } from "../constants/operationConstants";
+import { operator } from "../constants/operationConstants";
 
 export interface IGraphValue {
   name: string;

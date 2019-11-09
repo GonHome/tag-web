@@ -1,6 +1,7 @@
 import { IOperator } from 'models/operation';
 import NonOperatorItem from 'components/operation/body/right/board/operator/left/NonOperatorItem';
 import RightOperatorItem from 'components/operation/body/right/board/operator/right/RightOperatorItem';
+import BracketLeftOperatorItem from 'components/operation/body/right/board/operator/left/BracketLeftOperatorItem';
 
 export const leftSideTypes =  [
   { code: 'static', text: '静态' },
@@ -34,4 +35,5 @@ export const operatorDomMap: any = {
   [operator.JOIN]: RightOperatorItem,
   [operator.REDUCE]: RightOperatorItem,
   [operator.NON]: NonOperatorItem,
+  [operator.LEFT]: BracketLeftOperatorItem,
 };

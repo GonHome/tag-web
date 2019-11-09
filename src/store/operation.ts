@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 import { IGraphValue, ITagValue } from 'models/operation';
-import { operator, side } from "../constants/operationConstants";
+import { operator } from "../constants/operationConstants";
 import { getMaxVId } from 'util/operate';
 
 // 工作台
@@ -22,7 +22,7 @@ class Operation {
     this.graphIds = ['n-1', 'n-2', 'n-3'];
     this.graphMap = {
       'n-1': { name: '标签1', activeVId: 'v-1', vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4', 'v-5', 'v-6'], tagMap: {
-          'v-0': operator.NON,
+          'v-0': operator.LEFT,
           'v-1': { name: '常口1', config: {} },
           'v-2': operator.MIX,
           'v-3': { name: '常口2', config: {} },
@@ -146,7 +146,44 @@ class Operation {
         delete this.graphMap[activeGraphId].tagMap[prevVId];
       }
     }
-  }
+  };
+
+
+
+  @action addBracket = (vId: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const vIds = this.graphMap[activeGraphId].vIds;
+      const nextVId = `v-${getMaxVId(vIds)}`;
+      let outSideBracketVId = vId;
+      const getOutSideBracketVId = (id: string) => {
+        const activeGraphId = this.activeGraphId;
+        if (activeGraphId) {
+          const vIds = this.graphMap[activeGraphId].vIds;
+          const tagMap = this.graphMap[activeGraphId].tagMap;
+          const index = vIds.indexOf(id);
+          const prevVId = vIds[index - 1];
+          if (prevVId) {
+            const tag: ITagValue | operator = tagMap[prevVId];
+            if (typeof tag === 'number') {
+              if (tag === operator.LEFT || tag === operator.NON) {
+                getOutSideBracketVId(prevVId);
+              }
+            }
+          } else {
+            outSideBracketVId = id;
+          }
+        }
+      };
+      getOutSideBracketVId(vId);
+      if (outSideBracketVId) {
+        const index = vIds.indexOf(outSideBracketVId);
+        this.graphMap[activeGraphId].vIds.splice(index, 0, nextVId);
+        this.graphMap[activeGraphId].tagMap[nextVId] = operator.LEFT;
+      }
+    }
+  };
+
 }
 
 export default Operation;

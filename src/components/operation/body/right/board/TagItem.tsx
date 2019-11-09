@@ -37,13 +37,15 @@ export default class TagItem extends  React.Component<IProps, IState> {
 
   _operatorClick = (item: IOperator) => {
     const { isNon, operation, prevVId, vId } = this.props;
-    const { delNonOperator, addNonOperator } = operation;
+    const { delNonOperator, addNonOperator, addBracket } = operation;
     if (item.code === operator.NON) {
       if (isNon && prevVId) {
         delNonOperator(prevVId);
       } else {
         addNonOperator(vId);
       }
+    } else if (item.code === operator.LEFT) {
+      addBracket(vId);
     }
   };
 

@@ -312,8 +312,11 @@
               display: block;
             }
           }
-          .active {
+          .active:not(.operator-item) {
             border: 2px solid red;
+          }
+          .active:not(.tag-item) {
+            background-color: red;
           }
           .tag-item:hover,.operator-item:hover {
             background-color: #2661bf;
@@ -343,11 +346,14 @@
             .operator-center {
               text-align: center;
               display: grid;
-              i {
+              i,span {
                 font-size: 12px;
                 font-weight: 600;
                 color: #fff;
                 display: table;
+              }
+              span {
+                font-size: 16px;
               }
             }
           }

@@ -3,10 +3,10 @@ export const getMaxVId = (vIds: string[]) => {
   vIds.forEach((vId: string) => {
     const index = vId.split('-')[1] as unknown as number;
     if (index) {
-      if (index > maxIndex) {
-        maxIndex = index + 1;
+      if (index * 1 > maxIndex) {
+        maxIndex = index * 1 + 1;
       }
     }
   });
-  return maxIndex;
+  return maxIndex + 1;
 };

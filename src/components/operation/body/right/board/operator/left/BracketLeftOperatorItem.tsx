@@ -11,16 +11,8 @@ interface IProps {
   operator: operator,
 }
 
-interface IState {
-  isCalloutVisible: boolean;
-}
 @observer
-export default class LeftOperatorItem extends  React.Component<IProps, IState> {
-
-  constructor(props: IProps) {
-    super(props);
-    this.state = { isCalloutVisible: false };
-  }
+export default class BracketLeftOperatorItem extends  React.Component<IProps> {
 
   showIcon = (missOperator: IOperator) => {
     if (missOperator.iconName) {
@@ -29,19 +21,28 @@ export default class LeftOperatorItem extends  React.Component<IProps, IState> {
     return <span title={missOperator.name}>{missOperator.text}</span>;
   };
 
+  _delNonOperator = (e: any) => {
+    const { operation, vId } = this.props;
+    const { delNonOperator } = operation;
+    delNonOperator(vId);
+    e.stopPropagation();
+  };
+
   render() {
     const { operator, operation, vId } = this.props;
-    const { delNonOperator }= operation;
+    const { changeActiveVId }= operation;
     const missOperator: IOperator | undefined = leftOperators.filter((item: IOperator) => {
       return item.code === operator;
     })[0];
     return (
-      <div className="operator-item left" onClick={() => this.setState({ isCalloutVisible: true })} >
+      <div
+        className="operator-item left"
+        onClick={() => changeActiveVId(vId)} >
         <div className="operator-center">
           {missOperator ? this.showIcon(missOperator) : null}
         </div>
         <div className="close-icon">
-          <Icon iconName="StatusErrorFull" title="删除" onClick={() => delNonOperator(vId)} />
+          <Icon iconName="StatusErrorFull" title="删除" onClick={this._delNonOperator} />
         </div>
       </div>
     );
