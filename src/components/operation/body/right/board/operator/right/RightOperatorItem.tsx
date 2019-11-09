@@ -4,13 +4,13 @@ import classNames from 'classnames';
 import { Callout, getId, Icon, DirectionalHint } from 'office-ui-fabric-react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Operation } from "store";
-import { IOperator, IOperatorValue } from 'models/operation';
-import { rightOperators } from 'constants/operationConstants';
+import { IOperator } from 'models/operation';
+import { rightOperators, operator } from 'constants/operationConstants';
 interface IProps {
   operation: Operation,
   width: number,
   vId: string,
-  operator: IOperatorValue,
+  operator: operator,
 }
 
 interface IState {
@@ -33,7 +33,7 @@ export default class RightOperatorItem extends  React.Component<IProps, IState> 
   render() {
     const { vId, operation, operator } = this.props;
     const missOperator = rightOperators.filter((item: IOperator) => {
-      return item.code === operator.operator;
+      return item.code === operator;
     })[0];
     const { changeRightOperator } = operation;
     const { isCalloutVisible  } = this.state;
@@ -60,7 +60,7 @@ export default class RightOperatorItem extends  React.Component<IProps, IState> 
                     return (
                       <Col md={4} xs={6} key={item.code}>
                         <div
-                          className={classNames("operator-selector", {active: item.code === operator.operator})}
+                          className={classNames("operator-selector", {active: item.code === operator})}
                           title={item.name}
                           onClick={() => {changeRightOperator(item.code, vId);this._onDismiss()}}
                         >

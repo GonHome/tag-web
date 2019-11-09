@@ -1,4 +1,6 @@
 import { IOperator } from 'models/operation';
+import NonOperatorItem from 'components/operation/body/right/board/operator/left/NonOperatorItem';
+import RightOperatorItem from 'components/operation/body/right/board/operator/right/RightOperatorItem';
 
 export const leftSideTypes =  [
   { code: 'static', text: '静态' },
@@ -25,3 +27,11 @@ export const rightOperators: IOperator[] = [
   { code: operator.JOIN, name: '相加', iconName: 'Add' },
   { code: operator.REDUCE, name: '相减', iconName: 'CalculatorSubtract' },
 ];
+
+
+export const operatorDomMap: any = {
+  [operator.MIX]: RightOperatorItem,
+  [operator.JOIN]: RightOperatorItem,
+  [operator.REDUCE]: RightOperatorItem,
+  [operator.NON]: NonOperatorItem,
+};

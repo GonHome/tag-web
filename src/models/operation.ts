@@ -4,12 +4,9 @@ export interface IGraphValue {
   name: string;
   activeVId: string | undefined;
   vIds: string[];
-  tagMap: { [key: string]: ITagValue | IOperatorValue }
+  tagMap: { [key: string]: ITagValue | operator }
 }
-export interface IOperatorValue {
-  operator: operator,
-  side: side,
-}
+
 export interface ITagValue {
   config: any;
   name: string;

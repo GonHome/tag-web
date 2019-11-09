@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx';
-import { IGraphValue, IOperatorValue, ITagValue } from 'models/operation';
+import { IGraphValue, ITagValue } from 'models/operation';
 import { operator, side } from "../constants/operationConstants";
 import { getMaxVId } from 'util/operate';
 
@@ -22,13 +22,13 @@ class Operation {
     this.graphIds = ['n-1', 'n-2', 'n-3'];
     this.graphMap = {
       'n-1': { name: '标签1', activeVId: 'v-1', vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4', 'v-5', 'v-6'], tagMap: {
-          'v-0': { operator: operator.NON, side: side.LEFT },
+          'v-0': operator.NON,
           'v-1': { name: '常口1', config: {} },
-          'v-2': { operator: operator.MIX, side: side.RIGHT },
+          'v-2': operator.MIX,
           'v-3': { name: '常口2', config: {} },
-          'v-4': { operator: operator.MIX, side: side.RIGHT },
+          'v-4': operator.MIX,
           'v-5': { name: '常口3', config: {} },
-          'v-6': { operator: operator.MIX, side: side.RIGHT },
+          'v-6': operator.MIX,
         }
       },
       'n-2': { name: '标签2', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
@@ -83,7 +83,7 @@ class Operation {
 
   @action changeRightOperator = (rightOperator: operator, vId: string) => {
     if (this.activeGraphId) {
-      this.graphMap[this.activeGraphId].tagMap[vId] = { operator: rightOperator, side: side.RIGHT };
+      this.graphMap[this.activeGraphId].tagMap[vId] = rightOperator;
     }
   };
 
@@ -103,7 +103,7 @@ class Operation {
       const index = vIds.indexOf(vId);
       const nextVId = `v-${getMaxVId(vIds)}`;
       this.graphMap[this.activeGraphId].vIds.splice(index, 0, nextVId);
-      this.graphMap[this.activeGraphId].tagMap[nextVId] = { operator: operator.NON, side: side.LEFT };
+      this.graphMap[this.activeGraphId].tagMap[nextVId] = operator.NON;
     }
   };
 
@@ -114,15 +114,15 @@ class Operation {
       const vIds = this.graphMap[activeGraphId].vIds;
       const tagMap = this.graphMap[activeGraphId].tagMap;
       const realVIds = vIds.filter((item: string) => {
-        const tag = this.graphMap[activeGraphId].tagMap[item] as IOperatorValue;
-        return (tag.operator && tag.operator !== operator.LEFT && tag.operator !== operator.RIGHT) || !tag.operator;
+        const tag = this.graphMap[activeGraphId].tagMap[item] as operator;
+        return (typeof tag === 'number' && tag !== operator.LEFT && tag !== operator.RIGHT) || typeof tag !== 'number';
       });
       const index = realVIds.indexOf(vId);
       const prevVId = realVIds[index - 1];
       const nextVId = realVIds[index + 1];
       let isDelPrev = false;
-      const prevTag = prevVId ? tagMap[prevVId] as  IOperatorValue : null;
-      if (prevTag && prevTag.operator && prevTag.operator === operator.NON) {
+      const prevTag = prevVId ? tagMap[prevVId] as  operator : null;
+      if (typeof prevTag === 'number' && prevTag === operator.NON) {
         isDelPrev = true;
       }
       if (activeVId === vId) {
