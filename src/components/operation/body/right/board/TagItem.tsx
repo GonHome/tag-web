@@ -11,9 +11,10 @@ interface IProps {
   operation: Operation,
   width: number,
   tag: ITagValue,
-  activeVId: string;
+  activeVId: string | undefined;
   vId: string;
   isNon: boolean;
+  prevVId: string | undefined;
 }
 
 interface IState {
@@ -35,10 +36,22 @@ export default class TagItem extends  React.Component<IProps, IState> {
   };
 
   _operatorClick = (item: IOperator) => {
-    const { isNon, operation } = this.props;
+    const { isNon, operation, prevVId, vId } = this.props;
+    const { delNonOperator, addNonOperator } = operation;
     if (item.code === operator.NON) {
-
+      if (isNon && prevVId) {
+        delNonOperator(prevVId);
+      } else {
+        addNonOperator(vId);
+      }
     }
+  };
+
+  _delTag = (e: any) => {
+    const { vId, operation } = this.props;
+    const { delTag } = operation;
+    delTag(vId);
+    e.stopPropagation();
   };
 
   render() {
@@ -54,7 +67,7 @@ export default class TagItem extends  React.Component<IProps, IState> {
         />
         <div className="tag-name" title={tag.name}>{tag.name}</div>
         <div className="close-icon">
-          <Icon iconName="StatusErrorFull" title="删除"/>
+          <Icon iconName="StatusErrorFull" title="删除" onClick={this._delTag}/>
         </div>
         {isCalloutVisible  ?
           <Callout

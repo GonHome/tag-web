@@ -2,7 +2,7 @@ import { operator, side } from "../constants/operationConstants";
 
 export interface IGraphValue {
   name: string;
-  activeVId: string;
+  activeVId: string | undefined;
   vIds: string[];
   tagMap: { [key: string]: ITagValue | IOperatorValue }
 }

@@ -34,7 +34,7 @@ export default class BoardCenter extends  React.Component<IProps> {
               }
             }
             if (tag.hasOwnProperty("name")) {
-              return <TagItem operation={operation} width={width} tag={tag as ITagValue} activeVId={activeVId} vId={vId} key={vId} isNon={isNon}/>
+              return <TagItem operation={operation} width={width} tag={tag as ITagValue} activeVId={activeVId} vId={vId} key={vId} isNon={isNon} prevVId={prevVId}/>
             }
             if ((tag as IOperatorValue).side === side.LEFT) {
               return <LeftOperatorItem operation={operation} width={width} key={vId} vId={vId} operator={tag as IOperatorValue} />
