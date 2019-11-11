@@ -9,6 +9,7 @@ interface IProps {
   width: number,
   vId: string,
   operator: operator,
+  activeVId: string,
 }
 
 interface IState {

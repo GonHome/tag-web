@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { IGraphValue, ITagValue } from 'models/operation';
 import { operator } from "../constants/operationConstants";
 import { getMaxVId } from 'util/operate';
@@ -21,14 +21,15 @@ class Operation {
     this.activeGraphId = undefined;
     this.graphIds = ['n-1', 'n-2', 'n-3'];
     this.graphMap = {
-      'n-1': { name: '标签1', activeVId: 'v-1', vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4', 'v-5', 'v-6'], tagMap: {
+      'n-1': { name: '标签1', activeVId: 'v-1', vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4', 'v-5', 'v-6', 'v-7'], tagMap: {
           'v-0': operator.LEFT,
           'v-1': { name: '常口1', config: {} },
           'v-2': operator.MIX,
           'v-3': { name: '常口2', config: {} },
           'v-4': operator.MIX,
           'v-5': { name: '常口3', config: {} },
-          'v-6': operator.MIX,
+          'v-6': operator.RIGHT,
+          'v-7': operator.MIX,
         }
       },
       'n-2': { name: '标签2', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
@@ -180,8 +181,65 @@ class Operation {
         const index = vIds.indexOf(outSideBracketVId);
         this.graphMap[activeGraphId].vIds.splice(index, 0, nextVId);
         this.graphMap[activeGraphId].tagMap[nextVId] = operator.LEFT;
+        this.graphMap[activeGraphId].activeVId = nextVId;
       }
     }
+  };
+
+  @computed get rightBracketVId(): string | null {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      if (activeVId) {
+        const vIds = this.graphMap[activeGraphId].vIds;
+        const tagMap = this.graphMap[activeGraphId].tagMap;
+        const activeTag = tagMap[activeVId] as operator;
+        if (typeof activeTag === 'number' && activeTag === operator.LEFT) {
+          const leftBracketVIds = vIds.filter((id: string) => {
+            const tag = tagMap[id] as operator;
+            return typeof tag === 'number' && tag === operator.LEFT;
+          });
+          const rightBracketVIds = vIds.filter((id: string) => {
+            const tag = tagMap[id] as operator;
+            return typeof tag === 'number' && tag === operator.RIGHT;
+          });
+          const leftIndex = leftBracketVIds.length - 1 - leftBracketVIds.indexOf(activeVId);
+          const rightBracketVId = rightBracketVIds[leftIndex];
+          return rightBracketVId || null;
+        }
+        return null;
+      }
+      return null;
+    }
+    return null;
+  };
+
+  @computed get leftBracketVId(): string | null {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      if (activeVId) {
+        const vIds = this.graphMap[activeGraphId].vIds;
+        const tagMap = this.graphMap[activeGraphId].tagMap;
+        const activeTag = tagMap[activeVId] as operator;
+        if (typeof activeTag === 'number' && activeTag === operator.RIGHT) {
+          const leftBracketVIds = vIds.filter((id: string) => {
+            const tag = tagMap[id] as operator;
+            return typeof tag === 'number' && tag === operator.LEFT;
+          });
+          const rightBracketVIds = vIds.filter((id: string) => {
+            const tag = tagMap[id] as operator;
+            return typeof tag === 'number' && tag === operator.RIGHT;
+          });
+          const rightIndex = rightBracketVIds.indexOf(activeVId);
+          const leftBracketVId = leftBracketVIds[leftBracketVIds.length - 1 - rightIndex];
+          return leftBracketVId || null;
+        }
+        return null;
+      }
+      return null;
+    }
+    return null;
   };
 
 }

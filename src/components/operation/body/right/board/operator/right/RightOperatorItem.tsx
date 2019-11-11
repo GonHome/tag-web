@@ -6,11 +6,13 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Operation } from "store";
 import { IOperator } from 'models/operation';
 import { rightOperators, operator } from 'constants/operationConstants';
+
 interface IProps {
   operation: Operation,
   width: number,
   vId: string,
   operator: operator,
+  activeVId: string,
 }
 
 interface IState {

@@ -14,7 +14,7 @@ interface IProps {
 }
 
 @observer
-export default class BracketLeftOperatorItem extends  React.Component<IProps> {
+export default class BracketRightOperatorItem extends  React.Component<IProps> {
 
   _delOperator = (e: any) => {
     const { operation, vId } = this.props;
@@ -25,13 +25,13 @@ export default class BracketLeftOperatorItem extends  React.Component<IProps> {
 
   render() {
     const { operation, vId, activeVId } = this.props;
-    const { changeActiveVId, leftBracketVId }= operation;
+    const { changeActiveVId, rightBracketVId }= operation;
     return (
       <div
-        className={classNames('operator-item bracket', { active: vId === activeVId || (leftBracketVId && leftBracketVId === vId) } )}
+        className={classNames('operator-item bracket', { active: vId === activeVId || (rightBracketVId && rightBracketVId === vId) } )}
         onClick={() => changeActiveVId(vId)}>
         <div className="operator-center">
-          <span title='左侧括号'>(</span>
+          <span title='右侧括号'>)</span>
         </div>
         <div className="close-icon">
           <Icon iconName="StatusErrorFull" title="删除" onClick={this._delOperator} />

@@ -37,7 +37,7 @@ export default class BoardCenter extends  React.Component<IProps> {
                               vId={ vId } key={ vId } isNon={ isNon } prevVId={ prevVId }/>
             } else {
               const Dom = operatorDomMap[tag as operator];
-              return <InJect key={ vId } Component={ Dom } props={ { operation, width, vId, operator: tag } }/>
+              return <InJect key={ vId } Component={ Dom } props={ { operation, width, activeVId, vId, operator: tag } }/>
             }
           })}
         </div>

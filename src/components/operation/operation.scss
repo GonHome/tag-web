@@ -318,6 +318,9 @@
           .active:not(.tag-item) {
             background-color: red;
           }
+          .active:not(.tag-item):hover {
+            background-color: red !important;
+          }
           .tag-item:hover,.operator-item:hover {
             background-color: #2661bf;
             .circle {
@@ -357,7 +360,7 @@
               }
             }
           }
-          .left {
+          .bracket {
             border-radius: 0;
             width: 18px;
             height: 28px;

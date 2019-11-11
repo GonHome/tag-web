@@ -58,7 +58,8 @@ export default class TagItem extends  React.Component<IProps, IState> {
 
   render() {
     const { tag, operation, activeVId, vId, isNon } = this.props;
-    const { changeActiveVId } = operation;
+    const { changeActiveVId, rightBracketVId } = operation;
+    console.log(rightBracketVId);
     const { isCalloutVisible } = this.state;
     return (
       <div className={classNames("tag-item", { active: activeVId === vId } )} onClick={() => changeActiveVId(vId)}>
