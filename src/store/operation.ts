@@ -416,13 +416,30 @@ class Operation {
         };
         if (typeof tag === 'number') {
           tag = tag as operator;
-          const nextVId = vIds[hoverIndex + 1];
           switch (tag) {
             case operator.RIGHT:
-              getRightBracket(nextVId, hoverVId);
+              if (vIds[hoverIndex + 1]) {
+                getRightBracket(vIds[hoverIndex + 1], hoverVId);
+              }
               break;
             case operator.LEFT:
-              getRightBracket(nextVId, hoverVId);
+            case operator.NON:
+            case operator.JOIN:
+            case operator.MIX:
+            case operator.REDUCE:
+              const vIdsDesc = vIds.slice(0, hoverIndex).reverse();
+              const tagVIds = vIdsDesc.filter((vId: string) => {
+                const tag = tagMap[vId] as ITagValue | operator;
+                return typeof tag !== 'number'
+              });
+              hoverVId = tagVIds[0];
+              const nextVId = tagVIds[1];
+              if (nextVId) {
+                const nextTag = tagMap[nextVId] as operator;
+                if (typeof nextTag === 'number' && nextTag === operator.RIGHT) {
+                  getRightBracket(nextVId, hoverVId);
+                }
+              }
               break;
           }
         } else {
