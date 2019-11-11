@@ -46,6 +46,7 @@ export default class TagItem extends  React.Component<IProps, IState> {
       }
     } else if (item.code === operator.LEFT) {
       addBracket(vId);
+      this._onDismiss();
     }
   };
 
@@ -56,13 +57,28 @@ export default class TagItem extends  React.Component<IProps, IState> {
     e.stopPropagation();
   };
 
+  _clickTag = () => {
+    const { vId, operation } = this.props;
+    const { isTemporaryByStart, isLeftBracket, changeActiveVId, passBracket } = operation;
+    if (isLeftBracket && isTemporaryByStart) {
+      passBracket(vId);
+    } else {
+      changeActiveVId(vId);
+    }
+  };
+
   render() {
-    const { tag, operation, activeVId, vId, isNon } = this.props;
-    const { changeActiveVId, rightBracketVId } = operation;
-    console.log(rightBracketVId);
+    const { tag, activeVId, isNon, vId, operation } = this.props;
     const { isCalloutVisible } = this.state;
+    const { isLeftBracket, isTemporaryByStart, setHoverVId } = operation;
     return (
-      <div className={classNames("tag-item", { active: activeVId === vId } )} onClick={() => changeActiveVId(vId)}>
+      <div
+        className={classNames("tag-item", { active: activeVId === vId } )}
+        onClick={this._clickTag}
+        style={{ cursor: isLeftBracket && isTemporaryByStart ? 'alias' : 'pointer' }}
+        onMouseEnter={() => setHoverVId(vId)}
+        onMouseLeave={() => setHoverVId(undefined)}
+      >
         <div
           className={classNames("circle", { show: isCalloutVisible } )}
           onClick={() => this.setState({ isCalloutVisible: true })}

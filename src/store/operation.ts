@@ -1,5 +1,6 @@
 import { action, computed, observable } from 'mobx';
-import { IGraphValue, ITagValue } from 'models/operation';
+import _ from 'lodash';
+import { IBracket, IGraphValue, ITagValue } from 'models/operation';
 import { operator } from "../constants/operationConstants";
 import { getMaxVId } from 'util/operate';
 
@@ -21,7 +22,11 @@ class Operation {
     this.activeGraphId = undefined;
     this.graphIds = ['n-1', 'n-2', 'n-3'];
     this.graphMap = {
-      'n-1': { name: '标签1', activeVId: 'v-1', vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4', 'v-5', 'v-6', 'v-7'], tagMap: {
+      'n-1': {
+        name: '标签1',
+        activeVId: 'v-1',
+        vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4', 'v-5', 'v-6', 'v-7'],
+        tagMap: {
           'v-0': operator.LEFT,
           'v-1': { name: '常口1', config: {} },
           'v-2': operator.MIX,
@@ -30,22 +35,50 @@ class Operation {
           'v-5': { name: '常口3', config: {} },
           'v-6': operator.RIGHT,
           'v-7': operator.MIX,
-        }
+        },
+        brackets: [
+          { start: 'v-0', end: 'v-6', isTemporary: false }
+        ],
+        hoverVId: '',
       },
       'n-2': { name: '标签2', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
           'v-1': { name: '暂口1', config: {} },
           'v-2': { name: '暂口2', config: {} },
           'v-3': { name: '暂口3', config: {} },
-        }
+        },
+        brackets: [],
       },
       'n-3': { name: '标签3', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
           'v-1': { name: '逃犯1', config: {} },
           'v-2': { name: '逃犯2', config: {} },
           'v-3': { name: '逃犯3', config: {} },
-        }
+        },
+        brackets: [],
       },
     };
   }
+
+  @action setHoverVId = (hoverVId?: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId && this.isLeftBracket) {
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      if (activeVId && hoverVId) {
+        const bracket = this.getBracketByStart(activeVId);
+        const vIds = this.graphMap[activeGraphId].vIds;
+        const startIndex = vIds.indexOf(activeVId);
+        const endIndex = vIds.indexOf(hoverVId);
+        if (bracket && bracket.isTemporary && endIndex > startIndex) {
+          if (bracket.end) {
+            const delIndex = vIds.indexOf(bracket.end);
+            this.moveRightBracketTemporary(delIndex, bracket.end, hoverVId);
+          } else {
+            this.addRightBracket(hoverVId);
+          }
+        }
+        this.graphMap[activeGraphId].hoverVId = hoverVId;
+      }
+    }
+  };
 
   @action setLeftSideType = (leftSideType: string) => {
     this.leftSideType = leftSideType;
@@ -98,6 +131,39 @@ class Operation {
     }
   };
 
+  @action moveRightBracketTemporary = (delIndex: number, vId: string, prevVId?: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId && prevVId) {
+      const vIds = _.cloneDeep(this.graphMap[activeGraphId].vIds);
+      if (vIds.indexOf(prevVId) !== delIndex) {
+        vIds.splice(delIndex, 1);
+        const prevIndex = vIds.indexOf(prevVId);
+        vIds.splice(prevIndex + 1, 0, vId);
+        this.graphMap[activeGraphId].vIds = vIds;
+      }
+    }
+  };
+
+  @action delBracket = (vId: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const brackets = this.graphMap[activeGraphId].brackets.filter((item: IBracket) => {
+        return item.start === vId || item.end === vId;
+      });
+      brackets.forEach((bracket: IBracket) => {
+        if (bracket.start) {
+          this.delNonOperator(bracket.start);
+        }
+        if (bracket.end) {
+          this.delNonOperator(bracket.end);
+        }
+      });
+      this.graphMap[activeGraphId].brackets = this.graphMap[activeGraphId].brackets.filter((item: IBracket) => {
+        return item.start !== vId && item.end !== vId;
+      });
+    }
+  };
+
   @action addNonOperator = (vId: string) => {
     if (this.activeGraphId) {
       const vIds = this.graphMap[this.activeGraphId].vIds;
@@ -105,6 +171,39 @@ class Operation {
       const nextVId = `v-${getMaxVId(vIds)}`;
       this.graphMap[this.activeGraphId].vIds.splice(index, 0, nextVId);
       this.graphMap[this.activeGraphId].tagMap[nextVId] = operator.NON;
+    }
+  };
+
+  @action addRightBracket = (vId: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      if (activeVId) {
+        const vIds = this.graphMap[activeGraphId].vIds;
+        const index = vIds.indexOf(vId);
+        const nextVId = `v-${getMaxVId(vIds)}`;
+        this.graphMap[activeGraphId].vIds.splice(index + 1, 0, nextVId);
+        this.graphMap[activeGraphId].tagMap[nextVId] = operator.RIGHT;
+        this.graphMap[activeGraphId].brackets.forEach((bracket: IBracket) => {
+          if (bracket.start === activeVId) {
+            bracket.end = nextVId;
+          }
+        });
+      }
+    }
+  };
+
+  @action passBracket = (vId: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const vIds = this.graphMap[activeGraphId].vIds;
+      const brackets = this.graphMap[activeGraphId].brackets;
+      const prevIndex = vIds.indexOf(vId);
+      brackets.forEach((bracket: IBracket) => {
+        if (bracket.end === vIds[prevIndex + 1]) {
+          bracket.isTemporary = false;
+        }
+      });
     }
   };
 
@@ -182,6 +281,7 @@ class Operation {
         this.graphMap[activeGraphId].vIds.splice(index, 0, nextVId);
         this.graphMap[activeGraphId].tagMap[nextVId] = operator.LEFT;
         this.graphMap[activeGraphId].activeVId = nextVId;
+        this.graphMap[activeGraphId].brackets.push({ start: nextVId, end: undefined, isTemporary: true });
       }
     }
   };
@@ -191,21 +291,16 @@ class Operation {
     if (activeGraphId) {
       const activeVId = this.graphMap[activeGraphId].activeVId;
       if (activeVId) {
-        const vIds = this.graphMap[activeGraphId].vIds;
         const tagMap = this.graphMap[activeGraphId].tagMap;
         const activeTag = tagMap[activeVId] as operator;
         if (typeof activeTag === 'number' && activeTag === operator.LEFT) {
-          const leftBracketVIds = vIds.filter((id: string) => {
-            const tag = tagMap[id] as operator;
-            return typeof tag === 'number' && tag === operator.LEFT;
+          const brackets = this.graphMap[activeGraphId].brackets.filter((bracket: IBracket) => {
+            return bracket.start === activeVId;
           });
-          const rightBracketVIds = vIds.filter((id: string) => {
-            const tag = tagMap[id] as operator;
-            return typeof tag === 'number' && tag === operator.RIGHT;
-          });
-          const leftIndex = leftBracketVIds.length - 1 - leftBracketVIds.indexOf(activeVId);
-          const rightBracketVId = rightBracketVIds[leftIndex];
-          return rightBracketVId || null;
+          if (brackets.length > 0) {
+            return brackets[0].end || null;
+          }
+          return null;
         }
         return null;
       }
@@ -214,30 +309,73 @@ class Operation {
     return null;
   };
 
+  @computed get isTemporaryByStart(): boolean {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      if (activeVId) {
+        const tagMap = this.graphMap[activeGraphId].tagMap;
+        const activeTag = tagMap[activeVId] as operator;
+        if (typeof activeTag === 'number' && activeTag === operator.LEFT) {
+          const brackets = this.graphMap[activeGraphId].brackets.filter((bracket: IBracket) => {
+            return bracket.start === activeVId;
+          });
+          if (brackets.length > 0) {
+            return brackets[0] ? brackets[0].isTemporary : false;
+          }
+          return false;
+        }
+        return false;
+      }
+      return false;
+    }
+    return false;
+  };
+
   @computed get leftBracketVId(): string | null {
     const activeGraphId = this.activeGraphId;
     if (activeGraphId) {
       const activeVId = this.graphMap[activeGraphId].activeVId;
       if (activeVId) {
-        const vIds = this.graphMap[activeGraphId].vIds;
         const tagMap = this.graphMap[activeGraphId].tagMap;
         const activeTag = tagMap[activeVId] as operator;
         if (typeof activeTag === 'number' && activeTag === operator.RIGHT) {
-          const leftBracketVIds = vIds.filter((id: string) => {
-            const tag = tagMap[id] as operator;
-            return typeof tag === 'number' && tag === operator.LEFT;
+          const brackets = this.graphMap[activeGraphId].brackets.filter((bracket: IBracket) => {
+            return bracket.end === activeVId;
           });
-          const rightBracketVIds = vIds.filter((id: string) => {
-            const tag = tagMap[id] as operator;
-            return typeof tag === 'number' && tag === operator.RIGHT;
-          });
-          const rightIndex = rightBracketVIds.indexOf(activeVId);
-          const leftBracketVId = leftBracketVIds[leftBracketVIds.length - 1 - rightIndex];
-          return leftBracketVId || null;
+          if (brackets.length > 0) {
+            return brackets[0].start || null;
+          }
+          return null;
         }
         return null;
       }
       return null;
+    }
+    return null;
+  };
+
+  @computed get isLeftBracket(): boolean {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      if (activeVId) {
+        const tagMap = this.graphMap[activeGraphId].tagMap;
+        const activeTag = tagMap[activeVId] as operator;
+        return typeof  activeTag === 'number' && activeTag === operator.LEFT;
+      }
+      return false
+    }
+    return false;
+  }
+
+  getBracketByStart = (vId: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const brackets = this.graphMap[activeGraphId].brackets.filter((bracket: IBracket) => {
+        return bracket.start === vId;
+      });
+      return brackets[0] ? brackets[0] : null ;
     }
     return null;
   };

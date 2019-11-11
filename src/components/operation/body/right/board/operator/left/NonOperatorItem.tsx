@@ -32,12 +32,17 @@ export default class NonOperatorItem extends  React.Component<IProps, IState> {
 
   render() {
     const { operator, operation, vId } = this.props;
-    const { delNonOperator }= operation;
+    const { delNonOperator, setHoverVId }= operation;
     const missOperator: IOperator | undefined = leftOperators.filter((item: IOperator) => {
       return item.code === operator;
     })[0];
     return (
-      <div className="operator-item left" onClick={() => this.setState({ isCalloutVisible: true })} >
+      <div
+        className="operator-item bracket"
+        onClick={() => this.setState({ isCalloutVisible: true })}
+        onMouseEnter={() => setHoverVId(vId)}
+        onMouseLeave={() => setHoverVId(undefined)}
+      >
         <div className="operator-center">
           {missOperator ? this.showIcon(missOperator) : null}
         </div>

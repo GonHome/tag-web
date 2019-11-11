@@ -37,10 +37,15 @@ export default class RightOperatorItem extends  React.Component<IProps, IState> 
     const missOperator = rightOperators.filter((item: IOperator) => {
       return item.code === operator;
     })[0];
-    const { changeRightOperator } = operation;
+    const { changeRightOperator, setHoverVId } = operation;
     const { isCalloutVisible  } = this.state;
     return (
-      <div className="operator-item" onClick={() => this.setState({ isCalloutVisible: true })} >
+      <div
+        className="operator-item"
+        onClick={() => this.setState({ isCalloutVisible: true })}
+        onMouseEnter={() => setHoverVId(vId)}
+        onMouseLeave={() => setHoverVId(undefined)}
+      >
         <div ref={this._menuButtonElement} className="operator-center">
           {missOperator ? <Icon iconName={missOperator.iconName} title={missOperator.name}/> : null}
         </div>

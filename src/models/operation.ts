@@ -4,9 +4,16 @@ export interface IGraphValue {
   name: string;
   activeVId: string | undefined;
   vIds: string[];
-  tagMap: { [key: string]: ITagValue | operator }
+  tagMap: { [key: string]: ITagValue | operator };
+  brackets: IBracket[];
+  hoverVId?: string;
 }
 
+export interface IBracket {
+  start: string | undefined,
+  end: string | undefined,
+  isTemporary: boolean,
+}
 export interface ITagValue {
   config: any;
   name: string;
