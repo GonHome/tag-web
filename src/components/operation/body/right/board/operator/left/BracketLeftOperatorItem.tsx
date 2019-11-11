@@ -45,7 +45,6 @@ export default class BracketLeftOperatorItem extends  React.Component<IProps> {
           className="operator-item bracket temporary"
           onClick={() => changeActiveVId(vId)}
           onMouseEnter={() => setHoverVId(vId)}
-          onMouseLeave={() => setHoverVId(undefined)}
         >
           <div className="operator-center">
             <span title='左侧括号'>(</span>

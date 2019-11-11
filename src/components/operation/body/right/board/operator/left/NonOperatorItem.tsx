@@ -41,7 +41,6 @@ export default class NonOperatorItem extends  React.Component<IProps, IState> {
         className="operator-item bracket"
         onClick={() => this.setState({ isCalloutVisible: true })}
         onMouseEnter={() => setHoverVId(vId)}
-        onMouseLeave={() => setHoverVId(undefined)}
       >
         <div className="operator-center">
           {missOperator ? this.showIcon(missOperator) : null}

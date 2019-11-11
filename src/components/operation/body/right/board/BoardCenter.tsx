@@ -19,7 +19,9 @@ export default class BoardCenter extends  React.Component<IProps> {
     const { boardHeight, graphMap, activeGraphId } = this.props.operation;
     const graph: IGraphValue | null = activeGraphId ? graphMap[activeGraphId] : null;
     if (graph) {
-      const { activeVId, vIds, tagMap } = graph;
+      const { activeVId, vIds, tagMap, hoverVId } = graph;
+      const activeIndex = activeVId ? vIds.indexOf(activeVId) : -1;
+      const hoverIndex = hoverVId ? vIds.indexOf(hoverVId) : -1;
       return (
         <div className="board-center" style={{ height: boardHeight - 28 }}>
           { vIds.map((vId: string, index: number) => {
@@ -34,10 +36,10 @@ export default class BoardCenter extends  React.Component<IProps> {
             }
             if (tag.hasOwnProperty("name")) {
               return <TagItem operation={ operation } width={ width } tag={ tag as ITagValue } activeVId={ activeVId }
-                              vId={ vId } key={ vId } isNon={ isNon } prevVId={ prevVId }/>
+                              vId={ vId } key={ vId } isNon={ isNon } prevVId={ prevVId } isAddBracket={hoverIndex > activeIndex}/>
             } else {
               const Dom = operatorDomMap[tag as operator];
-              return <InJect key={ vId } Component={ Dom } props={ { operation, width, activeVId, vId, operator: tag } }/>
+              return <InJect key={ vId } Component={ Dom } props={ { operation, width, activeVId, vId, operator: tag, isAddBracket: hoverIndex > activeIndex } }/>
             }
           })}
         </div>

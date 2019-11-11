@@ -63,19 +63,22 @@ class Operation {
     if (activeGraphId && this.isLeftBracket) {
       const activeVId = this.graphMap[activeGraphId].activeVId;
       if (activeVId && hoverVId) {
-        const bracket = this.getBracketByStart(activeVId);
-        const vIds = this.graphMap[activeGraphId].vIds;
-        const startIndex = vIds.indexOf(activeVId);
-        const endIndex = vIds.indexOf(hoverVId);
-        if (bracket && bracket.isTemporary && endIndex > startIndex) {
-          if (bracket.end) {
-            const delIndex = vIds.indexOf(bracket.end);
-            this.moveRightBracketTemporary(delIndex, bracket.end, hoverVId);
-          } else {
-            this.addRightBracket(hoverVId);
+        if (this.isLeftBracket && this.isTemporaryByStart) {
+          const bracket = this.getBracketByStart(activeVId);
+          hoverVId = this.getRealHoverId(hoverVId) || hoverVId;
+          const vIds = this.graphMap[activeGraphId].vIds;
+          const startIndex = vIds.indexOf(activeVId);
+          const endIndex = vIds.indexOf(hoverVId);
+          if (bracket && bracket.isTemporary && endIndex > startIndex) {
+            if (bracket.end) {
+              const delIndex = vIds.indexOf(bracket.end);
+              this.moveRightBracketTemporary(delIndex, bracket.end, hoverVId);
+            } else {
+              this.addRightBracket(hoverVId);
+            }
           }
+          this.graphMap[activeGraphId].hoverVId = hoverVId;
         }
-        this.graphMap[activeGraphId].hoverVId = hoverVId;
       }
     }
   };
@@ -193,14 +196,13 @@ class Operation {
     }
   };
 
-  @action passBracket = (vId: string) => {
+  @action passBracket = () => {
     const activeGraphId = this.activeGraphId;
     if (activeGraphId) {
-      const vIds = this.graphMap[activeGraphId].vIds;
+      const activeVId = this.graphMap[activeGraphId].activeVId;
       const brackets = this.graphMap[activeGraphId].brackets;
-      const prevIndex = vIds.indexOf(vId);
       brackets.forEach((bracket: IBracket) => {
-        if (bracket.end === vIds[prevIndex + 1]) {
+        if (bracket.start === activeVId) {
           bracket.isTemporary = false;
         }
       });
@@ -380,6 +382,62 @@ class Operation {
     return null;
   };
 
+  getRealHoverId = (hoverVId: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      if (activeVId) {
+        const vIds = this.graphMap[activeGraphId].vIds;
+        const brackets = this.graphMap[activeGraphId].brackets;
+        const activeIndex = vIds.indexOf(activeVId);
+        const hoverIndex = vIds.indexOf(hoverVId);
+        const tagMap = this.graphMap[activeGraphId].tagMap;
+        let tag = tagMap[hoverVId] as ITagValue | operator;
+        const getRightBracket = (rightBracketVId: string, prevBracketVId: string) => {
+          const missBrackets = brackets.filter((bracket: IBracket) => {
+            return bracket.end === rightBracketVId;
+          });
+          if (missBrackets.length > 0) {
+            const missStart = missBrackets[0].start;
+            if (missStart) {
+              const missIndex = vIds.indexOf(missStart);
+              if (activeIndex < missIndex) {
+                hoverVId = rightBracketVId;
+                const nextVId = vIds[vIds.indexOf(rightBracketVId) + 1];
+                const nextTag = tagMap[nextVId] as operator;
+                if (typeof nextTag === 'number' && nextTag === operator.RIGHT) {
+                  getRightBracket(nextVId, rightBracketVId);
+                }
+              } else {
+                hoverVId = prevBracketVId;
+              }
+            }
+          }
+        };
+        if (typeof tag === 'number') {
+          tag = tag as operator;
+          const nextVId = vIds[hoverIndex + 1];
+          switch (tag) {
+            case operator.RIGHT:
+              getRightBracket(nextVId, hoverVId);
+              break;
+            case operator.LEFT:
+              getRightBracket(nextVId, hoverVId);
+              break;
+          }
+        } else {
+          const nextVId = vIds[hoverIndex + 1];
+          if (nextVId) {
+            const nextTag = tagMap[nextVId] as operator;
+            if (typeof nextTag === 'number' && nextTag === operator.RIGHT) {
+              getRightBracket(nextVId, hoverVId);
+            }
+          }
+        }
+        return hoverVId;
+      }
+    }
+  };
 }
 
 export default Operation;
