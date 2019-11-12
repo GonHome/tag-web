@@ -60,7 +60,6 @@ export default class BracketLeftOperatorItem extends  React.Component<IProps> {
         className={classNames('operator-item bracket', { active: vId === activeVId || (leftBracketVId && leftBracketVId === vId) } )}
         onClick={() => changeActiveVId(vId)}
         onMouseEnter={() => setHoverVId(vId)}
-        onMouseLeave={() => setHoverVId(undefined)}
       >
         <div className="operator-center">
           <span title='左侧括号'>(</span>

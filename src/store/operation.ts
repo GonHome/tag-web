@@ -39,7 +39,7 @@ class Operation {
         brackets: [
           { start: 'v-0', end: 'v-6', isTemporary: false }
         ],
-        hoverVId: '',
+        hoverVId: undefined,
       },
       'n-2': { name: '标签2', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
           'v-1': { name: '暂口1', config: {} },
@@ -62,6 +62,8 @@ class Operation {
     const activeGraphId = this.activeGraphId;
     if (activeGraphId && this.isLeftBracket) {
       const activeVId = this.graphMap[activeGraphId].activeVId;
+      const tagMap = this.graphMap[activeGraphId].tagMap;
+      const brackets = this.graphMap[activeGraphId].brackets;
       if (activeVId && hoverVId) {
         if (this.isLeftBracket && this.isTemporaryByStart) {
           const bracket = this.getBracketByStart(activeVId);
@@ -75,6 +77,28 @@ class Operation {
               this.moveRightBracketTemporary(delIndex, bracket.end, hoverVId);
             } else {
               this.addRightBracket(hoverVId);
+            }
+            let isPushFirst = false;
+            const outSideBrackets = brackets.filter((bracket: IBracket) => {
+              if (bracket.end) {
+                const rightIndex = vIds.indexOf(bracket.end);
+                if (endIndex === rightIndex && !bracket.isTemporary) {
+                  isPushFirst = true;
+                }
+                return endIndex <= rightIndex && !bracket.isTemporary;
+              }
+              return false;
+            });
+            if (outSideBrackets.length > 0) {
+              let leftBracketVId = outSideBrackets[0].start || '';
+              outSideBrackets.forEach((item: IBracket) => {
+                if (item.start) {
+                  if (vIds.indexOf(item.start) > vIds.indexOf(leftBracketVId)) {
+                    leftBracketVId = item.start;
+                  }
+                }
+              });
+              this.moveLeftBracketTemporary(activeVId, leftBracketVId, isPushFirst);
             }
           }
           this.graphMap[activeGraphId].hoverVId = hoverVId;
@@ -455,6 +479,31 @@ class Operation {
       }
     }
   };
+
+  moveLeftBracketTemporary = (activeVId: string, leftBracketVId: string, isPushFirst: boolean) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const vIds = this.graphMap[activeGraphId].vIds;
+      const newVIds: string[] = [];
+      vIds.forEach((vId: string) => {
+        if (vId !== activeVId) {
+          if (isPushFirst) {
+            if (vId === leftBracketVId) {
+              newVIds.push(activeVId);
+            }
+            newVIds.push(vId);
+          } else {
+            newVIds.push(vId);
+            if (vId === leftBracketVId) {
+              newVIds.push(activeVId);
+            }
+          }
+        }
+      });
+      this.graphMap[activeGraphId].vIds = newVIds;
+    }
+  };
+
 }
 
 export default Operation;
