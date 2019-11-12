@@ -5,7 +5,7 @@ import { Operation } from "store";
 import { IGraphValue, ITagValue } from "models/operation";
 import { operator, operatorDomMap } from "../../../../../constants/operationConstants";
 import InJect from "../../../../../util/InJect";
-
+import { dragRel, dragName, dragIcon, dragType } from 'constants/operationConstants';
 interface IProps {
   operation: Operation,
   width: number,
@@ -14,16 +14,28 @@ interface IProps {
 @observer
 export default class BoardCenter extends  React.Component<IProps> {
 
+  _onDrop = (e: any) => {
+    const dragRelVal = e.dataTransfer.getData(dragRel);
+    const dragNameVal = e.dataTransfer.getData(dragName);
+    const dragIconVal = e.dataTransfer.getData(dragIcon);
+    const dragTypeVal = e.dataTransfer.getData(dragType);
+    const { dragOverToBoard } = this.props.operation;
+    dragOverToBoard(dragNameVal);
+  };
+
   render() {
     const { operation, width } = this.props;
     const { boardHeight, graphMap, activeGraphId } = this.props.operation;
     const graph: IGraphValue | null = activeGraphId ? graphMap[activeGraphId] : null;
     if (graph) {
-      const { activeVId, vIds, tagMap, hoverVId } = graph;
-      const activeIndex = activeVId ? vIds.indexOf(activeVId) : -1;
-      const hoverIndex = hoverVId ? vIds.indexOf(hoverVId) : -1;
+      const { activeVId, vIds, tagMap } = graph;
       return (
-        <div className="board-center" style={{ height: boardHeight - 28 }}>
+        <div
+          className="board-center"
+          style={{ height: boardHeight - 48, width: width - 40 }}
+          onDragOver={(e)=>{e.preventDefault();}}
+          onDrop={this._onDrop}
+        >
           { vIds.map((vId: string, index: number) => {
             const tag: ITagValue | operator = tagMap[vId];
             const prevVId = vIds[index - 1];
@@ -36,10 +48,10 @@ export default class BoardCenter extends  React.Component<IProps> {
             }
             if (tag.hasOwnProperty("name")) {
               return <TagItem operation={ operation } width={ width } tag={ tag as ITagValue } activeVId={ activeVId }
-                              vId={ vId } key={ vId } isNon={ isNon } prevVId={ prevVId } isAddBracket={hoverIndex > activeIndex}/>
+                              vId={ vId } key={ vId } isNon={ isNon } prevVId={ prevVId } />
             } else {
               const Dom = operatorDomMap[tag as operator];
-              return <InJect key={ vId } Component={ Dom } props={ { operation, width, activeVId, vId, operator: tag, isAddBracket: hoverIndex > activeIndex } }/>
+              return <InJect key={ vId } Component={ Dom } props={ { operation, width, activeVId, vId, operator: tag } }/>
             }
           })}
         </div>

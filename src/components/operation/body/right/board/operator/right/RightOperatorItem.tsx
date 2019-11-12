@@ -13,7 +13,6 @@ interface IProps {
   vId: string,
   operator: operator,
   activeVId: string,
-  isAddBracket: boolean,
 }
 
 interface IState {
@@ -34,28 +33,30 @@ export default class RightOperatorItem extends  React.Component<IProps, IState> 
   };
 
   _clickTag = () => {
-    const { operation, isAddBracket } = this.props;
-    const { isLeftBracket, isTemporaryByStart } = operation;
-    if (isLeftBracket && isTemporaryByStart && !isAddBracket) {
-
+    const { operation, vId } = this.props;
+    const { isTemporaryByStart, isDisableToRightBracket, passBracket } = operation;
+    if (isTemporaryByStart()) {
+      if (!isDisableToRightBracket(vId)) {
+        passBracket();
+      }
     } else {
       this.setState({ isCalloutVisible: true });
     }
   };
 
   render() {
-    const { vId, operation, operator, isAddBracket } = this.props;
+    const { vId, operation, operator } = this.props;
     const missOperator = rightOperators.filter((item: IOperator) => {
       return item.code === operator;
     })[0];
-    const { changeRightOperator, setHoverVId, isLeftBracket, isTemporaryByStart } = operation;
+    const { changeRightOperator, setHoverVId, isTemporaryByStart, isDisableToRightBracket } = operation;
     const { isCalloutVisible  } = this.state;
     return (
       <div
         className="operator-item"
         onClick={this._clickTag}
         onMouseEnter={() => setHoverVId(vId)}
-        style={{ cursor: isLeftBracket && isTemporaryByStart && !isAddBracket ? 'not-allowed' : 'pointer' }}
+        style={{ cursor: isTemporaryByStart() ? (isDisableToRightBracket(vId) ?  'not-allowed' : 'alias') : 'pointer' }}
       >
         <div ref={this._menuButtonElement} className="operator-center">
           {missOperator ? <Icon iconName={missOperator.iconName} title={missOperator.name}/> : null}

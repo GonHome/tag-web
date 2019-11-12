@@ -12,22 +12,24 @@ interface IProps {
   activeVId: string,
 }
 
-interface IState {
-  isCalloutVisible: boolean;
-}
 @observer
-export default class NonOperatorItem extends  React.Component<IProps, IState> {
-
-  constructor(props: IProps) {
-    super(props);
-    this.state = { isCalloutVisible: false };
-  }
+export default class NonOperatorItem extends  React.Component<IProps> {
 
   showIcon = (missOperator: IOperator) => {
     if (missOperator.iconName) {
       return <Icon iconName={missOperator.iconName} title={missOperator.name}/>;
     }
     return <span title={missOperator.name}>{missOperator.text}</span>;
+  };
+
+  _click = () => {
+    const { vId, operation } = this.props;
+    const { isDisableToRightBracket, isTemporaryByStart, passBracket } = operation;
+    if (isTemporaryByStart()) {
+      if (!isDisableToRightBracket(vId)) {
+        passBracket();
+      }
+    }
   };
 
   render() {
@@ -39,7 +41,7 @@ export default class NonOperatorItem extends  React.Component<IProps, IState> {
     return (
       <div
         className="operator-item bracket"
-        onClick={() => this.setState({ isCalloutVisible: true })}
+        onClick={this._click}
         onMouseEnter={() => setHoverVId(vId)}
       >
         <div className="operator-center">

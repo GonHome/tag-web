@@ -269,7 +269,7 @@
           }
         }
         .board-center {
-          padding: 20px;
+          padding: 10px 20px;
           overflow-y: auto;
           .tag-item {
             width: 100px;
@@ -288,22 +288,22 @@
               width: calc(100% - 10px);
             }
             .circle {
-              display: none;
+              visibility: hidden;
               width: 10px;
               height: 20px;
               background: #2661bf;
               border-top-left-radius: 25px;
               border-bottom-left-radius: 25px;
-              position: absolute;
               margin-left: -12px;
-              margin-top: 4px;
+              margin-top: 5px;
+              float: left;
             }
             .close-icon {
-              position: absolute;
-              margin-left: -5px;
-              margin-top: -15px;
+              float: right;
+              margin-right: -8px;
+              margin-top: -55px;
               font-size: 14px;
-              display: none;
+              visibility: hidden;
             }
             .close-icon:hover {
               color: red;
@@ -324,13 +324,13 @@
           .tag-item:hover,.operator-item:hover {
             background-color: #2661bf;
             .circle {
-              display: block;
+              visibility: visible;
             }
             .circle:hover {
               background-color: #2a4a7d;
             }
             .close-icon {
-              display: inline-block;
+              visibility: visible;
             }
           }
           .tag-item,.operator-item {
@@ -346,6 +346,7 @@
             line-height: 24px;
             border-radius: 12px;
             margin-top: 15px;
+            margin-bottom: 5px !important;
             .operator-center {
               text-align: center;
               display: grid;
@@ -366,15 +367,16 @@
             height: 28px;
             line-height: 28px;
             margin: 13px 2px 0;
+            margin-bottom: 3px !important;
             i {
               font-size: 14px;
             }
             .close-icon {
-              position: absolute;
-              margin-left: 11px;
+              margin-right: -6px;
+              float: right;
               margin-top: -41px;
               font-size: 14px;
-              display: none;
+              visibility: hidden;
             }
             .close-icon:hover {
               color: red;

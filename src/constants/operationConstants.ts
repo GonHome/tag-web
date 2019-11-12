@@ -39,3 +39,8 @@ export const operatorDomMap: any = {
   [operator.LEFT]: BracketLeftOperatorItem,
   [operator.RIGHT]: BracketRightOperatorItem,
 };
+
+export const dragType = 'dragType';
+export const dragName = 'dragName';
+export const dragRel = 'dragRel';
+export const dragIcon = 'dragIcon';

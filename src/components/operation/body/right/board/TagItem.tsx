@@ -15,7 +15,6 @@ interface IProps {
   vId: string;
   isNon: boolean;
   prevVId: string | undefined;
-  isAddBracket: boolean;
 }
 
 interface IState {
@@ -59,10 +58,10 @@ export default class TagItem extends  React.Component<IProps, IState> {
   };
 
   _clickTag = () => {
-    const { vId, operation, isAddBracket } = this.props;
-    const { isTemporaryByStart, isLeftBracket, changeActiveVId, passBracket } = operation;
-    if (isLeftBracket && isTemporaryByStart) {
-      if (isAddBracket) {
+    const { vId, operation } = this.props;
+    const { isTemporaryByStart, changeActiveVId, passBracket, isDisableToRightBracket } = operation;
+    if (isTemporaryByStart()) {
+      if (!isDisableToRightBracket(vId)) {
         passBracket();
       }
     } else {
@@ -71,14 +70,14 @@ export default class TagItem extends  React.Component<IProps, IState> {
   };
 
   render() {
-    const { tag, activeVId, isNon, vId, operation, isAddBracket } = this.props;
+    const { tag, activeVId, isNon, vId, operation } = this.props;
     const { isCalloutVisible } = this.state;
-    const { isLeftBracket, isTemporaryByStart, setHoverVId } = operation;
+    const { isTemporaryByStart, setHoverVId, isDisableToRightBracket } = operation;
     return (
       <div
         className={classNames("tag-item", { active: activeVId === vId } )}
         onClick={this._clickTag}
-        style={{ cursor: isLeftBracket && isTemporaryByStart ? (isAddBracket ? 'alias' : 'not-allowed') : 'pointer' }}
+        style={{ cursor: isTemporaryByStart() ? (isDisableToRightBracket(vId) ?  'not-allowed' : 'alias') : 'pointer' }}
         onMouseEnter={() => setHoverVId(vId)}
       >
         <div

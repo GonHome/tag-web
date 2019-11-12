@@ -63,9 +63,8 @@ class Operation {
     if (activeGraphId && this.isLeftBracket) {
       const activeVId = this.graphMap[activeGraphId].activeVId;
       const tagMap = this.graphMap[activeGraphId].tagMap;
-      const brackets = this.graphMap[activeGraphId].brackets;
       if (activeVId && hoverVId) {
-        if (this.isLeftBracket && this.isTemporaryByStart) {
+        if (this.isTemporaryByStart()) {
           const bracket = this.getBracketByStart(activeVId);
           hoverVId = this.getRealHoverId(hoverVId) || hoverVId;
           const vIds = this.graphMap[activeGraphId].vIds;
@@ -78,27 +77,29 @@ class Operation {
             } else {
               this.addRightBracket(hoverVId);
             }
-            let isPushFirst = false;
-            const outSideBrackets = brackets.filter((bracket: IBracket) => {
-              if (bracket.end) {
-                const rightIndex = vIds.indexOf(bracket.end);
-                if (endIndex === rightIndex && !bracket.isTemporary) {
-                  isPushFirst = true;
+            const leftBracketVIds: string[] = [];
+            const getLeftBracketIndex = (nextVId: string) => {
+              if (nextVId && typeof tagMap[nextVId] === 'number' && tagMap[nextVId] === operator.LEFT) {
+                leftBracketVIds.push(nextVId);
+                const nextIndex = vIds.indexOf(nextVId);
+                if (vIds[nextIndex + 1]) {
+                  getLeftBracketIndex(vIds[nextIndex + 1]);
                 }
-                return endIndex <= rightIndex && !bracket.isTemporary;
               }
-              return false;
-            });
-            if (outSideBrackets.length > 0) {
-              let leftBracketVId = outSideBrackets[0].start || '';
-              outSideBrackets.forEach((item: IBracket) => {
-                if (item.start) {
-                  if (vIds.indexOf(item.start) > vIds.indexOf(leftBracketVId)) {
-                    leftBracketVId = item.start;
-                  }
+            };
+            const nextVId = vIds[startIndex + 1];
+            getLeftBracketIndex(nextVId);
+            if (leftBracketVIds.length > 0) {
+              let needInsertVId = null;
+              leftBracketVIds.forEach((vId: string) => {
+                const rightBracket = this.getRightBracket(vId);
+                if (rightBracket && rightBracket.end &&vIds.indexOf(rightBracket.end) > endIndex) {
+                  needInsertVId = rightBracket.start;
                 }
               });
-              this.moveLeftBracketTemporary(activeVId, leftBracketVId, isPushFirst);
+              if (needInsertVId) {
+                this.moveLeftBracketTemporary(activeVId, needInsertVId);
+              }
             }
           }
           this.graphMap[activeGraphId].hoverVId = hoverVId;
@@ -145,6 +146,21 @@ class Operation {
   @action changeRightOperator = (rightOperator: operator, vId: string) => {
     if (this.activeGraphId) {
       this.graphMap[this.activeGraphId].tagMap[vId] = rightOperator;
+    }
+  };
+
+  @action dragOverToBoard = (name: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const vIds = this.graphMap[activeGraphId].vIds;
+      const nextId = getMaxVId(vIds);
+      const nextVId = `v-${nextId}`;
+      const nextVId2 = `v-${nextId * 1 + 1}`;
+      this.graphMap[activeGraphId].vIds.splice(vIds.length + 1, 0, nextVId);
+      this.graphMap[activeGraphId].tagMap[nextVId] = { name, config: {} };
+      this.graphMap[activeGraphId].vIds.splice(vIds.length + 1, 0, nextVId2);
+      this.graphMap[activeGraphId].tagMap[nextVId2] = operator.MIX;
+      this.graphMap[activeGraphId].activeVId = nextVId;
     }
   };
 
@@ -335,7 +351,8 @@ class Operation {
     return null;
   };
 
-  @computed get isTemporaryByStart(): boolean {
+  // 判断是否是左侧括号并且未确定右侧括号
+  isTemporaryByStart = () => {
     const activeGraphId = this.activeGraphId;
     if (activeGraphId) {
       const activeVId = this.graphMap[activeGraphId].activeVId;
@@ -381,6 +398,7 @@ class Operation {
     return null;
   };
 
+  // 判断是否选中左侧括号
   @computed get isLeftBracket(): boolean {
     const activeGraphId = this.activeGraphId;
     if (activeGraphId) {
@@ -480,29 +498,70 @@ class Operation {
     }
   };
 
-  moveLeftBracketTemporary = (activeVId: string, leftBracketVId: string, isPushFirst: boolean) => {
+  moveLeftBracketTemporary = (activeVId: string, leftBracketVId: string) => {
     const activeGraphId = this.activeGraphId;
     if (activeGraphId) {
       const vIds = this.graphMap[activeGraphId].vIds;
       const newVIds: string[] = [];
       vIds.forEach((vId: string) => {
         if (vId !== activeVId) {
-          if (isPushFirst) {
-            if (vId === leftBracketVId) {
-              newVIds.push(activeVId);
-            }
-            newVIds.push(vId);
-          } else {
-            newVIds.push(vId);
-            if (vId === leftBracketVId) {
-              newVIds.push(activeVId);
-            }
+          newVIds.push(vId);
+          if (vId === leftBracketVId) {
+            newVIds.push(activeVId);
           }
         }
       });
       this.graphMap[activeGraphId].vIds = newVIds;
     }
   };
+
+  getIndexByVId = (vId: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const vIds = this.graphMap[activeGraphId].vIds;
+      return vIds.indexOf(vId);
+    }
+    return -1;
+  };
+
+  isDisableToRightBracket = (vId: string) => {
+    const activeGraphId = this.activeGraphId;
+    let isDisable = false;
+    if (this.isTemporaryByStart() && activeGraphId) {
+      const vIds = this.graphMap[activeGraphId].vIds;
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      const brackets = this.graphMap[activeGraphId].brackets;
+      const vIndex = vIds.indexOf(vId);
+      const activeIndex = activeVId ? vIds.indexOf(activeVId) : -1;
+      if (vIndex < activeIndex) {
+        isDisable = true;
+      } else {
+        const bracketIndexs = brackets.map((bracket: IBracket) => {
+         return {
+           startIndex: bracket.start ?  vIds.indexOf(bracket.start) : -1,
+           endIndex: bracket.end ?  vIds.indexOf(bracket.end) : -1,
+         }
+        });
+        bracketIndexs.forEach(({startIndex, endIndex}: { startIndex: number, endIndex: number}) => {
+          if (activeIndex < startIndex && vIndex > startIndex && vIndex < endIndex) {
+            isDisable = true;
+          }
+        });
+      }
+    }
+    return isDisable;
+  };
+
+  getRightBracket = (leftBracketVId: string) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const brackets = this.graphMap[activeGraphId].brackets;
+      return brackets.filter((bracket: IBracket) => {
+        return bracket.start === leftBracketVId;
+      })[0];
+    }
+    return null;
+  }
 
 }
 

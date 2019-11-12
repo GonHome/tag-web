@@ -35,16 +35,29 @@ export default class BracketLeftOperatorItem extends  React.Component<IProps> {
     return false;
   };
 
+  _click = () => {
+    const { vId, operation } = this.props;
+    const { isDisableToRightBracket, changeActiveVId, isTemporaryByStart, passBracket } = operation;
+    if (isTemporaryByStart()) {
+      if (!isDisableToRightBracket(vId)) {
+        passBracket();
+      }
+    } else {
+      changeActiveVId(vId);
+    }
+  };
+
   render() {
     const { operation, vId, activeVId } = this.props;
-    const { changeActiveVId, leftBracketVId, setHoverVId }= operation;
+    const { leftBracketVId, setHoverVId, isTemporaryByStart, isDisableToRightBracket }= operation;
     const isTemporary = this.getIsTemporaryByStart(vId);
     if (isTemporary) {
       return (
         <div
           className="operator-item bracket temporary"
-          onClick={() => changeActiveVId(vId)}
+          onClick={this._click}
           onMouseEnter={() => setHoverVId(vId)}
+          style={{ cursor: isTemporaryByStart() ? (isDisableToRightBracket(vId) ?  'not-allowed' : 'alias') : 'pointer' }}
         >
           <div className="operator-center">
             <span title='左侧括号'>(</span>
@@ -58,8 +71,9 @@ export default class BracketLeftOperatorItem extends  React.Component<IProps> {
     return (
       <div
         className={classNames('operator-item bracket', { active: vId === activeVId || (leftBracketVId && leftBracketVId === vId) } )}
-        onClick={() => changeActiveVId(vId)}
+        onClick={this._click}
         onMouseEnter={() => setHoverVId(vId)}
+        style={{ cursor: isTemporaryByStart() ? (isDisableToRightBracket(vId) ?  'not-allowed' : 'alias') : 'pointer' }}
       >
         <div className="operator-center">
           <span title='左侧括号'>(</span>
