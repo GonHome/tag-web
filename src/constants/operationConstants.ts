@@ -21,7 +21,7 @@ export enum side {
 
 export const leftOperators: IOperator[] = [
   { code: operator.LEFT, name: '左侧括号', text: '(' },
-  { code: operator.NON, name: '非', iconName: 'Important' }
+  { code: operator.NON, name: '非', text: '!' }
 ];
 
 export const rightOperators: IOperator[] = [
@@ -44,3 +44,7 @@ export const dragType = 'dragType';
 export const dragName = 'dragName';
 export const dragRel = 'dragRel';
 export const dragIcon = 'dragIcon';
+
+export enum rightTypes {
+  REVIEW = 'REVIEW', DETAILS = 'DETAILS',
+}

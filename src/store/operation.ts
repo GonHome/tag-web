@@ -1,7 +1,7 @@
 import { action, computed, observable } from 'mobx';
 import _ from 'lodash';
 import { IBracket, IGraphValue, ITagValue } from 'models/operation';
-import { operator } from "../constants/operationConstants";
+import { operator, rightTypes } from "../constants/operationConstants";
 import { getMaxVId } from 'util/operate';
 
 // 工作台
@@ -28,11 +28,11 @@ class Operation {
         vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4', 'v-5', 'v-6', 'v-7'],
         tagMap: {
           'v-0': operator.LEFT,
-          'v-1': { name: '常口1', config: {} },
+          'v-1': { name: '常口1', config: { rightType: null } },
           'v-2': operator.MIX,
-          'v-3': { name: '常口2', config: {} },
+          'v-3': { name: '常口2', config: { rightType: null } },
           'v-4': operator.MIX,
-          'v-5': { name: '常口3', config: {} },
+          'v-5': { name: '常口3', config: { rightType: null } },
           'v-6': operator.RIGHT,
           'v-7': operator.MIX,
         },
@@ -42,16 +42,16 @@ class Operation {
         hoverVId: undefined,
       },
       'n-2': { name: '标签2', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
-          'v-1': { name: '暂口1', config: {} },
-          'v-2': { name: '暂口2', config: {} },
-          'v-3': { name: '暂口3', config: {} },
+          'v-1': { name: '暂口1', config: { rightType: null } },
+          'v-2': { name: '暂口2', config: { rightType: null } },
+          'v-3': { name: '暂口3', config: { rightType: null } },
         },
         brackets: [],
       },
       'n-3': { name: '标签3', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
-          'v-1': { name: '逃犯1', config: {} },
-          'v-2': { name: '逃犯2', config: {} },
-          'v-3': { name: '逃犯3', config: {} },
+          'v-1': { name: '逃犯1', config: { rightType: null } },
+          'v-2': { name: '逃犯2', config: { rightType: null } },
+          'v-3': { name: '逃犯3', config: { rightType: null } },
         },
         brackets: [],
       },
@@ -157,7 +157,7 @@ class Operation {
       const nextVId = `v-${nextId}`;
       const nextVId2 = `v-${nextId * 1 + 1}`;
       this.graphMap[activeGraphId].vIds.splice(vIds.length + 1, 0, nextVId);
-      this.graphMap[activeGraphId].tagMap[nextVId] = { name, config: {} };
+      this.graphMap[activeGraphId].tagMap[nextVId] = { name, config: { rightType: null } };
       this.graphMap[activeGraphId].vIds.splice(vIds.length + 1, 0, nextVId2);
       this.graphMap[activeGraphId].tagMap[nextVId2] = operator.MIX;
       this.graphMap[activeGraphId].activeVId = nextVId;
@@ -324,6 +324,16 @@ class Operation {
         this.graphMap[activeGraphId].tagMap[nextVId] = operator.LEFT;
         this.graphMap[activeGraphId].activeVId = nextVId;
         this.graphMap[activeGraphId].brackets.push({ start: nextVId, end: undefined, isTemporary: true });
+      }
+    }
+  };
+
+  @action changeRightType = (rightType: rightTypes | null) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      if (activeVId) {
+        (this.graphMap[activeGraphId].tagMap[activeVId] as ITagValue).config.rightType = rightType;
       }
     }
   };

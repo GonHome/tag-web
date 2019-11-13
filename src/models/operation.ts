@@ -1,4 +1,4 @@
-import { operator } from "../constants/operationConstants";
+import { operator, rightTypes } from "../constants/operationConstants";
 
 export interface IGraphValue {
   name: string;
@@ -15,7 +15,7 @@ export interface IBracket {
   isTemporary: boolean,
 }
 export interface ITagValue {
-  config: any;
+  config: { rightType: rightTypes | null };
   name: string;
 }
 

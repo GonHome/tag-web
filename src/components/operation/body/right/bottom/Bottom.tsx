@@ -3,6 +3,8 @@ import React from "react";
 import { Pivot, PivotItem } from 'office-ui-fabric-react/lib/Pivot';
 import { Operation, System } from "store";
 import { IGraphValue, ITagValue } from "../../../../../models/operation";
+import TagPanel from './TagPanel';
+
 interface IProps {
   operation: Operation,
   system: System,
@@ -39,7 +41,7 @@ export default class Bottom extends  React.Component<IProps> {
               const tag = tagMap[vId] as ITagValue;
               return (
                 <PivotItem headerText={tag.name} itemKey={vId} key={`${activeGraphId}_${vId}`}>
-                  {tag.name}
+                  <TagPanel operation={operation} vId={vId} width={width} height={height} tag={tag}/>
                 </PivotItem>
               );
             })}

@@ -321,7 +321,7 @@
           .active:not(.tag-item):hover {
             background-color: red !important;
           }
-          .tag-item:hover,.operator-item:hover {
+          .tag-item:hover,.operator-item:hover   {
             background-color: #2661bf;
             .circle {
               visibility: visible;
@@ -405,8 +405,78 @@
       }
       .bottom {
         overflow-y: auto;
+        .ms-FocusZone {
+          background: #f3f2f1;
+          .ms-Button-flexContainer {
+            font-size: 12px;
+          }
+        }
         .ms-Pivot-link {
           height: 30px;
+        }
+        .tag-panel {
+          overflow-y: auto;
+          font-size: 12px;
+          .right-sider-bar {
+            float: right;
+            width: 28px;
+            border-left: 1px solid #e1e8ed;
+            background-color: #edecea;
+            right: 0;
+            line-height: 24px;
+            word-wrap: break-word;
+            color: #7a7a7a;
+            ul {
+              list-style: none;
+              width: 100%;
+              margin: 0;
+              padding-left: 0;
+              li {
+                cursor: pointer;
+                margin-bottom: 2px;
+                a {
+                  text-decoration: none;
+                  padding: 10px 0;
+                  color: #696969;
+                  position: relative;
+                  text-align: center;
+                  word-break: break-all;
+                  display: inline-block;
+                  white-space: normal;
+                  width: 100%;
+                  span {
+                    width: 16px;
+                    white-space: normal;
+                    word-break: break-all;
+                    display: inline-block;
+                    line-height: 16px;
+                    font-size: 12px;
+                  }
+                }
+                a:not(.active):hover {
+                  background-color: #d4e0f4;
+                }
+                .active {
+                  background-color: #fff;
+                  color: #444444;
+                  border-right: 4px solid #48aff0;
+                  width: calc(100% - 4px);
+                  span {
+                    margin-left: 4px;
+                  }
+                }
+              }
+            }
+          }
+          .container-fluid {
+            height: 100%;
+            .row {
+              height: 100%;
+              .col-md-6:nth-of-type(1) {
+                border-right: 1px solid #dad3d3;
+              }
+            }
+          }
         }
       }
     }
