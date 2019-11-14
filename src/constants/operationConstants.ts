@@ -48,3 +48,8 @@ export const dragIcon = 'dragIcon';
 export enum rightTypes {
   REVIEW = 'REVIEW', DETAILS = 'DETAILS',
 }
+
+export enum dialogTypes {
+  ADDTAG = 'ADDTAG',
+  DEITTAG = 'DEITTAG',
+}

@@ -405,7 +405,7 @@
       }
       .bottom {
         overflow-y: auto;
-        .ms-FocusZone {
+        .ms-Pivot {
           background: #f3f2f1;
           .ms-Button-flexContainer {
             font-size: 12px;
@@ -415,7 +415,6 @@
           height: 30px;
         }
         .tag-panel {
-          overflow-y: auto;
           font-size: 12px;
           .right-sider-bar {
             float: right;
@@ -468,12 +467,25 @@
               }
             }
           }
-          .container-fluid {
+          .tag-body {
             height: 100%;
-            .row {
+            display: inline-block;
+            .tag-config {
               height: 100%;
-              .col-md-6:nth-of-type(1) {
-                border-right: 1px solid #dad3d3;
+              border-right: 1px solid #dad3d3;
+              transition: width 0.5s;
+              display: inline-flex;
+            }
+            .rag-review {
+              height: 100%;
+              overflow-y: auto;
+              transition: width 0.5s;
+              display: inline-flex;
+              .root-93 {
+                width: 100%;
+                .ms-DetailsHeader-cellName {
+                  font-size: 12px;
+                }
               }
             }
           }

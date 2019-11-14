@@ -2,11 +2,7 @@ import React from 'react';
 import { inject, observer, Provider } from 'mobx-react';
 import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
 import { createBrowserHistory } from 'history';
-import {
-  Switch ,
-  Router,
-  Route,
-} from 'react-router';
+import {HashRouter, Route, Switch} from 'react-router-dom';
 import { initializeIcons } from '@uifabric/icons';
 import Head from 'components/head';
 import { rootStore } from './store';
@@ -16,6 +12,8 @@ import InJect from './util/InJect';
 import { System, User, App as AppStore } from './store';
 import Home from 'components/home';
 import OperationDom from 'components/operation';
+import Back from 'components/back';
+import Build from 'components/build';
 const browserHistory = createBrowserHistory();
 const routerStore =  new RouterStore();
 // 同步路由与mobx的数据状态
@@ -45,12 +43,14 @@ class Entry extends React.Component<IProps> {
       return (
         <div style={{ height, width }}>
           <Head user={user} system={system} />
-          <Router history={history}>
+          <HashRouter>
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/operation" component={OperationDom}/>
+              <Route exact path="/back" component={Back}/>
+              <Route exact path="/build" component={Build}/>
             </Switch>
-          </Router>
+          </HashRouter>
         </div>
       );
     } else {

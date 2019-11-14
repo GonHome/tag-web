@@ -328,14 +328,26 @@ class Operation {
     }
   };
 
-  @action changeRightType = (rightType: rightTypes | null) => {
+  @action changeRightType = (rightType: rightTypes | null, vId: string) => {
     const activeGraphId = this.activeGraphId;
     if (activeGraphId) {
-      const activeVId = this.graphMap[activeGraphId].activeVId;
-      if (activeVId) {
-        (this.graphMap[activeGraphId].tagMap[activeVId] as ITagValue).config.rightType = rightType;
-      }
+      (this.graphMap[activeGraphId].tagMap[vId] as ITagValue).config.rightType = rightType;
     }
+  };
+
+  // TODO
+  @action addGraph = ({ name, description }: { name: string, description: string }) => {
+    // 这里需要先插入数据库返回id,做graphId,暂时模拟
+    const graphId = `n-${getMaxVId(this.graphIds)}`;
+    this.graphIds.splice(this.graphIds.length, 0, graphId);
+    this.graphMap[graphId] = {
+      name: name,
+      activeVId: undefined,
+      vIds: [],
+      tagMap: {},
+      brackets: [],
+    };
+    this.activeGraphId = graphId;
   };
 
   @computed get rightBracketVId(): string | null {

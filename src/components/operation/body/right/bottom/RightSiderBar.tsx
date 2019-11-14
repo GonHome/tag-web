@@ -14,7 +14,7 @@ interface IProps {
 @observer
 export default class RightSiderBar extends  React.Component<IProps> {
   render() {
-    const { height, rightType, operation } = this.props;
+    const { height, rightType, operation, vId } = this.props;
     const { changeRightType } = operation;
     return (
       <nav className="right-sider-bar" style={{ height }}>
@@ -22,7 +22,7 @@ export default class RightSiderBar extends  React.Component<IProps> {
           <li>
             <a
               className={classNames({ active: rightType === rightTypes.REVIEW  })}
-              onClick={() => changeRightType(rightType === rightTypes.REVIEW ? null : rightTypes.REVIEW )}
+              onClick={() => changeRightType(rightType === rightTypes.REVIEW ? null : rightTypes.REVIEW, vId )}
             >
               <span>预览数据</span>
             </a>
@@ -30,7 +30,7 @@ export default class RightSiderBar extends  React.Component<IProps> {
           <li>
             <a
               className={classNames({ active: rightType === rightTypes.DETAILS })}
-              onClick={() => changeRightType(rightType === rightTypes.DETAILS ? null : rightTypes.DETAILS )}
+              onClick={() => changeRightType(rightType === rightTypes.DETAILS ? null : rightTypes.DETAILS, vId )}
             >
               <span>标签信息</span>
             </a>

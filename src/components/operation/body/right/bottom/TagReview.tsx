@@ -2,10 +2,12 @@ import { observer } from "mobx-react";
 import React from "react";
 import { DetailsList, DetailsListLayoutMode, IColumn, Selection, MarqueeSelection } from "office-ui-fabric-react";
 import { Operation } from "../../../../../store";
+import { rightTypes } from "../../../../../constants/operationConstants";
 
 interface IProps {
   operation: Operation,
   vId: string,
+  rightType: rightTypes | null,
 }
 
 interface IDetailsListBasicExampleItem {
@@ -65,9 +67,10 @@ export default class TagReview extends  React.Component<IProps, IState> {
   });
 
   render() {
+    const { rightType } = this.props;
     const { items } = this.state;
     return (
-      <div>
+      <div style={{ width: rightType === rightTypes.REVIEW ? '50%' : 0 }} className="rag-review">
         <MarqueeSelection selection={this._selection}>
           <DetailsList
             items={items}

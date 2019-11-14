@@ -68,6 +68,53 @@ body {
   }
 }
 
+.panel-all-head {
+  .ms-Panel-main {
+    width: 310px;
+    .ms-Panel-commands {
+      height: 48px;
+      .ms-Panel-navigation {
+        padding: 0;
+        height: 48px;
+        .ms-Label {
+          padding: 0;
+          .ms-Button {
+            height: 100%;
+            i {
+              color: #414448;
+            }
+          }
+        }
+      }
+    }
+    .ms-Panel-scrollableContent {
+      overflow-x: hidden;
+      .nav-item {
+        width: 250px;
+        height: 48px;
+        line-height: 48px;
+        cursor: pointer;
+        border: 1px solid #fff;
+        padding-left: 10px;
+        img {
+          width: 32px;
+          margin-right: 10px;
+          float: left;
+          margin-top: 7px;
+        }
+      }
+      .nav-item:hover {
+        border-color: #f4f4f4!important;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,.1);
+        transition: border-color .167s linear,box-shadow .167s linear;
+        span {
+          color: #48aff0;
+        }
+      }
+    }
+  }
+}
+
 .card-full {
   .ms-Panel-content {
     padding: 10px 0;
@@ -159,4 +206,8 @@ body {
       }
     }
   }
+}
+
+.ms-Dialog-main {
+  max-width: none;
 }

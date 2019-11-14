@@ -73,7 +73,7 @@
     "react-flexbox-grid": "^2.1.2",
     "react-input-mask": "^2.0.4",
     "react-monaco-editor": "^0.30.0",
-    "react-router-dom": "^5.0.1",
+    "react-router-dom": "^5.1.2",
     "react-transition-group": "^4.3.0",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
