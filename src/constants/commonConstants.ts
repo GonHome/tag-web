@@ -23,3 +23,19 @@ export const modelLinks: IModelLink[] = [
     img: "/img/system.png", name: "后台管理", link: "/#/back"
   },
 ];
+
+export enum tagTypes {
+  people = 'people',
+  car = 'car',
+  company = 'company',
+  case = 'case',
+  other = 'other',
+}
+
+export const tagTypeList: { code: tagTypes, text: string }[] = [
+  { code: tagTypes.people, text: '人员' },
+  { code: tagTypes.car, text: '车辆' },
+  { code: tagTypes.company, text: '公司' },
+  { code: tagTypes.case, text: '案件' },
+  { code: tagTypes.other, text: '其他' },
+];

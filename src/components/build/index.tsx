@@ -1,3 +1,3 @@
-import Build from './Build';
+import BuildDom from './Build';
 import './build.scss';
-export default Build ;
+export default BuildDom ;

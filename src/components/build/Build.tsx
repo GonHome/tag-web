@@ -1,20 +1,27 @@
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Operation, System } from "../../store";
+import { System, Build } from "../../store";
+import LeftBuild from './left/LeftBuild';
+import CenterBuild from './center/CenterBuild';
+import RightBuild from './right/RightBuild';
 
 interface IProps {
   system: System,
-  operation: Operation,
+  build: Build,
 }
 
 
-@inject('system', 'operation')
+@inject('system', 'build')
 @observer
-export default class Build extends  React.Component<IProps> {
+export default class BuildDom extends  React.Component<IProps> {
   render() {
+    const { system, build } = this.props;
+    const { mainHeight } = system;
     return (
-      <div>
-        123123
+      <div className="build" style={{ height: mainHeight }}>
+        <LeftBuild system={system} build={build} />
+        <CenterBuild system={system} build={build} />
+        <RightBuild system={system} build={build} />
       </div>
     )
   }

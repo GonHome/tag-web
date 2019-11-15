@@ -1,0 +1,83 @@
+.build {
+  overflow-y: hidden;
+  .left-build {
+    height: 100%;
+    padding: 20px;
+    float: left;
+    background-color: #e5e7e8;
+    .ms-ChoiceField-wrapper {
+      width: 75px;
+    }
+    .ms-ChoiceField-labelWrapper {
+      height: 20px;
+    }
+  }
+  .center-build {
+    height: 100%;
+    float: left;
+    border-right: 1px solid #d2c1c1;
+    border-left: 1px solid #d2c1c1;
+    text-align: center;
+    overflow-y: auto;
+    .remarks {
+      float: right;
+      padding: 0;
+      color: #5b5c65;
+      margin-right: 50px;
+      .circle-key {
+        width: 14px;
+        height: 14px;
+        background-color: #d8d7d7;
+        display: inline-block;
+        margin: 0 3px;
+      }
+      .circle-value {
+        width: 14px;
+        height: 14px;
+        background-color: #9388d4;
+        display: inline-block;
+        margin: 0 3px;
+      }
+    }
+    .row {
+      border-right: 0;
+      padding: 0;
+      .label{
+        border: 1px solid;
+        border-right: 1px solid;
+        height: 50px;
+        line-height: 50px;
+        text-align: left;
+        background-color: #d8d7d7;
+        .ms-TextField {
+          display: inline-block;
+          width: calc(100% - 40px);
+        }
+      }
+      .param {
+        border: 1px solid;
+        border-left: 0;
+        background-color: #9388d4;
+      }
+      .bar {
+        .ms-Button {
+          padding: 0;
+          width: 40px;
+          min-width: auto;
+          margin-top: 9px;
+        }
+      }
+    }
+  }
+  .right-build {
+    height: 100%;
+    float: right;
+    background-color: #e5e7e8;
+  }
+  .font600 {
+    font-weight: 600;
+  }
+  .letter {
+    letter-spacing: 1px;
+  }
+}
