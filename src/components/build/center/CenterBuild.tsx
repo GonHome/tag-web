@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import React from "react";
-import { Label, Text, PrimaryButton, IIconProps, TextField } from 'office-ui-fabric-react';
+import { Label, Text, PrimaryButton, IIconProps, TextField, Icon } from 'office-ui-fabric-react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Build, System } from "store";
 import { IRowConfig } from "../../../models/build";
@@ -12,13 +12,26 @@ interface IProps {
 
 const addIcon: IIconProps = { iconName: 'CircleAdditionSolid' };
 const delIcon: IIconProps = { iconName: 'StatusErrorFull' };
-
 @observer
 export default class CenterBuild extends  React.Component<IProps> {
 
   _labelChange = (index: number, newValue?: string) => {
     const { changeLabelName } = this.props.build;
     changeLabelName(index, newValue || '');
+  };
+
+  _turnToLeft = (index: number, labelCol: number) => {
+    const { changeLabelCol } = this.props.build;
+    if (labelCol > 2) {
+      changeLabelCol(index, labelCol - 1);
+    }
+  };
+
+  _turnToRight = (index: number, labelCol: number) => {
+    const { changeLabelCol } = this.props.build;
+    if (labelCol < 7) {
+      changeLabelCol(index, labelCol + 1);
+    }
   };
 
   render() {
@@ -42,16 +55,42 @@ export default class CenterBuild extends  React.Component<IProps> {
           <Grid fluid>
             {rowConfigs.map((config: IRowConfig, index: number) => {
               return (
-                <Row>
-                  <Col md={config.labelCol} className="label" style={{ borderTop: index === 0 ? '1px solid' : '0' }}>
+                <Row key={index}>
+                  <Col md={config.labelCol} className="label" style={{ borderTop: index === 0 ? '1px solid #867979' : '0' }}>
                     <TextField
                       required
                       value={config.labelName}
                       onChange={(e: any, newValue?: string ) => this._labelChange(index, newValue)}
                     />
+                    <div
+                      className="left-bar"
+                      onClick={() => this._turnToLeft(index, config.labelCol)}
+                      style={{ cursor: config.labelCol > 2 ? 'pointer' : 'not-allowed' }}
+                    >
+                      <Icon iconName="CaretLeft8" title="向左" />
+                    </div>
                   </Col>
-                  <Col md={config.paramCol} className="param" style={{ borderTop: index === 0 ? '1px solid' : '0' }}>
-                    123
+                  <Col md={config.paramCol} className="param" style={{ borderTop: index === 0 ? '1px solid #867979' : '0' }}>
+                    <div
+                      className="right-bar"
+                      onClick={() => this._turnToRight(index, config.labelCol)}
+                      style={{ cursor: config.paramCol > 4 ? 'pointer' : 'not-allowed' }}
+                    >
+                      <Icon iconName="CaretRight8" title="向右" />
+                    </div>
+                    <TextField
+                      value={config.labelName}
+                      onChange={(e: any, newValue?: string ) => this._labelChange(index, newValue)}
+
+                    />
+                    <TextField
+                      value={config.labelName}
+                      onChange={(e: any, newValue?: string ) => this._labelChange(index, newValue)}
+                    />
+                    <TextField
+                      value={config.labelName}
+                      onChange={(e: any, newValue?: string ) => this._labelChange(index, newValue)}
+                    />
                   </Col>
                   <Col md={1} className="bar">
                     {

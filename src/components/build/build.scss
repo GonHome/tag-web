@@ -43,21 +43,47 @@
       border-right: 0;
       padding: 0;
       .label{
-        border: 1px solid;
-        border-right: 1px solid;
+        border: 1px solid #867979;
+        border-right: 1px solid #867979;
         height: 50px;
         line-height: 50px;
         text-align: left;
         background-color: #d8d7d7;
+        padding-right: 0;
         .ms-TextField {
           display: inline-block;
           width: calc(100% - 40px);
         }
+        .left-bar {
+          float: right;
+          height: 100%;
+          cursor: pointer;
+        }
+        .left-bar:hover {
+          background-color: #c5cbd4;
+        }
       }
       .param {
-        border: 1px solid;
+        border: 1px solid #867979;
         border-left: 0;
+        padding-left: 0;
         background-color: #9388d4;
+        height: 50px;
+        line-height: 50px;
+        text-align: left;
+        .ms-TextField {
+          display: inline-block;
+          width: 100px
+        }
+        .right-bar {
+          float: left;
+          height: 48px;
+          line-height: 48px;
+          cursor: pointer;
+        }
+        .right-bar:hover {
+          background-color: #c5cbd4;
+        }
       }
       .bar {
         .ms-Button {

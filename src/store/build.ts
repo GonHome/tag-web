@@ -34,6 +34,11 @@ class Build {
     this.rowConfigs[index].labelName = labelName;
   };
 
+  @action changeLabelCol = (index: number, labelCol: number) => {
+    this.rowConfigs[index].labelCol = labelCol;
+    this.rowConfigs[index].paramCol = 11 - labelCol;
+  };
+
   @action addRowConfig = () => {
     this.rowConfigs.push(
       {
