@@ -1,6 +1,7 @@
 
 /* global window */
 import { IModelLink } from "../models";
+import { DropdownMenuItemType, IDropdownOption } from "office-ui-fabric-react";
 
 export const INITIAL_ROUTE = {
   keys: {},
@@ -38,4 +39,38 @@ export const tagTypeList: { code: tagTypes, text: string }[] = [
   { code: tagTypes.company, text: '公司' },
   { code: tagTypes.case, text: '案件' },
   { code: tagTypes.other, text: '其他' },
+];
+
+export enum inputTypes {
+  label = 'label',
+  input = 'input',
+  select = 'select',
+  inputNumber = 'inputNumber',
+  date = 'date',
+}
+
+export enum textAligns {
+  left = 'left',
+  center = 'center',
+  right = 'right',
+}
+
+export const typeOptions: IDropdownOption[] = [
+  { key: 'labelHeader', text: '文本', itemType: DropdownMenuItemType.Header },
+  { key: 'label', text: '描述' },
+  { key: 'divider_1', text: '-', itemType: DropdownMenuItemType.Divider },
+  { key: 'inputHeader', text: '输入组件', itemType: DropdownMenuItemType.Header },
+  { key: 'input', text: '输入框' },
+  { key: 'select', text: '下拉选择框'},
+  { key: 'inputNumber', text: '数字输入框' },
+  { key: 'divider_2', text: '-', itemType: DropdownMenuItemType.Divider },
+  { key: 'dateHeader', text: '日期组件', itemType: DropdownMenuItemType.Header },
+  { key: 'date', text: '日期' },
+];
+
+export const alignOptions: IDropdownOption[] = [
+  { key: 'alignHeader', text: '定位', itemType: DropdownMenuItemType.Header },
+  { key: textAligns.left, text: '居左' },
+  { key: textAligns.center, text: '居中' },
+  { key: textAligns.right, text: '居右' },
 ];

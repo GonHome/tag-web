@@ -1,108 +1,67 @@
 import { observer } from "mobx-react";
 import React from "react";
-import { Label, Text, PrimaryButton, IIconProps, TextField, Icon } from 'office-ui-fabric-react';
+import { Label, Text, Icon } from 'office-ui-fabric-react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import classNames from 'classnames';
 import { Build, System } from "store";
 import { IRowConfig } from "../../../models/build";
+import ResultShow from './show/ResultShow';
+import ResultConfig from './config/ResultConfig';
+import { rightTypes } from "../../../constants/operationConstants";
 
 interface IProps {
   system: System,
   build: Build,
 }
 
-const addIcon: IIconProps = { iconName: 'CircleAdditionSolid' };
-const delIcon: IIconProps = { iconName: 'StatusErrorFull' };
 @observer
 export default class CenterBuild extends  React.Component<IProps> {
 
-  _labelChange = (index: number, newValue?: string) => {
-    const { changeLabelName } = this.props.build;
-    changeLabelName(index, newValue || '');
-  };
-
-  _turnToLeft = (index: number, labelCol: number) => {
-    const { changeLabelCol } = this.props.build;
-    if (labelCol > 2) {
-      changeLabelCol(index, labelCol - 1);
-    }
-  };
-
-  _turnToRight = (index: number, labelCol: number) => {
-    const { changeLabelCol } = this.props.build;
-    if (labelCol < 7) {
-      changeLabelCol(index, labelCol + 1);
-    }
-  };
-
   render() {
     const { system, build } = this.props;
-    const { leftWidth, rightWidth, rowConfigs, addRowConfig, delRowConfig } = build;
+    const { leftWidth, rightWidth, rowConfigs, addRowConfig, delRowConfig, activeId, checkActiveId } = build;
     const { width, mainHeight } = system;
     return (
       <div className="center-build" style={{ width: width - leftWidth - rightWidth - 2 }}>
-        <div style={{ height: 60 }}>
+        <div className="title">
           <Label>
             <Text variant="large" className="font600 letter">参数配置</Text>
           </Label>
-          <Label className="remarks">
-            <Text variant="medium">参数名</Text>
-            <div className="circle-key"/>
-            <Text variant="medium">参数值</Text>
-            <div className="circle-value"/>
-          </Label>
         </div>
-        <div style={{ height: mainHeight - 60 }}>
-          <Grid fluid>
-            {rowConfigs.map((config: IRowConfig, index: number) => {
-              return (
-                <Row key={index}>
-                  <Col md={config.labelCol} className="label" style={{ borderTop: index === 0 ? '1px solid #867979' : '0' }}>
-                    <TextField
-                      required
-                      value={config.labelName}
-                      onChange={(e: any, newValue?: string ) => this._labelChange(index, newValue)}
-                    />
-                    <div
-                      className="left-bar"
-                      onClick={() => this._turnToLeft(index, config.labelCol)}
-                      style={{ cursor: config.labelCol > 2 ? 'pointer' : 'not-allowed' }}
-                    >
-                      <Icon iconName="CaretLeft8" title="向左" />
-                    </div>
-                  </Col>
-                  <Col md={config.paramCol} className="param" style={{ borderTop: index === 0 ? '1px solid #867979' : '0' }}>
-                    <div
-                      className="right-bar"
-                      onClick={() => this._turnToRight(index, config.labelCol)}
-                      style={{ cursor: config.paramCol > 4 ? 'pointer' : 'not-allowed' }}
-                    >
-                      <Icon iconName="CaretRight8" title="向右" />
-                    </div>
-                    <TextField
-                      value={config.labelName}
-                      onChange={(e: any, newValue?: string ) => this._labelChange(index, newValue)}
-
-                    />
-                    <TextField
-                      value={config.labelName}
-                      onChange={(e: any, newValue?: string ) => this._labelChange(index, newValue)}
-                    />
-                    <TextField
-                      value={config.labelName}
-                      onChange={(e: any, newValue?: string ) => this._labelChange(index, newValue)}
-                    />
-                  </Col>
-                  <Col md={1} className="bar">
-                    {
-                      index === 0 ?
-                        <PrimaryButton iconProps={addIcon} title="添加" onClick={addRowConfig} /> :
-                        <PrimaryButton iconProps={delIcon} title="删除" onClick={() => delRowConfig(index)} />
-                    }
-                  </Col>
+        <div style={{ height: mainHeight - 40 }}>
+          <div className="show-result">
+            <div className="result show-board">
+              <Grid fluid>
+                <Row>
+                  {rowConfigs.map((rowConfig: IRowConfig) => {
+                    return (
+                      <Col
+                        md={rowConfig.colNum}
+                        className={classNames("col", { active: rowConfig.rowId === activeId })}
+                        key={rowConfig.rowId}
+                        onClick={() => checkActiveId(rowConfig.rowId)}
+                      >
+                        <ResultShow build={build} rowConfig={rowConfig}/>
+                      </Col>
+                    )
+                  })}
                 </Row>
-              )
-            })}
-          </Grid>
+              </Grid>
+            </div>
+            <div className="right-bar">
+              <div className="action-bar primary" title="添加" onClick={addRowConfig}>
+                <Icon iconName="Add" />
+              </div>
+              <div
+                className={classNames("action-bar close", { disable: !activeId })}
+                title="删除">
+                <Icon iconName="Clear" onClick={delRowConfig} />
+              </div>
+            </div>
+          </div>
+          <div className="show-config">
+            <ResultConfig width={width - leftWidth - rightWidth - 2} build={build}  />
+          </div>
         </div>
       </div>
     )

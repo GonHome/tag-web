@@ -17,80 +17,71 @@
     float: left;
     border-right: 1px solid #d2c1c1;
     border-left: 1px solid #d2c1c1;
-    text-align: center;
     overflow-y: auto;
-    .remarks {
-      float: right;
-      padding: 0;
-      color: #5b5c65;
-      margin-right: 50px;
-      .circle-key {
-        width: 14px;
-        height: 14px;
-        background-color: #d8d7d7;
-        display: inline-block;
-        margin: 0 3px;
+    .title {
+      height: 40px;
+      text-align: center;
+    }
+    .show-result {
+      width: calc(100% - 52px);
+      border: 1px solid #bbbdbd;
+      margin-left: 25px;
+      height: 40%;
+      .show-board {
+        height: 100%;
+        overflow-y: auto;
+        float: left;
+        width: calc(100% - 25px);
       }
-      .circle-value {
-        width: 14px;
-        height: 14px;
-        background-color: #9388d4;
-        display: inline-block;
-        margin: 0 3px;
+      .right-bar {
+        width: 24px;
+        float: right;
+        background-color: #dbddde;
+        height: 100%;
+        border-left: 1px solid #b9b5b5;
+        text-align: center;
+        .action-bar {
+          height: 24px;
+          cursor: pointer;
+          i {
+            font-size: 12px;
+            color: #fff;
+          }
+        }
+        .primary {
+          background-color: #2b579a;
+        }
+        .primary:hover {
+          background-color: #10356d;
+        }
+        .close {
+          background-color: #da1b1b;
+        }
+        .close:not(.disable):hover {
+          background-color: red;
+        }
+        .disable {
+          cursor: not-allowed;
+          background-color: #a28181;
+        }
       }
     }
-    .row {
-      border-right: 0;
-      padding: 0;
-      .label{
-        border: 1px solid #867979;
-        border-right: 1px solid #867979;
-        height: 50px;
-        line-height: 50px;
-        text-align: left;
-        background-color: #d8d7d7;
-        padding-right: 0;
-        .ms-TextField {
-          display: inline-block;
-          width: calc(100% - 40px);
+    .show-config {
+      width: calc(100% - 52px);
+      border: 1px solid #bbbdbd;
+      border-top: 0;
+      margin-left: 25px;
+      overflow-y: auto;
+      height: calc(60% - 15px);
+      font-size: 14px;
+      .config-col {
+        margin-top: 5px;
+        .label {
+          text-align: right;
         }
-        .left-bar {
-          float: right;
-          height: 100%;
-          cursor: pointer;
-        }
-        .left-bar:hover {
-          background-color: #c5cbd4;
-        }
-      }
-      .param {
-        border: 1px solid #867979;
-        border-left: 0;
-        padding-left: 0;
-        background-color: #9388d4;
-        height: 50px;
-        line-height: 50px;
-        text-align: left;
-        .ms-TextField {
-          display: inline-block;
-          width: 100px
-        }
-        .right-bar {
-          float: left;
-          height: 48px;
-          line-height: 48px;
-          cursor: pointer;
-        }
-        .right-bar:hover {
-          background-color: #c5cbd4;
-        }
-      }
-      .bar {
-        .ms-Button {
-          padding: 0;
-          width: 40px;
-          min-width: auto;
-          margin-top: 9px;
+        .label, .ms-Dropdown-title, .ms-TextField-fieldGroup {
+          height: 28px;
+          line-height: 25px;
         }
       }
     }
