@@ -471,12 +471,13 @@
             height: 100%;
             display: inline-block;
             .tag-config {
-              height: 100%;
+              height: calc(100% - 20px);
               border-right: 1px solid #dad3d3;
               transition: width 0.5s;
               display: inline-flex;
               float: left;
               padding: 10px 0;
+              overflow-y: auto;
               .container-fluid {
                 .row {
                   margin: 0;

@@ -8,6 +8,7 @@ import Config from "./config/Config";
 
 interface IProps {
   operation: Operation,
+  width: number,
   configs: IConfig[] | null,
   vId: string,
   rightType: rightTypes | null,
@@ -17,7 +18,11 @@ interface IProps {
 export default class TagConfig extends  React.Component<IProps> {
 
   render() {
-    const { rightType, configs, operation } = this.props;
+    const { rightType, configs, operation, width } = this.props;
+    let colSize: number = 1;
+    if (rightType || width < 400) {
+      colSize = 2;
+    }
     if (configs) {
       return (
         <div className="tag-config" style={{ width: rightType ? 'calc(50% - 1px)' : 'calc(100% - 1px)' }}>
@@ -26,7 +31,7 @@ export default class TagConfig extends  React.Component<IProps> {
               {configs.map((config: IConfig) => {
                 return (
                   <Col
-                    md={config.colNum}
+                    md={config.colNum * colSize}
                     className="col"
                     key={config.rowId}
                   >
