@@ -1,6 +1,5 @@
 import { observer } from "mobx-react";
 import React from "react";
-import { Row, Col, Grid } from 'react-flexbox-grid';
 import TagConfig from './TagConfig';
 import { Operation } from "../../../../../store";
 import { ITagValue } from "../../../../../models/operation";
@@ -25,12 +24,11 @@ export default class TagPanel extends  React.Component<IProps> {
 
   render() {
     const { width, height, operation, vId, tag } = this.props;
-    const { config } = tag;
-    const { rightType } = config;
+    const { rightType, config } = tag;
     return (
       <div style={{ width, height: height - 30 }} className='tag-panel'>
         <div style={{ width: width - 29 }} className="tag-body">
-          <TagConfig operation={operation} vId={vId} rightType={rightType} />
+          <TagConfig operation={operation} vId={vId} rightType={rightType} configs={config} />
           <TagReview operation={operation} vId={vId} rightType={rightType} />
         </div>
         <RightSiderBar operation={operation} vId={vId} height={height - 30} rightType={rightType} />

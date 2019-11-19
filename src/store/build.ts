@@ -24,7 +24,7 @@ class Build {
         fontSize: 12,
         color: 'black',
         options: '',
-        textAlign: textAligns.right,
+        textAlign: textAligns.left,
         defaultValue: '',
         maxValue: undefined,
         minValue: undefined,
@@ -49,7 +49,7 @@ class Build {
         fontSize: 12,
         color: 'black',
         options: '',
-        textAlign: textAligns.right,
+        textAlign: textAligns.left,
         defaultValue: '',
         maxValue: undefined,
         minValue: undefined,
@@ -86,6 +86,9 @@ class Build {
       this.rowConfigs.forEach((rowConfig: IRowConfig) => {
         if (rowConfig.rowId === this.activeId) {
           rowConfig.type = val;
+          rowConfig.defaultValue = undefined;
+          rowConfig.maxValue = undefined;
+          rowConfig.minValue = undefined;
         }
       });
     }
@@ -141,7 +144,7 @@ class Build {
     }
   };
 
-  @action changeConfigDefaultValue = (defaultValue: string | number | Date) => {
+  @action changeConfigDefaultValue = (defaultValue: string | number | undefined) => {
     if (this.activeId) {
       this.rowConfigs.forEach((rowConfig: IRowConfig) => {
         if (rowConfig.rowId === this.activeId) {
@@ -161,7 +164,7 @@ class Build {
     }
   };
 
-  @action changeConfigMax = (maxValue: number | Date) => {
+  @action changeConfigMax = (maxValue: string | number) => {
     if (this.activeId) {
       this.rowConfigs.forEach((rowConfig: IRowConfig) => {
         if (rowConfig.rowId === this.activeId) {
@@ -171,7 +174,7 @@ class Build {
     }
   };
 
-  @action changeConfigMin = (minValue: number | Date) => {
+  @action changeConfigMin = (minValue: string | number) => {
     if (this.activeId) {
       this.rowConfigs.forEach((rowConfig: IRowConfig) => {
         if (rowConfig.rowId === this.activeId) {

@@ -49,3 +49,11 @@ export const  DayPickerStrings: IDatePickerStrings = {
   isRequiredErrorMessage: 'Start date is required.',
   invalidInputErrorMessage: 'Invalid date format.'
 };
+
+export const turnToDate = (dateStr: string) => {
+  const date: Date = new Date(dateStr);
+  if (isNaN(date.getTime())) {
+    return undefined;
+  }
+  return date;
+};

@@ -2,13 +2,12 @@ import { observer } from "mobx-react";
 import React from "react";
 import { DatePicker, DayOfWeek } from 'office-ui-fabric-react/lib/DatePicker';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import { Build } from "store";
-import { IRowConfig } from "../../../../models/build";
+import { IConfig } from "models/operation";
 import { onFormatDate, onParseDateFromString, DayPickerStrings, turnToDate } from "util/build";
 
 interface IProps {
-  build: Build,
-  rowConfig: IRowConfig,
+  rowConfig: IConfig,
+  changeOperationConfig: (config: IConfig) => void,
 }
 
 const controlClass = mergeStyleSets({
@@ -19,11 +18,19 @@ const controlClass = mergeStyleSets({
 });
 
 @observer
-export default class DateShow extends  React.Component<IProps> {
+export default class DateConfig extends  React.Component<IProps> {
+
+  private _dateChange = (date: Date | null | undefined) => {
+    const { rowConfig, changeOperationConfig } = this.props;
+    if (date) {
+      const newConfig: IConfig = { ...rowConfig, value: onFormatDate(date) };
+      changeOperationConfig(newConfig);
+    }
+  };
 
   render() {
     const { rowConfig } = this.props;
-    const { defaultValue, color, fontSize, textAlign } = rowConfig;
+    const { value, color, fontSize, textAlign, maxValue, minValue } = rowConfig;
     return (
       <div style={{ color, fontSize, textAlign }}>
         <DatePicker
@@ -32,9 +39,12 @@ export default class DateShow extends  React.Component<IProps> {
           allowTextInput={true}
           firstDayOfWeek={DayOfWeek.Sunday}
           strings={DayPickerStrings}
-          value={(turnToDate(defaultValue as string))!}
+          value={(turnToDate(value as string))!}
+          maxDate={turnToDate((maxValue as string))}
+          minDate={turnToDate((minValue as string))}
           formatDate={onFormatDate}
-          parseDateFromString={e => onParseDateFromString(e, turnToDate(defaultValue as string))}
+          onSelectDate={this._dateChange}
+          parseDateFromString={e => onParseDateFromString(e, turnToDate(value as string))}
         />
       </div>
     );

@@ -404,7 +404,7 @@
         background-color: rgba(0,0,0,.05);
       }
       .bottom {
-        overflow-y: auto;
+        overflow: hidden;
         .ms-Pivot {
           background: #f3f2f1;
           .ms-Button-flexContainer {
@@ -475,12 +475,37 @@
               border-right: 1px solid #dad3d3;
               transition: width 0.5s;
               display: inline-flex;
+              float: left;
+              padding: 10px 0;
+              .container-fluid {
+                .row {
+                  margin: 0;
+                  .col {
+                    height: 30px;
+                    margin-top: 5px;
+                    cursor: pointer;
+                    .label {
+                      height: 28px;
+                      line-height: 28px;
+                      white-space: nowrap;
+                      width: 100%;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    }
+                    .ms-TextField-fieldGroup, .ms-Dropdown-title {
+                      height: 28px;
+                      line-height: 28px;
+                    }
+                  }
+                }
+              }
             }
             .rag-review {
               height: 100%;
               overflow-y: auto;
               transition: width 0.5s;
               display: inline-flex;
+              float: left;
               .root-93 {
                 width: 100%;
                 .ms-DetailsHeader-cellName {

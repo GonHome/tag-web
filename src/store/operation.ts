@@ -1,7 +1,8 @@
 import { action, computed, observable } from 'mobx';
 import _ from 'lodash';
-import { IBracket, IGraphValue, ITagValue } from 'models/operation';
+import { IBracket, IConfig, IGraphValue, ITagValue } from 'models/operation';
 import { operator, rightTypes } from "../constants/operationConstants";
+import { demoConfigs } from "../constants/commonConstants";
 import { getMaxVId } from 'util/operate';
 
 // 工作台
@@ -28,11 +29,11 @@ class Operation {
         vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4', 'v-5', 'v-6', 'v-7'],
         tagMap: {
           'v-0': operator.LEFT,
-          'v-1': { name: '常口1', config: { rightType: null } },
+          'v-1': { name: '常口1', config: demoConfigs, rightType: null },
           'v-2': operator.MIX,
-          'v-3': { name: '常口2', config: { rightType: null } },
+          'v-3': { name: '常口2', config: demoConfigs, rightType: null },
           'v-4': operator.MIX,
-          'v-5': { name: '常口3', config: { rightType: null } },
+          'v-5': { name: '常口3', config: demoConfigs, rightType: null },
           'v-6': operator.RIGHT,
           'v-7': operator.MIX,
         },
@@ -42,16 +43,16 @@ class Operation {
         hoverVId: undefined,
       },
       'n-2': { name: '标签2', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
-          'v-1': { name: '暂口1', config: { rightType: null } },
-          'v-2': { name: '暂口2', config: { rightType: null } },
-          'v-3': { name: '暂口3', config: { rightType: null } },
+          'v-1': { name: '暂口1', config: null, rightType: null },
+          'v-2': { name: '暂口2', config: null, rightType: null },
+          'v-3': { name: '暂口3', config: null, rightType: null },
         },
         brackets: [],
       },
       'n-3': { name: '标签3', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
-          'v-1': { name: '逃犯1', config: { rightType: null } },
-          'v-2': { name: '逃犯2', config: { rightType: null } },
-          'v-3': { name: '逃犯3', config: { rightType: null } },
+          'v-1': { name: '逃犯1', config: null, rightType: null },
+          'v-2': { name: '逃犯2', config: null, rightType: null },
+          'v-3': { name: '逃犯3', config: null, rightType: null },
         },
         brackets: [],
       },
@@ -157,7 +158,7 @@ class Operation {
       const nextVId = `v-${nextId}`;
       const nextVId2 = `v-${nextId * 1 + 1}`;
       this.graphMap[activeGraphId].vIds.splice(vIds.length + 1, 0, nextVId);
-      this.graphMap[activeGraphId].tagMap[nextVId] = { name, config: { rightType: null } };
+      this.graphMap[activeGraphId].tagMap[nextVId] = { name, config: null, rightType: null };
       this.graphMap[activeGraphId].vIds.splice(vIds.length + 1, 0, nextVId2);
       this.graphMap[activeGraphId].tagMap[nextVId2] = operator.MIX;
       this.graphMap[activeGraphId].activeVId = nextVId;
@@ -331,7 +332,7 @@ class Operation {
   @action changeRightType = (rightType: rightTypes | null, vId: string) => {
     const activeGraphId = this.activeGraphId;
     if (activeGraphId) {
-      (this.graphMap[activeGraphId].tagMap[vId] as ITagValue).config.rightType = rightType;
+      (this.graphMap[activeGraphId].tagMap[vId] as ITagValue).rightType = rightType;
     }
   };
 
@@ -348,6 +349,26 @@ class Operation {
       brackets: [],
     };
     this.activeGraphId = graphId;
+  };
+
+  // TODO
+  @action changeConfig = (newConfig: IConfig) => {
+    const activeGraphId = this.activeGraphId;
+    if (activeGraphId) {
+      const activeVId = this.graphMap[activeGraphId].activeVId;
+      if (activeVId) {
+        const tag = this.graphMap[activeGraphId].tagMap[activeVId] as ITagValue;
+        if (tag.config) {
+          (this.graphMap[activeGraphId].tagMap[activeVId] as ITagValue).config =
+          tag.config.map((config: IConfig) => {
+            if (config.rowId === newConfig.rowId) {
+              return newConfig;
+            }
+            return config;
+          })
+        }
+      }
+    }
   };
 
   @computed get rightBracketVId(): string | null {

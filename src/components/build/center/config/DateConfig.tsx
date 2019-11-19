@@ -7,7 +7,7 @@ import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { Build } from "store";
 import { IRowConfig } from "../../../../models/build";
 import { inputTypes, textAligns, alignOptions, typeOptions } from "constants/commonConstants";
-import { onFormatDate, onParseDateFromString, DayPickerStrings } from "util/build";
+import { onFormatDate, onParseDateFromString, DayPickerStrings, turnToDate } from "util/build";
 
 interface IProps {
   build: Build;
@@ -32,7 +32,7 @@ export default class DateConfig extends  React.Component<IProps> {
     const { build } = this.props;
     const { changeConfigDefaultValue } = build;
     if (date) {
-      changeConfigDefaultValue(date);
+      changeConfigDefaultValue(onFormatDate(date));
     }
   };
 
@@ -40,7 +40,7 @@ export default class DateConfig extends  React.Component<IProps> {
     const { build } = this.props;
     const { changeConfigMax } = build;
     if (date) {
-      changeConfigMax(date);
+      changeConfigMax(onFormatDate(date));
     }
   };
 
@@ -48,7 +48,7 @@ export default class DateConfig extends  React.Component<IProps> {
     const { build } = this.props;
     const { changeConfigMin } = build;
     if (date) {
-      changeConfigMin(date);
+      changeConfigMin(onFormatDate(date));
     }
   };
 
@@ -97,13 +97,13 @@ export default class DateConfig extends  React.Component<IProps> {
                   isRequired={false}
                   allowTextInput={true}
                   firstDayOfWeek={DayOfWeek.Sunday}
-                  maxDate={rowConfig.maxValue as Date}
-                  minDate={rowConfig.minValue as Date}
+                  maxDate={turnToDate(rowConfig.maxValue as string)}
+                  minDate={turnToDate(rowConfig.minValue as string)}
                   strings={DayPickerStrings}
-                  value={(rowConfig.defaultValue as Date)!}
+                  value={(turnToDate(rowConfig.defaultValue as string))!}
                   onSelectDate={this._onSelectDate}
                   formatDate={onFormatDate}
-                  parseDateFromString={e => onParseDateFromString(e, rowConfig.defaultValue as Date)}
+                  parseDateFromString={e => onParseDateFromString(e, turnToDate(rowConfig.defaultValue as string))}
                 />
               </Col>
             </Row>
@@ -153,12 +153,12 @@ export default class DateConfig extends  React.Component<IProps> {
                   isRequired={false}
                   allowTextInput={true}
                   firstDayOfWeek={DayOfWeek.Sunday}
-                  maxDate={rowConfig.maxValue as Date}
+                  maxDate={turnToDate(rowConfig.maxValue as string)}
                   strings={DayPickerStrings}
-                  value={(rowConfig.minValue as Date)!}
+                  value={turnToDate(rowConfig.minValue as string)!}
                   onSelectDate={this._onSelectMinDate}
                   formatDate={onFormatDate}
-                  parseDateFromString={e => onParseDateFromString(e, rowConfig.minValue as Date)}
+                  parseDateFromString={e => onParseDateFromString(e, turnToDate(rowConfig.minValue as string))}
                 />
               </Col>
             </Row>
@@ -174,12 +174,12 @@ export default class DateConfig extends  React.Component<IProps> {
                   isRequired={false}
                   allowTextInput={true}
                   firstDayOfWeek={DayOfWeek.Sunday}
-                  minDate={rowConfig.minValue as Date}
+                  minDate={turnToDate(rowConfig.minValue as string)}
                   strings={DayPickerStrings}
-                  value={(rowConfig.maxValue as Date)!}
+                  value={turnToDate(rowConfig.maxValue as string)!}
                   onSelectDate={this._onSelectMaxDate}
                   formatDate={onFormatDate}
-                  parseDateFromString={e => onParseDateFromString(e, rowConfig.maxValue as Date)}
+                  parseDateFromString={e => onParseDateFromString(e, turnToDate(rowConfig.maxValue as string))}
                 />
               </Col>
             </Row>

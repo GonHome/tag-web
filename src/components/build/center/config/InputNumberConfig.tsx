@@ -23,6 +23,36 @@ interface IProps {
 @observer
 export default class InputNumberConfig extends  React.Component<IProps> {
 
+  private _inputBlur = () => {
+    const { rowConfig, build } = this.props;
+    const { maxValue, minValue, defaultValue } = rowConfig;
+    const { changeConfigDefaultValue } = build;
+    if (maxValue && defaultValue && (defaultValue as number) * 1 > (maxValue as number) * 1) {
+      changeConfigDefaultValue(maxValue || '');
+    }
+    if (minValue && defaultValue && (defaultValue as number) * 1 < (minValue as number) * 1) {
+      changeConfigDefaultValue(minValue || '');
+    }
+  };
+
+  private _maxBlur = () => {
+    const { rowConfig, build } = this.props;
+    const { maxValue, minValue } = rowConfig;
+    const { changeConfigMax } = build;
+    if (minValue && maxValue && (minValue as number) * 1 > (maxValue as number) * 1) {
+      changeConfigMax(minValue || '');
+    }
+  };
+
+  private _minBlur = () => {
+    const { rowConfig, build } = this.props;
+    const { maxValue, minValue } = rowConfig;
+    const { changeConfigMin } = build;
+    if (minValue && maxValue && (minValue as number) * 1 > (maxValue as number) * 1) {
+      changeConfigMin(maxValue || '');
+    }
+  };
+
   render() {
     const { build, width, colNumChange, defaultValueChange, fontSizeChange, colorChange, rowConfig, maxChange, minChange } = this.props;
     const { changeConfigType, changeConfigAlign } = build;
@@ -63,7 +93,7 @@ export default class InputNumberConfig extends  React.Component<IProps> {
                 默认值:
               </Col>
               <Col md={8}>
-                <TextField value={`${rowConfig.defaultValue}`} onChange={defaultValueChange} type="number"/>
+                <TextField value={`${rowConfig.defaultValue}`} onChange={defaultValueChange} type="number" onBlur={this._inputBlur}/>
               </Col>
             </Row>
           </Col>
@@ -107,7 +137,7 @@ export default class InputNumberConfig extends  React.Component<IProps> {
                 限定最小:
               </Col>
               <Col md={8}>
-                <TextField value={`${rowConfig.minValue}`} onChange={minChange} type="number"  />
+                <TextField value={`${rowConfig.minValue}`} onChange={minChange} type="number" onBlur={this._minBlur}  />
               </Col>
             </Row>
           </Col>
@@ -117,7 +147,7 @@ export default class InputNumberConfig extends  React.Component<IProps> {
                 限定最大:
               </Col>
               <Col md={8}>
-                <TextField value={`${rowConfig.maxValue}`} onChange={maxChange} type="number"/>
+                <TextField value={`${rowConfig.maxValue}`} onChange={maxChange} type="number" onBlur={this._maxBlur}/>
               </Col>
             </Row>
           </Col>

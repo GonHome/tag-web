@@ -66,14 +66,14 @@ export default class ResultConfig extends  React.Component<IProps> {
   _maxChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
     const { changeConfigMax } = this.props.build;
     if (newValue) {
-      changeConfigMax((newValue as unknown as number) * 1);
+      changeConfigMax(newValue || '');
     }
   };
 
   _minChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
     const { changeConfigMin } = this.props.build;
     if (newValue) {
-      changeConfigMin((newValue as unknown as number) * 1);
+      changeConfigMin(newValue || '');
     }
   };
 
