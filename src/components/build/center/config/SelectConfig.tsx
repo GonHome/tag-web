@@ -64,7 +64,7 @@ export default class SelectConfig extends  React.Component<IProps> {
               <Col md={8}>
                 <Dropdown
                   options={showOptions(rowConfig.options)}
-                  selectedKey={rowConfig.defaultValue}
+                  selectedKey={rowConfig.defaultValue as string | number}
                   onChange={(event, item) => item ? changeConfigDefaultValue(item.key as string) : null}
                 />
               </Col>

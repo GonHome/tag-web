@@ -141,7 +141,7 @@ class Build {
     }
   };
 
-  @action changeConfigDefaultValue = (defaultValue: string) => {
+  @action changeConfigDefaultValue = (defaultValue: string | number | Date) => {
     if (this.activeId) {
       this.rowConfigs.forEach((rowConfig: IRowConfig) => {
         if (rowConfig.rowId === this.activeId) {
@@ -161,7 +161,7 @@ class Build {
     }
   };
 
-  @action changeConfigMax = (maxValue: number) => {
+  @action changeConfigMax = (maxValue: number | Date) => {
     if (this.activeId) {
       this.rowConfigs.forEach((rowConfig: IRowConfig) => {
         if (rowConfig.rowId === this.activeId) {
@@ -171,7 +171,7 @@ class Build {
     }
   };
 
-  @action changeConfigMin = (minValue: number) => {
+  @action changeConfigMin = (minValue: number | Date) => {
     if (this.activeId) {
       this.rowConfigs.forEach((rowConfig: IRowConfig) => {
         if (rowConfig.rowId === this.activeId) {

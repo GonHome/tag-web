@@ -19,7 +19,7 @@ export default class SelectShow extends  React.Component<IProps> {
       <div style={{ color, fontSize, textAlign }}>
         <Dropdown
           options={showOptions(options)}
-          defaultSelectedKey={defaultValue}
+          defaultSelectedKey={defaultValue as string | number}
         />
       </div>
     );

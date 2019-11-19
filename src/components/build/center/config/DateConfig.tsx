@@ -1,30 +1,59 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { TextField } from 'office-ui-fabric-react';
+import { DatePicker, DayOfWeek, TextField } from 'office-ui-fabric-react';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
+import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { Build } from "store";
 import { IRowConfig } from "../../../../models/build";
 import { inputTypes, textAligns, alignOptions, typeOptions } from "constants/commonConstants";
+import { onFormatDate, onParseDateFromString, DayPickerStrings } from "util/build";
 
 interface IProps {
   build: Build;
   width: number;
   rowConfig: IRowConfig;
   colNumChange: (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
-  defaultValueChange: (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
   fontSizeChange: (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
   colorChange: (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
-  maxChange: (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
-  minChange: (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
 }
 
+const controlClass = mergeStyleSets({
+  control: {
+    margin: '0 0 15px 0',
+    maxWidth: '300px'
+  }
+});
 
 @observer
 export default class DateConfig extends  React.Component<IProps> {
 
+  private _onSelectDate = (date: Date | null | undefined): void => {
+    const { build } = this.props;
+    const { changeConfigDefaultValue } = build;
+    if (date) {
+      changeConfigDefaultValue(date);
+    }
+  };
+
+  private _onSelectMaxDate = (date: Date | null | undefined): void => {
+    const { build } = this.props;
+    const { changeConfigMax } = build;
+    if (date) {
+      changeConfigMax(date);
+    }
+  };
+
+  private _onSelectMinDate = (date: Date | null | undefined): void => {
+    const { build } = this.props;
+    const { changeConfigMin } = build;
+    if (date) {
+      changeConfigMin(date);
+    }
+  };
+
   render() {
-    const { build, width, colNumChange, defaultValueChange, fontSizeChange, colorChange, rowConfig, maxChange, minChange } = this.props;
+    const { build, width, colNumChange, fontSizeChange, colorChange, rowConfig } = this.props;
     const { changeConfigType, changeConfigAlign } = build;
     let colNum = 6;
     if (width < 400) {
@@ -63,7 +92,19 @@ export default class DateConfig extends  React.Component<IProps> {
                 默认值:
               </Col>
               <Col md={8}>
-                <TextField value={`${rowConfig.defaultValue}`} onChange={defaultValueChange} type="number"/>
+                <DatePicker
+                  className={controlClass.control}
+                  isRequired={false}
+                  allowTextInput={true}
+                  firstDayOfWeek={DayOfWeek.Sunday}
+                  maxDate={rowConfig.maxValue as Date}
+                  minDate={rowConfig.minValue as Date}
+                  strings={DayPickerStrings}
+                  value={(rowConfig.defaultValue as Date)!}
+                  onSelectDate={this._onSelectDate}
+                  formatDate={onFormatDate}
+                  parseDateFromString={e => onParseDateFromString(e, rowConfig.defaultValue as Date)}
+                />
               </Col>
             </Row>
           </Col>
@@ -107,7 +148,18 @@ export default class DateConfig extends  React.Component<IProps> {
                 限定最小:
               </Col>
               <Col md={8}>
-                <TextField value={`${rowConfig.minValue}`} onChange={minChange} type="number"  />
+                <DatePicker
+                  className={controlClass.control}
+                  isRequired={false}
+                  allowTextInput={true}
+                  firstDayOfWeek={DayOfWeek.Sunday}
+                  maxDate={rowConfig.maxValue as Date}
+                  strings={DayPickerStrings}
+                  value={(rowConfig.minValue as Date)!}
+                  onSelectDate={this._onSelectMinDate}
+                  formatDate={onFormatDate}
+                  parseDateFromString={e => onParseDateFromString(e, rowConfig.minValue as Date)}
+                />
               </Col>
             </Row>
           </Col>
@@ -117,7 +169,18 @@ export default class DateConfig extends  React.Component<IProps> {
                 限定最大:
               </Col>
               <Col md={8}>
-                <TextField value={`${rowConfig.maxValue}`} onChange={maxChange} type="number"/>
+                <DatePicker
+                  className={controlClass.control}
+                  isRequired={false}
+                  allowTextInput={true}
+                  firstDayOfWeek={DayOfWeek.Sunday}
+                  minDate={rowConfig.minValue as Date}
+                  strings={DayPickerStrings}
+                  value={(rowConfig.maxValue as Date)!}
+                  onSelectDate={this._onSelectMaxDate}
+                  formatDate={onFormatDate}
+                  parseDateFromString={e => onParseDateFromString(e, rowConfig.maxValue as Date)}
+                />
               </Col>
             </Row>
           </Col>

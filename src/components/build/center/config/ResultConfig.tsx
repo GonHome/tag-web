@@ -135,9 +135,6 @@ export default class ResultConfig extends  React.Component<IProps> {
               colNumChange={this._colNumChange}
               colorChange={this._colorChange}
               fontSizeChange={this._fontSizeChange}
-              defaultValueChange={this._defaultValueChange}
-              maxChange={this._maxChange}
-              minChange={this._minChange}
               rowConfig={checkedConfig[0]}
             />;
           default:

@@ -15,7 +15,7 @@ export interface IRowConfig {
   color: string,
   options: string,
   textAlign: textAligns,
-  defaultValue: string | number,
-  maxValue: number | undefined,
-  minValue: number | undefined,
+  defaultValue: string | number | Date,
+  maxValue: number | undefined | Date,
+  minValue: number | undefined | Date,
 }
