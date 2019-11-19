@@ -16,7 +16,7 @@ export default class InputShow extends  React.Component<IProps> {
     const { defaultValue, color, fontSize, textAlign } = rowConfig;
     return (
       <div style={{ color, fontSize, textAlign }}>
-        <TextField defaultValue={`${defaultValue}`}/>
+        <TextField value={`${defaultValue}`}/>
       </div>
     );
   }

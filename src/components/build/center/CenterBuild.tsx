@@ -21,6 +21,7 @@ export default class CenterBuild extends  React.Component<IProps> {
     const { system, build } = this.props;
     const { leftWidth, rightWidth, rowConfigs, addRowConfig, delRowConfig, activeId, checkActiveId } = build;
     const { width, mainHeight } = system;
+    console.log(rowConfigs);
     return (
       <div className="center-build" style={{ width: width - leftWidth - rightWidth - 2 }}>
         <div className="title">

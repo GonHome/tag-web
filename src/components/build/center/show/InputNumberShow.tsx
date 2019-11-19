@@ -16,7 +16,7 @@ export default class InputNumberShow extends  React.Component<IProps> {
     const { defaultValue, color, fontSize, textAlign } = rowConfig;
     return (
       <div style={{ color, fontSize, textAlign }}>
-        <TextField defaultValue={`${defaultValue}`} type="number"/>
+        <TextField value={`${defaultValue}`} type="number"/>
       </div>
     );
   }

@@ -114,8 +114,8 @@ export default class SelectConfig extends  React.Component<IProps> {
                   multiline
                   rows={5}
                   placeholder='{key,text}的数组形式，例如:[{ "key": "1", "text": "男", "key": "2", "text": "女" }]'
-                  defaultValue={rowConfig.options}
-                  onBlur={optionsChange}
+                  value={rowConfig.options}
+                  onChange={optionsChange}
                 />
               </Col>
             </Row>
