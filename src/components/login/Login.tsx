@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { ISystem } from 'store';
+import { System } from 'store';
 
 interface IState {
   username: string;
@@ -9,8 +9,8 @@ interface IState {
 
 @inject('system')
 @observer
-export default class Login extends  React.Component<ISystem, IState> {
-  constructor(props: ISystem) {
+export default class Login extends  React.Component<System, IState> {
+  constructor(props: System) {
     super(props);
     this.state = { username: '', password: '' };
   }
