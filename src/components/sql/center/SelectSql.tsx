@@ -18,7 +18,7 @@ export default class SelectSql extends  React.Component<IProps> {
   };
 
   render() {
-    const { selectList } = this.props.sql;
+    const { selectCols } = this.props.sql;
     return (
       <div className="select-sql">
         <div className="panel-title">
@@ -26,7 +26,7 @@ export default class SelectSql extends  React.Component<IProps> {
             输出字段
           </Text>
           <div className="select-cols">
-            {selectList.map((col: ISelectCol, index: number) => {
+            {selectCols.map((col: ISelectCol, index: number) => {
               return <Tag title={this._showTitle(col)} key={index} className="col-item">{col.columnAlias || col.columnName}</Tag>
             })}
           </div>

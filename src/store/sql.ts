@@ -12,18 +12,18 @@ class Sql {
   @observable basicInfo: IBasicInfo;
   @observable activeSqlId: string;
   @observable sqlValue: string;
-  @observable selectList: ISelectCol[];
-  @observable whereList: string[];
+  @observable selectCols: ISelectCol[];
+  @observable whereCols: string[];
 
   constructor () {
     this.leftWidth = 280;
     this.rightWidth = 280;
-    this.basicInfo = { name: '新建SQL' };
+    this.basicInfo = { name: '新建SQL', personCol: '' };
     this.sqlList = ['常口1','常口2','常口3','常口4','常口5','常口6','常口7','常口8','常口9','常口10','常口11','常口12','常口13',];
     this.activeSqlId = '';
     this.sqlValue = '';
-    this.selectList = [];
-    this.whereList = [];
+    this.selectCols = [];
+    this.whereCols = [];
   }
 
   @action changeBasicInfo = (basicInfo: IBasicInfo) => {
@@ -54,23 +54,24 @@ class Sql {
       if (ast.length > 0 && ast[0] && ast[0].type === 'select') {
         const { columns, where } = ast[0];
         if (columns instanceof Array) {
-          this.selectList = columns.map((column: any) => {
+          this.selectCols = columns.map((column: any) => {
             return { columnName: column.expr.column, columnAlias: column.as };
           });
         } else {
-          this.selectList = [];
+          this.selectCols = [];
         }
         getWhereCol(where);
-        this.whereList = whereList;
+        this.whereCols = whereList;
       } else {
-        this.whereList = [];
-        this.selectList = [];
+        this.whereCols = [];
+        this.selectCols = [];
       }
     }catch (e) {
-      this.whereList = [];
-      this.selectList = [];
+      this.whereCols = [];
+      this.selectCols = [];
     }
     this.sqlValue = sqlValue;
+    this.basicInfo = { ...this.basicInfo, personCol: '' };
   };
 
 }

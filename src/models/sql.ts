@@ -1,5 +1,6 @@
 export interface IBasicInfo {
   name: string;
+  personCol: string;
 }
 
 export interface ISelectCol {
