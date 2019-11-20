@@ -7,9 +7,11 @@ import { getMaxVId } from 'util/operate';
 class Build {
   @observable leftWidth: number;
   @observable rightWidth: number;
+  @observable tagList: string[];
   @observable basicInfo: IBasicInfo;
   @observable rowConfigs: IRowConfig[];
   @observable activeId: string;
+  @observable activeTagId: string;
 
   constructor () {
     this.leftWidth = 280;
@@ -31,6 +33,8 @@ class Build {
       }
     ];
     this.activeId = '';
+    this.tagList = ['常口1','常口2','常口3','常口4','常口5','常口6','常口7','常口8','常口9','常口10','常口11','常口12','常口13',];
+    this.activeTagId = '';
   }
 
   @action changeBasicInfo = (basicInfo: IBasicInfo) => {
@@ -182,6 +186,10 @@ class Build {
         }
       })
     }
+  };
+
+  @action checkTag = (tagId: string) => {
+    this.activeTagId = tagId;
   };
 
 

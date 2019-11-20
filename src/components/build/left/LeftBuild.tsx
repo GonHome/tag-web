@@ -1,9 +1,10 @@
 import { observer } from "mobx-react";
 import React from "react";
-import { TextField, Stack } from 'office-ui-fabric-react';
-import { ChoiceGroup, IChoiceGroupOption } from 'office-ui-fabric-react/lib/ChoiceGroup';
+import { Stack, PrimaryButton } from 'office-ui-fabric-react';
+import { Pivot, PivotItem } from 'office-ui-fabric-react/lib/Pivot';
 import { Build, System } from "store";
-import { tagTypes, tagTypeList } from 'constants/commonConstants';
+import TagList from './TagList';
+import { tagTypes } from "../../../constants/commonConstants";
 
 interface IProps {
   system: System,
@@ -13,48 +14,29 @@ interface IProps {
 @observer
 export default class LeftBuild extends  React.Component<IProps> {
 
-  _onTypeChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, option?: IChoiceGroupOption) => {
-    if (option) {
-      const { changeBasicInfo, basicInfo } = this.props.build;
-      changeBasicInfo({ ...basicInfo, type: option.key as tagTypes });
-    }
-  };
-
   render() {
-    const { leftWidth, changeBasicInfo, basicInfo } = this.props.build;
-    const { name, sql, type } = basicInfo;
+    const { leftWidth } = this.props.build;
     return (
-      <div className="left-build" style={{ width: leftWidth - 40 }}>
+      <div className="left-build" style={{ width: leftWidth - 20 }}>
         <Stack>
-          <TextField
-            label="标签名"
-            required
-            errorMessage={ name ? '' : '标签名不可为空' }
-            onChange={(e: any, newValue?: string) => changeBasicInfo({ ...basicInfo, name: newValue || '' })}
-            value={name}
-          />
-          <ChoiceGroup
-            required
-            label="类型"
-            selectedKey={type}
-            options={tagTypeList.map(({code, text}: { code: tagTypes, text: string }) => (
-              {
-                key: code,
-                imageSrc: `/img/${code}.png`,
-                selectedImageSrc: `/img/${code}.png`,
-                imageSize: { width: 32, height: 32 },
-                text: text,
-              }
-            ))}
-            onChange={this._onTypeChange}
-          />
-          <TextField
-            label="SQL"
-            multiline
-            rows={8}
-            onChange={(e: any, newValue?: string) => changeBasicInfo({ ...basicInfo, sql: newValue || '' })}
-            value={sql}
-          />
+          <Pivot>
+            <PivotItem headerText="人员">
+              <TagList {...this.props} tagType={tagTypes.people} />
+            </PivotItem>
+            <PivotItem headerText="车辆">
+              <TagList {...this.props} tagType={tagTypes.car} />
+            </PivotItem>
+            <PivotItem headerText="公司">
+              <TagList {...this.props} tagType={tagTypes.company} />
+            </PivotItem>
+            <PivotItem headerText="案件">
+              <TagList {...this.props} tagType={tagTypes.case} />
+            </PivotItem>
+            <PivotItem headerText="其他">
+              <TagList {...this.props} tagType={tagTypes.other} />
+            </PivotItem>
+          </Pivot>
+          <PrimaryButton text="新建标签" />
         </Stack>
       </div>
     )
