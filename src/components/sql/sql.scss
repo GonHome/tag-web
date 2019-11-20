@@ -63,7 +63,7 @@
     float: left;
     border-right: 1px solid #d2c1c1;
     border-left: 1px solid #d2c1c1;
-    overflow-y: auto;
+    overflow-y: hidden;
     .title {
       height: 40px;
       text-align: center;
@@ -83,17 +83,52 @@
       height: calc(60% - 15px);
       font-size: 14px;
       .select-sql {
-        width: calc(50% - 1px);
+        width: calc(50% - 21px);
         float: left;
         height: 100%;
         overflow-y: auto;
         border-right: 1px solid #bbbdbd;
+        padding: 0 10px;
+        overflow-x: hidden;
+        .select-cols {
+          text-align: left;
+          .col-item {
+            border-radius: 0;
+            background-color: rgb(43, 85, 154);
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            color: #fff;
+            display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
       }
       .where-sql {
-        width: 50%;
+        width: calc(50% - 20px);
         float: right;
         height: 100%;
         overflow-y: auto;
+        padding: 0 10px;
+        .where-cols {
+          text-align: left;
+          .col-item {
+            border-radius: 0;
+            background-color: #2b9a66;
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            color: #fff;
+            display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
       }
       .panel-title {
         text-align: center;

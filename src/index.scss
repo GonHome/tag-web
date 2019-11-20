@@ -1,3 +1,5 @@
+@import '~antd/dist/antd.css';
+
 $colors:
         hsla(337, 84, 48, 0.75)
         hsla(160, 50, 48, 0.75)
@@ -210,4 +212,8 @@ body {
 
 .ms-Dialog-main {
   max-width: none;
+}
+
+* {
+  box-sizing: content-box;
 }
