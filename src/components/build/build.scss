@@ -151,7 +151,7 @@
         height: 20px;
       }
       .sql-link {
-        cursor: pointer;
+        cursor: -webkit-zoom-in;
         .sql {
           float: left;
         }
@@ -169,7 +169,16 @@
       .sql-review {
         height: 180px;
         border: 1px solid #948c8c;
-        cursor: pointer;
+        cursor: -webkit-zoom-in;
+        padding: 2px 3px;
+        font-size: 12px;
+        color: black;
+        overflow-x: hidden;
+        overflow-y: auto;
+        word-break: break-word;
+      }
+      .sql-review:hover {
+        color: #2b569a;
       }
     }
     .button-group {

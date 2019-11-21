@@ -217,3 +217,10 @@ body {
 * {
   box-sizing: content-box;
 }
+
+.sql-dialog {
+  .ms-Dialog-main {
+    position: absolute;
+    top: 50px;
+  }
+}
