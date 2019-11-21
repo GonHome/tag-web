@@ -31,8 +31,9 @@ export default class NavTab extends  React.Component<IProps> {
       >
         <div className="tab-left" />
         <div className="tab-content">
+          <Icon iconName='TagSolid' className="tag-icon"/>
           <span className="tab-name">{graph.name}</span>
-          <Icon iconName='ErrorBadge' title='关闭' onClick={this.delGraph}/>
+          <Icon iconName='ErrorBadge' className='close-icon' title='关闭' onClick={this.delGraph}/>
         </div>
         <div className="tab-right" />
       </div>

@@ -11,12 +11,15 @@ export const leftSideTypes =  [
   { code: 'other', text: '其他' },
 ];
 
-export enum operator {
-  MIX, JOIN, REDUCE, NON, LEFT, RIGHT,
+export enum sideTypes {
+  static = 'static',
+  dynamic = 'dynamic',
+  share = 'share',
+  other = 'other',
 }
 
-export enum side {
-  LEFT, RIGHT
+export enum operator {
+  MIX, JOIN, REDUCE, NON, LEFT, RIGHT,
 }
 
 export const leftOperators: IOperator[] = [
@@ -51,5 +54,5 @@ export enum rightTypes {
 
 export enum dialogTypes {
   ADDTAG = 'ADDTAG',
-  DEITTAG = 'DEITTAG',
+  SAVEAS = 'SAVEAS',
 }

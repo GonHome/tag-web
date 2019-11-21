@@ -1,13 +1,12 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { Icon } from 'office-ui-fabric-react';
-import { Operation } from "../../../store";
+import { Operation } from "../../../../store";
 import { Card } from "@uifabric/react-cards";
 import { dragType, dragIcon, dragName, dragRel } from 'constants/operationConstants';
 
 interface IProps {
   operation: Operation,
-  // height: number;
 }
 
 @observer

@@ -2,7 +2,7 @@ import { observer } from "mobx-react";
 import React from "react";
 import { Operation, System } from "../../../store";
 import RightBody from './right/RightBody';
-import LeftSider from './LeftSider';
+import LeftSide from './left/LeftSide';
 
 interface IProps {
   operation: Operation,
@@ -43,7 +43,7 @@ export default class Body extends  React.Component<IProps> {
     const leftWidth = operation.leftWidth;
     return (
       <div className="body" style={{ height }}>
-        <LeftSider operation={operation} height={height} />
+        <LeftSide operation={operation} height={height} />
         <div
           className="sash"
           style={{ transform: `matrix(1, 0, 0, 1, ${leftWidth}, 0)` }}

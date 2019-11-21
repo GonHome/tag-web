@@ -3,6 +3,7 @@ import React from "react";
 import { CommandBarButton, IIconProps, Stack } from 'office-ui-fabric-react';
 import { Operation } from "../../../store";
 import TagAddDialog from './TagAddDialog';
+import TagSaveAsDialog from './TagSaveAsDialog';
 import { dialogTypes } from 'constants/operationConstants';
 interface IProps {
   operation: Operation,
@@ -30,7 +31,7 @@ export default class Toolbar extends  React.Component<IProps, IState> {
   render() {
     const { operation } = this.props;
     const { dialogType } = this.state;
-    const { toolbarHeight } = operation;
+    const { toolbarHeight, activeGraphId } = operation;
     return (
       <div className='toolbar' style={{ height: toolbarHeight }}>
         <Stack horizontal>
@@ -42,21 +43,26 @@ export default class Toolbar extends  React.Component<IProps, IState> {
           />
           <CommandBarButton
             iconProps={saveIcon}
+            disabled={!activeGraphId}
             title="保存"
             text="保存"
           />
           <CommandBarButton
             iconProps={saveAsIcon}
+            disabled={!activeGraphId}
+            onClick={() => this.setState({ dialogType: dialogTypes.SAVEAS })}
             title="另存为"
             text="另存为"
           />
           <CommandBarButton
             iconProps={runIcon}
+            disabled={!activeGraphId}
             title="执行"
             text="执行"
           />
         </Stack>
         <TagAddDialog operation={operation} isHidden={dialogType !== dialogTypes.ADDTAG} closeDialog={this._closeDialog} />
+        <TagSaveAsDialog operation={operation} isHidden={dialogType !== dialogTypes.SAVEAS} closeDialog={this._closeDialog} />
       </div>
     );
   }

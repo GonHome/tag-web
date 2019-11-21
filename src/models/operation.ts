@@ -1,5 +1,5 @@
-import { operator, rightTypes } from "../constants/operationConstants";
-import { inputTypes, textAligns } from "../constants/commonConstants";
+import { operator, rightTypes, sideTypes } from "../constants/operationConstants";
+import { inputTypes, textAligns, tagTypes } from "../constants/commonConstants";
 
 export interface IGraphValue {
   name: string;
@@ -19,6 +19,27 @@ export interface ITagValue {
   config: IConfig[] | null;
   name: string;
   rightType: null | rightTypes;
+}
+
+export interface ILeftMap {
+  [sideTypes.static]: { name: string, dataMap: IStaticMap };
+  [sideTypes.dynamic]: { name: string, data: any[], pagination: IPage };
+  [sideTypes.share]: { name: string, data: any[], pagination: IPage };
+  [sideTypes.other]: { name: string, data: any[], pagination: IPage };
+}
+
+export interface IPage {
+  current: number;
+  total: number;
+  pageSize: number;
+}
+
+export interface IStaticMap {
+  [tagTypes.people]: { data: any[], pagination: IPage };
+  [tagTypes.car]: { data: any[], pagination: IPage };
+  [tagTypes.company]: { data: any[], pagination: IPage };
+  [tagTypes.case]: { data: any[], pagination: IPage };
+  [tagTypes.other]: { data: any[], pagination: IPage };
 }
 
 export interface IOperator {

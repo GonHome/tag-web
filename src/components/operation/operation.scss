@@ -20,9 +20,9 @@
     overflow: hidden;
     background-color: #fff;
     -webkit-user-select: none;
-    .left-sider {
+    .left-side {
       float: left;
-      .left-sider-bar {
+      .left-side-bar {
         position: absolute;
         width: 30px;
         height: 100%;
@@ -81,7 +81,7 @@
       .left-body {
         height: 100%;
         margin-left: 34px;
-        padding: 0 5px;
+        padding-right: 5px;
         .ms-SearchBox {
           height: 28px;
           font-size: 12px;
@@ -110,6 +110,73 @@
           .left-drag-item:hover {
             background-color: #e4e8ea;
           }
+        }
+        .left-dynamic-content {
+          height: calc(100% - 60px);
+          overflow-y: auto;
+          font-size: 12px;
+          padding-top: 5px;
+          .tag-item {
+            height: 34px;
+            line-height: 34px;
+            cursor: pointer;
+            padding-left: 10px;
+            padding-right: 5px;
+            .tag-icon {
+              float: left;
+              font-size: 14px;
+              font-weight: 600;
+              margin-right: 10px;
+            }
+            .tag-name {
+              color: #382b2b;
+              display: inline-block;
+              width: calc(100% - 55px);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            i:not(.tag-icon) {
+              float: right;
+              font-weight: 600;
+              visibility: hidden;
+            }
+            .more-icon {
+              font-size: 16px;
+            }
+          }
+          .tag-item:not(.active):hover {
+            background-color: aliceblue;
+            .tag-name {
+              color: #186798;
+            }
+          }
+          .tag-item:hover {
+            .more-icon {
+              visibility: visible;
+            }
+            .more-icon:hover {
+              background-color: #c0d5d6;
+            }
+          }
+          .active {
+            background-color: #d6dce1;
+            .tag-name {
+              color: #186798;
+              font-weight: 600;
+            }
+            i:not(.tag-icon):not(.more-icon) {
+              visibility: visible;
+              color: #186798;
+              font-weight: 600;
+            }
+            .tag-icon, .more-icon {
+              color: #186798;
+            }
+          }
+        }
+        .ant-pagination {
+          text-align: center;
         }
       }
     }
@@ -185,14 +252,19 @@
               font-size: 13px;
               overflow: hidden;
               .tab-name {
-                width: calc(100% - 16px);
+                width: calc(100% - 35px);
                 display: inline-block;
-                text-align: center;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
               }
-              i {
+              .tag-icon {
+                float: left;
+                font-size: 16px;
+                font-weight: 600;
+                margin-right: 5px;
+              }
+              .close-icon {
                 float: right;
                 display: none;
               }
@@ -200,12 +272,12 @@
           }
           .tab-wrap:hover {
             .tab-content {
-              i {
+              .close-icon {
                 display: inline-block;
                 font-weight: 600;
                 color: #312c2c;
               }
-              i:hover {
+              .close-icon:hover {
                 color: red;
               }
             }
@@ -416,7 +488,7 @@
         }
         .tag-panel {
           font-size: 12px;
-          .right-sider-bar {
+          .right-side-bar {
             float: right;
             width: 28px;
             border-left: 1px solid #e1e8ed;

@@ -1,8 +1,8 @@
 import { action, computed, observable } from 'mobx';
 import _ from 'lodash';
-import { IBracket, IConfig, IGraphValue, ITagValue } from 'models/operation';
-import { operator, rightTypes } from "../constants/operationConstants";
-import { demoConfigs } from "../constants/commonConstants";
+import { IBracket, IConfig, IGraphValue, ILeftMap, ITagValue } from 'models/operation';
+import { operator, rightTypes, sideTypes } from "../constants/operationConstants";
+import { demoConfigs, tagTypes } from "../constants/commonConstants";
 import { getMaxVId } from 'util/operate';
 
 // 工作台
@@ -14,6 +14,7 @@ class Operation {
   @observable activeGraphId: string | undefined;
   @observable graphIds: string[];
   @observable graphMap: { [key: string]: IGraphValue };
+  @observable leftMap: ILeftMap;
 
   constructor () {
     this.toolbarHeight = 30;
@@ -57,6 +58,19 @@ class Operation {
         brackets: [],
       },
     };
+    this.leftMap = {
+      [sideTypes.static]: { name: '', dataMap:{
+          [tagTypes.people]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
+          [tagTypes.car]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
+          [tagTypes.company]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
+          [tagTypes.case]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
+          [tagTypes.other]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
+        }
+      },
+      [sideTypes.dynamic]: { name: '', data: ['n-1', 'n-2', 'n-3', 'n-4', 'n-5', 'n-6', 'n-7', 'n-8', 'n-9'], pagination: { current: 0, total:0, pageSize: 10 } },
+      [sideTypes.share]: { name: '', data: [], pagination: { current: 0, total:0, pageSize: 10 } },
+      [sideTypes.other]: { name: '', data: [], pagination: { current: 0, total:0, pageSize: 10 } },
+    }
   }
 
   @action setHoverVId = (hoverVId?: string) => {
@@ -369,6 +383,27 @@ class Operation {
         }
       }
     }
+  };
+
+  @action changeLeftMapName = (name: string, sideType: sideTypes) => {
+    if (sideType !== sideTypes.static) {
+      this.leftMap[sideType].name = name;
+    }
+  };
+
+  // TODO
+  @action checkGraphId = (graphId: string) => {
+    if (this.graphIds.indexOf(graphId) === -1) {
+      this.graphMap[graphId] = {
+        name: graphId,
+        activeVId: undefined,
+        vIds: [],
+        tagMap: {},
+        brackets: [],
+      };
+      this.graphIds.push(graphId);
+    }
+    this.activeGraphId = graphId;
   };
 
   @computed get rightBracketVId(): string | null {

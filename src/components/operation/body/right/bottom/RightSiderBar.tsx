@@ -17,7 +17,7 @@ export default class RightSiderBar extends  React.Component<IProps> {
     const { height, rightType, operation, vId } = this.props;
     const { changeRightType } = operation;
     return (
-      <nav className="right-sider-bar" style={{ height }}>
+      <nav className="right-side-bar" style={{ height }}>
         <ul>
           <li>
             <a
