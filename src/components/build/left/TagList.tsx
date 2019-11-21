@@ -3,6 +3,7 @@ import React from "react";
 import { Build, System } from "store";
 import TagItem from './TagItem';
 import { SearchBox } from "office-ui-fabric-react";
+import { Pagination } from 'antd';
 import { tagTypes } from "../../../constants/commonConstants";
 
 interface IProps {
@@ -29,6 +30,7 @@ export default class TagList extends  React.Component<IProps> {
             return <TagItem build={ build } tagName={tag} key={index} tagType={tagType} index={index}/>;
           })}
         </div>
+        <Pagination size="small" simple />
       </div>
     )
   }

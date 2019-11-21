@@ -3,8 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Label, ILabelStyles } from 'office-ui-fabric-react/lib/Label';
 import { Pivot, PivotItem } from 'office-ui-fabric-react/lib/Pivot';
 import { IStyleSet } from 'office-ui-fabric-react/lib/Styling';
-import { DetailsList, DetailsListLayoutMode, Selection, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
-import { MarqueeSelection } from 'office-ui-fabric-react/lib/MarqueeSelection';
+import { DetailsList, DetailsListLayoutMode, IColumn, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
 import TagAddDialog from './TagAddDialog';
 
 import { System, Operation } from 'store';
@@ -25,7 +24,6 @@ interface IDetailsListBasicExampleItem {
 interface IState {
   isShow: boolean;
   items: IDetailsListBasicExampleItem[];
-  selectionDetails: {};
   dialogType: dialogTypes | null;
 }
 
@@ -46,19 +44,7 @@ export default class Home extends  React.Component<IProps, IState> {
         value: i
       });
     }
-    this.state = { isShow: true,items: _allItems, selectionDetails: this._getSelectionDetails(), dialogType: null }
-  }
-
-  private _getSelectionDetails(): string {
-    const selectionCount = this._selection.getSelectedCount();
-    switch (selectionCount) {
-      case 0:
-        return 'No items selected';
-      case 1:
-        return '1 item selected: ' + (this._selection.getSelection()[0] as IDetailsListBasicExampleItem).name;
-      default:
-        return `${selectionCount} items selected`;
-    }
+    this.state = { isShow: true,items: _allItems, dialogType: null }
   }
 
   _changeIsShow = (isShow: boolean) => {
@@ -71,10 +57,6 @@ export default class Home extends  React.Component<IProps, IState> {
     { key: 'column3', name: '最近操作人', fieldName: 'who', minWidth: 100, maxWidth: 200, isResizable: true },
     { key: 'column4', name: '共享', fieldName: 'who', minWidth: 100, maxWidth: 200, isResizable: true }
   ];
-
-  _selection = new Selection({
-    onSelectionChanged: () => this.setState({ selectionDetails: this._getSelectionDetails() })
-  });
 
   _closeDialog = () => {
     this.setState({ dialogType: null });
@@ -95,19 +77,17 @@ export default class Home extends  React.Component<IProps, IState> {
           <PivotItem
             headerText="最近操作"
           >
-            <MarqueeSelection selection={this._selection}>
-              <DetailsList
-                items={items}
-                columns={this._columns}
-                setKey="set"
-                layoutMode={DetailsListLayoutMode.justified}
-                selection={this._selection}
-                selectionPreservedOnEmptyClick={true}
-                ariaLabelForSelectionColumn="Toggle selection"
-                ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-                checkButtonAriaLabel="Row checkbox"
-              />
-            </MarqueeSelection>
+            <DetailsList
+              items={items}
+              columns={this._columns}
+              setKey="set"
+              layoutMode={DetailsListLayoutMode.justified}
+              selectionMode={SelectionMode.none}
+              selectionPreservedOnEmptyClick={true}
+              ariaLabelForSelectionColumn="Toggle selection"
+              ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+              checkButtonAriaLabel="Row checkbox"
+            />
           </PivotItem>
           <PivotItem headerText="关注">
             <Label styles={labelStyles}>Pivot #2</Label>

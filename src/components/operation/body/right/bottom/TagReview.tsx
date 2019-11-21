@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import React from "react";
-import { DetailsList, DetailsListLayoutMode, IColumn, Selection, MarqueeSelection } from "office-ui-fabric-react";
+import { DetailsList, DetailsListLayoutMode, IColumn, SelectionMode } from "office-ui-fabric-react";
 import { Operation } from "../../../../../store";
 import { rightTypes } from "../../../../../constants/operationConstants";
 
@@ -19,7 +19,6 @@ interface IDetailsListBasicExampleItem {
 interface IState {
   isShow: boolean;
   items: IDetailsListBasicExampleItem[];
-  selectionDetails: {};
 }
 
 @observer
@@ -35,19 +34,7 @@ export default class TagReview extends  React.Component<IProps, IState> {
         value: i
       });
     }
-    this.state = { isShow: true,items: _allItems, selectionDetails: this._getSelectionDetails() }
-  }
-
-  private _getSelectionDetails(): string {
-    const selectionCount = this._selection.getSelectedCount();
-    switch (selectionCount) {
-      case 0:
-        return 'No items selected';
-      case 1:
-        return '1 item selected: ' + (this._selection.getSelection()[0] as IDetailsListBasicExampleItem).name;
-      default:
-        return `${selectionCount} items selected`;
-    }
+    this.state = { isShow: true,items: _allItems }
   }
 
   componentDidMount(): void {
@@ -62,28 +49,22 @@ export default class TagReview extends  React.Component<IProps, IState> {
     { key: 'column4', name: '共享', fieldName: 'who', minWidth: 100, maxWidth: 200, isResizable: true }
   ];
 
-  _selection = new Selection({
-    onSelectionChanged: () => this.setState({ selectionDetails: this._getSelectionDetails() })
-  });
-
   render() {
     const { rightType } = this.props;
     const { items } = this.state;
     return (
       <div style={{ width: rightType === rightTypes.REVIEW ? '50%' : 0 }} className="rag-review">
-        <MarqueeSelection selection={this._selection}>
-          <DetailsList
-            items={items}
-            columns={this._columns}
-            setKey="set"
-            layoutMode={DetailsListLayoutMode.justified}
-            selection={this._selection}
-            selectionPreservedOnEmptyClick={true}
-            ariaLabelForSelectionColumn="Toggle selection"
-            ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-            checkButtonAriaLabel="Row checkbox"
-          />
-        </MarqueeSelection>
+        <DetailsList
+          items={items}
+          columns={this._columns}
+          setKey="set"
+          layoutMode={DetailsListLayoutMode.justified}
+          selectionMode={SelectionMode.none}
+          selectionPreservedOnEmptyClick={true}
+          ariaLabelForSelectionColumn="Toggle selection"
+          ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+          checkButtonAriaLabel="Row checkbox"
+        />
       </div>
     )
   }

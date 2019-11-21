@@ -11,9 +11,8 @@ interface IState {
   dialogType: string | null,
 }
 const addIcon: IIconProps = { iconName: 'Add' };
-const editIcon: IIconProps = { iconName: 'Edit' };
-const delIcon: IIconProps = { iconName: 'Delete' };
-const shareIcon: IIconProps = { iconName: 'Share' };
+const saveIcon: IIconProps = { iconName: 'Save' };
+const saveAsIcon: IIconProps = { iconName: 'SaveAs' };
 const runIcon: IIconProps = { iconName: 'Play' };
 
 @observer
@@ -38,22 +37,22 @@ export default class Toolbar extends  React.Component<IProps, IState> {
           <CommandBarButton
             iconProps={addIcon}
             onClick={() => this.setState({ dialogType: dialogTypes.ADDTAG })}
+            title="新增"
             text="新增"
           />
           <CommandBarButton
-            iconProps={editIcon}
-            text="编辑"
+            iconProps={saveIcon}
+            title="保存"
+            text="保存"
           />
           <CommandBarButton
-            iconProps={delIcon}
-            text="删除"
-          />
-          <CommandBarButton
-            iconProps={shareIcon}
-            text="分享"
+            iconProps={saveAsIcon}
+            title="另存为"
+            text="另存为"
           />
           <CommandBarButton
             iconProps={runIcon}
+            title="执行"
             text="执行"
           />
         </Stack>

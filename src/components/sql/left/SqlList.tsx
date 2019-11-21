@@ -1,8 +1,9 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { Sql, System } from "store";
-import SqlItem from './SqlItem';
 import { SearchBox } from "office-ui-fabric-react";
+import { Pagination } from 'antd';
+import SqlItem from './SqlItem';
 
 interface IProps {
   system: System,
@@ -27,6 +28,7 @@ export default class SqlList extends  React.Component<IProps> {
             return <SqlItem sql={ sql } tagName={tag} key={index} index={index}/>;
           })}
         </div>
+        <Pagination size="small" simple />
       </div>
     )
   }
