@@ -22,7 +22,7 @@ export interface ITagValue {
 }
 
 export interface ILeftMap {
-  [sideTypes.static]: { name: string, dataMap: IStaticMap };
+  [sideTypes.static]: { name: string, dataMap: IStaticMap, activeTag: tagTypes };
   [sideTypes.dynamic]: { name: string, data: any[], pagination: IPage };
   [sideTypes.share]: { name: string, data: any[], pagination: IPage };
   [sideTypes.other]: { name: string, data: any[], pagination: IPage };

@@ -86,6 +86,15 @@
           height: 28px;
           font-size: 12px;
         }
+        .ant-tag {
+          border-radius: 0;
+          margin-top: 3px;
+          cursor: pointer;
+          margin-right: 3px;
+        }
+        .ant-tag-checkable-checked {
+          background-color: #2b569a;
+        }
         .left-drag-content {
           height: calc(100% - 28px);
           overflow-y: auto;
@@ -115,13 +124,13 @@
           height: calc(100% - 60px);
           overflow-y: auto;
           font-size: 12px;
-          padding-top: 5px;
           .tag-item {
             height: 34px;
             line-height: 34px;
             cursor: pointer;
             padding-left: 10px;
             padding-right: 5px;
+            margin-top: 3px;
             .tag-icon {
               float: left;
               font-size: 14px;
@@ -157,6 +166,12 @@
             }
             .more-icon:hover {
               background-color: #c0d5d6;
+            }
+          }
+          .action-bar {
+            background-color: aliceblue;
+            .more-icon {
+              visibility: visible !important;
             }
           }
           .active {

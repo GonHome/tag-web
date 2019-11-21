@@ -59,7 +59,7 @@ class Operation {
       },
     };
     this.leftMap = {
-      [sideTypes.static]: { name: '', dataMap:{
+      [sideTypes.static]: { name: '', activeTag: tagTypes.all, dataMap:{
           [tagTypes.people]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
           [tagTypes.car]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
           [tagTypes.company]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
@@ -404,6 +404,10 @@ class Operation {
       this.graphIds.push(graphId);
     }
     this.activeGraphId = graphId;
+  };
+
+  @action changeStaticActiveTag = (activeTag: tagTypes) => {
+    this.leftMap[sideTypes.static].activeTag = activeTag;
   };
 
   @computed get rightBracketVId(): string | null {
