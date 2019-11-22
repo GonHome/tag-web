@@ -17,10 +17,6 @@ interface IProps {
 
 @observer
 export default class TagPanel extends  React.Component<IProps> {
-  componentDidMount(): void {
-    const { vId } = this.props;
-    console.log(vId);
-  }
 
   render() {
     const { width, height, operation, vId, tag } = this.props;

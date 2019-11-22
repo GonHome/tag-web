@@ -37,11 +37,6 @@ export default class TagReview extends  React.Component<IProps, IState> {
     this.state = { isShow: true,items: _allItems }
   }
 
-  componentDidMount(): void {
-    const { vId } = this.props;
-    console.log(vId);
-  }
-
   _columns: IColumn[] = [
     { key: 'column1', name: '标签名', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true },
     { key: 'column2', name: '最近操作时间', fieldName: 'value', minWidth: 100, maxWidth: 200, isResizable: true },

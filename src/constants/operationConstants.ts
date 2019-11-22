@@ -1,8 +1,9 @@
-import { IOperator } from 'models/operation';
+import { IOperator, ITagValue } from 'models/operation';
 import NonOperatorItem from 'components/operation/body/right/board/operator/left/NonOperatorItem';
 import RightOperatorItem from 'components/operation/body/right/board/operator/right/RightOperatorItem';
 import BracketLeftOperatorItem from 'components/operation/body/right/board/operator/left/BracketLeftOperatorItem';
 import BracketRightOperatorItem from 'components/operation/body/right/board/operator/right/BracketRightOperatorItem';
+import { tagTypes } from "./commonConstants";
 
 export const leftSideTypes =  [
   { code: 'static', text: '静态' },
@@ -32,6 +33,14 @@ export const rightOperators: IOperator[] = [
   { code: operator.JOIN, name: '相加', iconName: 'Add' },
   { code: operator.REDUCE, name: '相减', iconName: 'CalculatorSubtract' },
 ];
+
+export const tagTypeIconMap: { [key: string]: string } = {
+  [tagTypes.people]: 'Contact',
+  [tagTypes.car]: 'Car',
+  [tagTypes.company]: 'Bank',
+  [tagTypes.case]: 'MapLayers',
+  [tagTypes.other]: 'WebAppBuilderFragment',
+};
 
 
 export const operatorDomMap: any = {

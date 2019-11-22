@@ -19,10 +19,11 @@ export interface ITagValue {
   config: IConfig[] | null;
   name: string;
   rightType: null | rightTypes;
+  icon: string;
 }
 
 export interface ILeftMap {
-  [sideTypes.static]: { name: string, dataMap: IStaticMap, activeTag: tagTypes };
+  [sideTypes.static]: { name: string, data: any[], activeTag: tagTypes, pagination: IPage };
   [sideTypes.dynamic]: { name: string, data: any[], pagination: IPage };
   [sideTypes.share]: { name: string, data: any[], pagination: IPage };
   [sideTypes.other]: { name: string, data: any[], pagination: IPage };
@@ -32,14 +33,6 @@ export interface IPage {
   current: number;
   total: number;
   pageSize: number;
-}
-
-export interface IStaticMap {
-  [tagTypes.people]: { data: any[], pagination: IPage };
-  [tagTypes.car]: { data: any[], pagination: IPage };
-  [tagTypes.company]: { data: any[], pagination: IPage };
-  [tagTypes.case]: { data: any[], pagination: IPage };
-  [tagTypes.other]: { data: any[], pagination: IPage };
 }
 
 export interface IOperator {

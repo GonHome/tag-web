@@ -30,11 +30,11 @@ class Operation {
         vIds: ['v-0', 'v-1', 'v-2', 'v-3', 'v-4', 'v-5', 'v-6', 'v-7'],
         tagMap: {
           'v-0': operator.LEFT,
-          'v-1': { name: '常口1', config: demoConfigs, rightType: null },
+          'v-1': { name: '常口1', config: demoConfigs, rightType: null, icon: 'Contact' },
           'v-2': operator.MIX,
-          'v-3': { name: '常口2', config: demoConfigs, rightType: null },
+          'v-3': { name: '常口2', config: demoConfigs, rightType: null, icon: 'Contact' },
           'v-4': operator.MIX,
-          'v-5': { name: '常口3', config: demoConfigs, rightType: null },
+          'v-5': { name: '常口3', config: demoConfigs, rightType: null, icon: 'Contact' },
           'v-6': operator.RIGHT,
           'v-7': operator.MIX,
         },
@@ -44,29 +44,33 @@ class Operation {
         hoverVId: undefined,
       },
       'n-2': { name: '标签2', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
-          'v-1': { name: '暂口1', config: null, rightType: null },
-          'v-2': { name: '暂口2', config: null, rightType: null },
-          'v-3': { name: '暂口3', config: null, rightType: null },
+          'v-1': { name: '暂口1', config: null, rightType: null, icon: 'Contact' },
+          'v-2': { name: '暂口2', config: null, rightType: null, icon: 'Contact' },
+          'v-3': { name: '暂口3', config: null, rightType: null, icon: 'Contact' },
         },
         brackets: [],
       },
       'n-3': { name: '标签3', activeVId: 'v-1', vIds: ['v-1', 'v-2', 'v-3'], tagMap: {
-          'v-1': { name: '逃犯1', config: null, rightType: null },
-          'v-2': { name: '逃犯2', config: null, rightType: null },
-          'v-3': { name: '逃犯3', config: null, rightType: null },
+          'v-1': { name: '逃犯1', config: null, rightType: null, icon: 'Contact' },
+          'v-2': { name: '逃犯2', config: null, rightType: null, icon: 'Contact' },
+          'v-3': { name: '逃犯3', config: null, rightType: null, icon: 'Contact' },
         },
         brackets: [],
       },
     };
     this.leftMap = {
-      [sideTypes.static]: { name: '', activeTag: tagTypes.all, dataMap:{
-          [tagTypes.people]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
-          [tagTypes.car]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
-          [tagTypes.company]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
-          [tagTypes.case]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
-          [tagTypes.other]: { data: [], pagination: { current: 0, total:0, pageSize: 10 } },
-        }
-      },
+      [sideTypes.static]: { name: '', activeTag: tagTypes.all, data: [
+        { name: '常口1', type: tagTypes.people },
+        { name: '常口2', type: tagTypes.people },
+        { name: '违章1', type: tagTypes.car },
+        { name: '违章2', type: tagTypes.car },
+        { name: '案件1', type: tagTypes.case },
+        { name: '案件2', type: tagTypes.case },
+        { name: '公司1', type: tagTypes.company },
+        { name: '公司2', type: tagTypes.company },
+        { name: '其他1', type: tagTypes.other },
+        { name: '其他2', type: tagTypes.other },
+        ], pagination: { current: 0, total: 0, pageSize: 10 } },
       [sideTypes.dynamic]: { name: '', data: ['n-1', 'n-2', 'n-3', 'n-4', 'n-5', 'n-6', 'n-7', 'n-8', 'n-9'], pagination: { current: 0, total:0, pageSize: 10 } },
       [sideTypes.share]: { name: '', data: [], pagination: { current: 0, total:0, pageSize: 10 } },
       [sideTypes.other]: { name: '', data: [], pagination: { current: 0, total:0, pageSize: 10 } },
@@ -164,7 +168,7 @@ class Operation {
     }
   };
 
-  @action dragOverToBoard = (name: string) => {
+  @action dragOverToBoard = ({ name, rel, icon, type } : { name: string, rel: string, icon: string, type: string }) => {
     const activeGraphId = this.activeGraphId;
     if (activeGraphId) {
       const vIds = this.graphMap[activeGraphId].vIds;
@@ -172,7 +176,7 @@ class Operation {
       const nextVId = `v-${nextId}`;
       const nextVId2 = `v-${nextId * 1 + 1}`;
       this.graphMap[activeGraphId].vIds.splice(vIds.length + 1, 0, nextVId);
-      this.graphMap[activeGraphId].tagMap[nextVId] = { name, config: null, rightType: null };
+      this.graphMap[activeGraphId].tagMap[nextVId] = { name, icon, config: null, rightType: null };
       this.graphMap[activeGraphId].vIds.splice(vIds.length + 1, 0, nextVId2);
       this.graphMap[activeGraphId].tagMap[nextVId2] = operator.MIX;
       this.graphMap[activeGraphId].activeVId = nextVId;
@@ -407,7 +411,13 @@ class Operation {
   };
 
   @action changeStaticActiveTag = (activeTag: tagTypes) => {
-    this.leftMap[sideTypes.static].activeTag = activeTag;
+    if (this.leftMap[sideTypes.static].activeTag !== activeTag) {
+      this.leftMap[sideTypes.static].activeTag = activeTag;
+    }
+  };
+
+  @action changeStaticName = (name: string) => {
+    this.leftMap[sideTypes.static].name = name;
   };
 
   @computed get rightBracketVId(): string | null {

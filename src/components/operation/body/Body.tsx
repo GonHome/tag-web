@@ -39,7 +39,7 @@ export default class Body extends  React.Component<IProps> {
 
   render() {
     const { system, operation } = this.props;
-    const height = system.mainHeight - operation.toolbarHeight;
+    const height = system.mainHeight - operation.toolbarHeight - 2;
     const leftWidth = operation.leftWidth;
     return (
       <div className="body" style={{ height }}>

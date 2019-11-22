@@ -38,6 +38,32 @@ export default class LeftDynamicItem extends  React.Component<IProps, IState> {
     this.setState({ isShowEditDialog: false, isShowShareDialog: false });
   };
 
+  private _showIcon = () => {
+    const { visible } = this.state;
+    return (
+      <Popover
+        content={
+          <ul className="tag-bar">
+            <li onClick={this._editTag}>修改</li>
+            <li onClick={this._shareTag}>共享</li>
+          </ul>
+        }
+        trigger="click"
+        visible={visible}
+        placement="right"
+        onVisibleChange={() => this.setState({ visible: !visible })}
+      >
+        <Icon iconName="MoreVertical" className="more-icon" title='操作'/>
+      </Popover>
+    );
+  };
+
+  private _showIconShare = () => {
+    return (
+      <Icon iconName="Cloud" title='已共享' className="share-icon"/>
+    );
+  };
+
   render() {
     const { operation, item } = this.props;
     const { visible, isShowEditDialog, isShowShareDialog } = this.state;
@@ -50,20 +76,7 @@ export default class LeftDynamicItem extends  React.Component<IProps, IState> {
       >
         <Icon iconName="TagSolid" className="tag-icon" />
         <Text className="tag-name">{item}</Text>
-        <Popover
-          content={
-            <ul className="tag-bar">
-              <li onClick={this._editTag}>修改</li>
-              <li onClick={this._shareTag}>共享</li>
-            </ul>
-          }
-          trigger="click"
-          visible={visible}
-          placement="right"
-          onVisibleChange={() => this.setState({ visible: !visible })}
-        >
-          <Icon iconName="MoreVertical" className="more-icon" title='操作'/>
-        </Popover>
+        {this._showIcon()}
         <Icon iconName="PinnedSolid" />
         {isShowEditDialog ? <TagEditDialog operation={operation} closeDialog={this._closeDialog} item={item}/> : null}
         {isShowShareDialog ? <TagShareDialog operation={operation} closeDialog={this._closeDialog} item={item}/> : null}

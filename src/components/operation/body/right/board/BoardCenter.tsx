@@ -15,12 +15,12 @@ interface IProps {
 export default class BoardCenter extends  React.Component<IProps> {
 
   _onDrop = (e: any) => {
-    const dragRelVal = e.dataTransfer.getData(dragRel);
-    const dragNameVal = e.dataTransfer.getData(dragName);
-    const dragIconVal = e.dataTransfer.getData(dragIcon);
-    const dragTypeVal = e.dataTransfer.getData(dragType);
+    const rel = e.dataTransfer.getData(dragRel);
+    const name = e.dataTransfer.getData(dragName);
+    const icon = e.dataTransfer.getData(dragIcon);
+    const type = e.dataTransfer.getData(dragType);
     const { dragOverToBoard } = this.props.operation;
-    dragOverToBoard(dragNameVal);
+    dragOverToBoard({ name, rel, icon, type });
   };
 
   render() {

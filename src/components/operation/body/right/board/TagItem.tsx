@@ -73,6 +73,7 @@ export default class TagItem extends  React.Component<IProps, IState> {
     const { tag, activeVId, isNon, vId, operation } = this.props;
     const { isCalloutVisible } = this.state;
     const { isTemporaryByStart, setHoverVId, isDisableToRightBracket } = operation;
+    console.log(tag);
     return (
       <div
         className={classNames("tag-item", { active: activeVId === vId } )}
@@ -85,7 +86,10 @@ export default class TagItem extends  React.Component<IProps, IState> {
           onClick={() => this.setState({ isCalloutVisible: true })}
           ref={this._menuButtonElement}
         />
-        <div className="tag-name" title={tag.name}>{tag.name}</div>
+        <div className="tag-name" title={tag.name}>
+          <Icon iconName={tag.icon}/>
+          {tag.name}
+        </div>
         <div className="close-icon">
           <Icon iconName="StatusErrorFull" title="删除" onClick={this._delTag}/>
         </div>

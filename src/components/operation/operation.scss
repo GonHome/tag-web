@@ -16,6 +16,12 @@
       }
     }
   }
+  .ms-ProgressIndicator {
+    visibility: hidden;
+    .ms-ProgressIndicator-itemProgress {
+      padding: 0;
+    }
+  }
   .body {
     overflow: hidden;
     background-color: #fff;
@@ -100,19 +106,24 @@
           overflow-y: auto;
           font-size: 12px;
           color: #3a342a;
-          padding-top: 5px;
           .left-drag-item {
             margin: 2px 2px 8px;
-            .ms-Stack {
+            .ms-Card {
               min-width: auto;
-              cursor: pointer;
+              cursor: move;
+              height: 30px;
+              line-height: 30px;
+              padding: 0 5px;
+              i {
+                font-weight: 600;
+              }
               .tag-name {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 display: inline-block;
                 font-size: 14px;
-                line-height: 24px;
+                line-height: 30px;
               }
             }
           }
@@ -151,7 +162,14 @@
               visibility: hidden;
             }
             .more-icon {
+              margin-left: 3px;
               font-size: 16px;
+            }
+            .share-icon {
+              margin-left: 3px;
+              font-size: 14px;
+              visibility: visible !important;
+              color: #186798;
             }
           }
           .tag-item:not(.active):hover {
@@ -373,6 +391,11 @@
               white-space: nowrap;
               display: inline-block;
               width: calc(100% - 10px);
+              i {
+                font-size: 12px;
+                font-weight: 600;
+                margin-right: 3px;
+              }
             }
             .circle {
               visibility: hidden;
@@ -494,6 +517,12 @@
         overflow: hidden;
         .ms-Pivot {
           background: #f3f2f1;
+          .ms-Pivot-text {
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
           .ms-Button-flexContainer {
             font-size: 12px;
           }

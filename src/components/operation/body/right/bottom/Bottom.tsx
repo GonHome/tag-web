@@ -40,7 +40,7 @@ export default class Bottom extends  React.Component<IProps> {
             {tagVIds.map((vId: string) => {
               const tag = tagMap[vId] as ITagValue;
               return (
-                <PivotItem headerText={tag.name} itemKey={vId} key={`${activeGraphId}_${vId}`}>
+                <PivotItem itemIcon={tag.icon} headerText={tag.name} itemKey={vId} key={`${activeGraphId}_${vId}`}>
                   <TagPanel operation={operation} vId={vId} width={width} height={height} tag={tag}/>
                 </PivotItem>
               );

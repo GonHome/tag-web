@@ -4,15 +4,17 @@ import { Icon } from 'office-ui-fabric-react';
 import { Operation } from "../../../../store";
 import { Card } from "@uifabric/react-cards";
 import { dragType, dragIcon, dragName, dragRel } from 'constants/operationConstants';
+import { tagTypeIconMap } from 'constants/operationConstants';
 
 interface IProps {
   operation: Operation,
+  item: any;
 }
 
 @observer
 export default class LeftDragItem extends  React.Component<IProps> {
   render() {
-    const { operation } = this.props;
+    const { operation, item } = this.props;
     const nameWidth = operation.leftWidth - 80;
     return (
       <div
@@ -20,18 +22,18 @@ export default class LeftDragItem extends  React.Component<IProps> {
         className="left-drag-item"
         onDragStart={(e)=>{
           e.dataTransfer.setData(dragType, 'resTbl');
-          e.dataTransfer.setData(dragName, '常口');
+          e.dataTransfer.setData(dragName, item.name);
           e.dataTransfer.setData(dragRel, '');
-          e.dataTransfer.setData(dragIcon, '');
+          e.dataTransfer.setData(dragIcon, tagTypeIconMap[item.type as string]);
         }}
       >
         <Card horizontal>
           <Card.Item fill>
-            <Icon iconName="Tag" />
+            <Icon iconName={tagTypeIconMap[item.type as string]} />
           </Card.Item>
           <Card.Section>
             <div className="tag-name" style={{ width: nameWidth }} >
-              常口标签
+              {item.name}
             </div>
           </Card.Section>
         </Card>
