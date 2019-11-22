@@ -238,138 +238,165 @@
           line-height: 26px;
           margin-top: 2px;
           box-shadow: inset 0 -1px 0 0 #5182E4;
-          padding: 0 10px;
           background-color: #fff;
           margin-left: -5px;
-          .tab-wrap {
-            width: 120px;
-            height: 100%;
-            padding: 0 4px;
-            margin-left: -4px;
-            overflow: hidden;
+          .left-icon, .right-icon {
+            height: 24px;
+            line-height: 24px;
+            background-color: #eef2fc;
+            color: #2b569a;
             cursor: pointer;
-            display: inline-block;
-            .tab-left {
-              width: 8px;
-              height: 25px;
-              float: left;
-              background: linear-gradient(
-                              to bottom right,
-                              rgba(0, 0, 0, 0) 0%,
-                              rgba(0, 0, 0, 0) calc(50% - 1px),
-                              #eef2fc 50%,
-                              #eef2fc calc(50% + 1px),
-                              #eef2fc 100%
-              );
-            }
-            .tab-right {
-              width: 8px;
+            margin: 0 5px;
+          }
+          .left-icon {
+            float: left;
+          }
+          .right-icon {
+            float: right;
+          }
+          .left-icon:hover, .right-icon:hover {
+            background-color: #d4e0f4;
+          }
+          .nav-content {
+            height: 100%;
+            width: calc(100% - 48px);
+            float: left;
+            list-style: none;
+            overflow: hidden;
+            white-space: nowrap;
+            list-style-position: outside;
+            right: 0;
+            left: 0;
+            .tab-wrap {
+              width: 120px;
               height: 100%;
-              float: right;
-              margin-top: -26px;
-              background: linear-gradient(
-                              to top right,
-                              #eef2fc 0%,
-                              #eef2fc calc(50% - 1px),
-                              #eef2fc 50%,
-                              rgba(0, 0, 0, 0) calc(50% + 1px),
-                              rgba(0, 0, 0, 0) 100%
-              );
-            }
-            .tab-content {
-              margin-left: 8px;
-              width: calc(100% - 16px);
-              height: calc(100% - 2px);
-              background-color: #eef2fc;
-              border-top: 1px solid #eef2fc;
-              font-size: 13px;
+              padding: 0 4px;
+              margin-left: -4px;
               overflow: hidden;
-              .tab-name {
-                width: calc(100% - 35px);
-                display: inline-block;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-              }
-              .tag-icon {
+              cursor: pointer;
+              display: inline-block;
+              .tab-left {
+                width: 8px;
+                height: 25px;
                 float: left;
-                font-size: 16px;
-                font-weight: 600;
-                margin-right: 5px;
+                background: linear-gradient(
+                                to bottom right,
+                                rgba(0, 0, 0, 0) 0%,
+                                rgba(0, 0, 0, 0) calc(50% - 1px),
+                                #eef2fc 50%,
+                                #eef2fc calc(50% + 1px),
+                                #eef2fc 100%
+                );
               }
-              .close-icon {
+              .tab-right {
+                width: 8px;
+                height: 100%;
                 float: right;
-                display: none;
+                margin-top: -26px;
+                background: linear-gradient(
+                                to top right,
+                                #eef2fc 0%,
+                                #eef2fc calc(50% - 1px),
+                                #eef2fc 50%,
+                                rgba(0, 0, 0, 0) calc(50% + 1px),
+                                rgba(0, 0, 0, 0) 100%
+                );
+              }
+              .tab-content {
+                margin-left: 8px;
+                width: calc(100% - 16px);
+                height: calc(100% - 2px);
+                background-color: #eef2fc;
+                border-top: 1px solid #eef2fc;
+                font-size: 13px;
+                overflow: hidden;
+                .tab-name {
+                  width: calc(100% - 35px);
+                  display: inline-block;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+                .tag-icon {
+                  float: left;
+                  font-size: 16px;
+                  font-weight: 600;
+                  margin-right: 5px;
+                }
+                .close-icon {
+                  float: right;
+                  display: none;
+                }
               }
             }
-          }
-          .tab-wrap:hover {
-            .tab-content {
-              .close-icon {
-                display: inline-block;
-                font-weight: 600;
-                color: #312c2c;
+            .tab-wrap:hover {
+              .tab-content {
+                .close-icon {
+                  display: inline-block;
+                  font-weight: 600;
+                  color: #312c2c;
+                }
+                .close-icon:hover {
+                  color: red;
+                }
               }
-              .close-icon:hover {
-                color: red;
+            }
+            .tab-wrap:not(.active):hover {
+              .tab-left {
+                background: linear-gradient(
+                                to bottom right,
+                                rgba(0, 0, 0, 0) 0%,
+                                rgba(0, 0, 0, 0) calc(50% - 1px),
+                                #d4e0f4 50%,
+                                #d4e0f4 calc(50% + 1px),
+                                #d4e0f4 100%
+                );
+              }
+              .tab-right {
+                background: linear-gradient(
+                                to top right,
+                                #d4e0f4 0%,
+                                #d4e0f4 calc(50% - 1px),
+                                #d4e0f4 50%,
+                                rgba(0, 0, 0, 0) calc(50% + 1px),
+                                rgba(0, 0, 0, 0) 100%
+                );
+              }
+              .tab-content {
+                border-top: 1px solid #d4e0f4;
+                background-color: #d4e0f4;
               }
             }
-          }
-          .tab-wrap:not(.active):hover {
-            .tab-left {
-               background: linear-gradient(
-                               to bottom right,
-                               rgba(0, 0, 0, 0) 0%,
-                               rgba(0, 0, 0, 0) calc(50% - 1px),
-                               #d4e0f4 50%,
-                               #d4e0f4 calc(50% + 1px),
-                               #d4e0f4 100%
-               );
-             }
-            .tab-right {
-              background: linear-gradient(
-                              to top right,
-                              #d4e0f4 0%,
-                              #d4e0f4 calc(50% - 1px),
-                              #d4e0f4 50%,
-                              rgba(0, 0, 0, 0) calc(50% + 1px),
-                              rgba(0, 0, 0, 0) 100%
-              );
-            }
-            .tab-content {
-              border-top: 1px solid #d4e0f4;
-              background-color: #d4e0f4;
-            }
-          }
-          .active {
-            .tab-left {
-              height: 26px;
-              box-shadow: inset 0 -1px 0 0 #fff;
-              background: linear-gradient(
-                              to bottom right,
-                              rgba(0, 0, 0, 0) 0%,
-                              rgba(0, 0, 0, 0) calc(50% - 1px),
-                              rgb(81, 130, 228) 50%,
-                              rgba(0, 0, 0, 0) calc(50% + 1px),
-                              rgba(0, 0, 0, 0) 100%
-              );
-            }
-            .tab-right {
-              box-shadow: inset 0 -1px 0 0 #fff;
-              background: linear-gradient(
-                              to top right,
-                              rgba(0, 0, 0, 0) 0%,
-                              rgba(0, 0, 0, 0) calc(50% - 1px),
-                              rgb(81, 130, 228) 50%,
-                              rgba(0, 0, 0, 0) calc(50% + 1px),
-                              rgba(0, 0, 0, 0) 100%
-              );
-            }
-            .tab-content {
-              border-top: 1px solid #769fea;
-              background-color: #fff;
-              border-bottom: 1px solid #fff;
-              color: #5181e4;
+            .active {
+              .tab-left {
+                height: 26px;
+                box-shadow: inset 0 -1px 0 0 #fff;
+                background: linear-gradient(
+                                to bottom right,
+                                rgba(0, 0, 0, 0) 0%,
+                                rgba(0, 0, 0, 0) calc(50% - 1px),
+                                rgb(81, 130, 228) 50%,
+                                rgba(0, 0, 0, 0) calc(50% + 1px),
+                                rgba(0, 0, 0, 0) 100%
+                );
+              }
+              .tab-right {
+                box-shadow: inset 0 -1px 0 0 #fff;
+                background: linear-gradient(
+                                to top right,
+                                rgba(0, 0, 0, 0) 0%,
+                                rgba(0, 0, 0, 0) calc(50% - 1px),
+                                rgb(81, 130, 228) 50%,
+                                rgba(0, 0, 0, 0) calc(50% + 1px),
+                                rgba(0, 0, 0, 0) 100%
+                );
+              }
+              .tab-content {
+                border-top: 1px solid #769fea;
+                background-color: #fff;
+                border-bottom: 1px solid #fff;
+                color: #5181e4;
+              }
             }
           }
         }
@@ -517,6 +544,8 @@
         overflow: hidden;
         .ms-Pivot {
           background: #f3f2f1;
+          overflow-x: auto;
+          overflow-y: hidden;
           .ms-Pivot-text {
             max-width: 80px;
             overflow: hidden;
