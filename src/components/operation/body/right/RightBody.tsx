@@ -40,7 +40,7 @@ export default class RightBody extends  React.Component<IProps> {
   render() {
     const { operation, height, system } = this.props;
     const width = system.width - operation.leftWidth - 4;
-    const sashHeight = operation.boardHeight;
+    const sashHeight = operation.boardHeight + 2;
     return (
       <div style={{ height, width }} className="right-body">
         <Board system={system} operation={operation} width={width} />
