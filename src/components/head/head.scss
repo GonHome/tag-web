@@ -34,6 +34,14 @@
     .button-right-group {
       float: right;
       height: 48px;
+      .ant-badge {
+        height: 100%;
+        float: left;
+        .ant-badge-count {
+          padding: 0;
+          top: 10px;
+        }
+      }
       .ms-Icon {
         font-size: 20px;
       }

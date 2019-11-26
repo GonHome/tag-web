@@ -1,7 +1,8 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
-import { Tag, Pagination } from 'antd';
+import { Tag } from 'antd';
+import { Pagination } from '@uifabric/experiments';
 import { Operation } from "store";
 import { tagAllTypeList, tagTypes } from 'constants/commonConstants';
 import LeftDragItem from './LeftDragItem';
@@ -43,7 +44,9 @@ export default class LeftStaticSide extends  React.Component<IProps> {
           {data.map((item: any, index: number) => {
             return <LeftDragItem key={index} operation={operation} item={item}/>
           })}
-          <Pagination {...pagination} size="small" simple />
+          <Pagination pageCount={Math.ceil(pagination.total / pagination.pageSize)}
+                      itemsPerPage={pagination.pageSize}
+                      totalItemCount={pagination.total} />
         </div>
       </div>
     );

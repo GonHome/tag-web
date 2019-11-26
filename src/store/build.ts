@@ -2,6 +2,7 @@ import { action, observable } from 'mobx';
 import { IBasicInfo, IRowConfig } from "../models/build";
 import { inputTypes, tagTypes, textAligns } from "../constants/commonConstants";
 import { getMaxVId } from 'util/operate';
+import { IPage } from "../models/operation";
 
 // 标签模板
 class Build {
@@ -12,6 +13,7 @@ class Build {
   @observable rowConfigs: IRowConfig[];
   @observable activeId: string;
   @observable activeTagId: string;
+  @observable pagination: IPage;
 
   constructor () {
     this.leftWidth = 280;
@@ -35,6 +37,7 @@ class Build {
     this.activeId = '';
     this.tagList = ['常口1','常口2','常口3','常口4','常口5','常口6','常口7','常口8','常口9','常口10','常口11','常口12','常口13',];
     this.activeTagId = '';
+    this.pagination = { current: 0, total: 100, pageSize: 10 };
   }
 
   @action changeBasicInfo = (basicInfo: IBasicInfo) => {
@@ -192,6 +195,9 @@ class Build {
     this.activeTagId = tagId;
   };
 
+  @action pageChange = (current: number) => {
+    this.pagination.current = current;
+  }
 
 }
 

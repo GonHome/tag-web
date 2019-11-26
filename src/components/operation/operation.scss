@@ -208,9 +208,6 @@
             }
           }
         }
-        .ant-pagination {
-          text-align: center;
-        }
       }
     }
     .sash {
@@ -737,6 +734,17 @@
           .tag-panel {
             margin-left: -15px  ;
           }
+        }
+      }
+    }
+    .no-data {
+      height: 100%;
+      .ms-Image {
+        height: 100%;
+        text-align: center;
+        img {
+          height: 100%;
+          display: inline-block;
         }
       }
     }

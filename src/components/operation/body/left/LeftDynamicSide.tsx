@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
-import { Pagination } from 'antd';
+import { Pagination } from '@uifabric/experiments';
 import { Operation } from "store";
 import LeftDynamicItem from './LeftDynamicItem';
 import { sideTypes } from "../../../../constants/operationConstants";
@@ -30,7 +30,9 @@ export default class LeftDynamicSide extends  React.Component<IProps> {
             return <LeftDynamicItem key={item} operation={operation} item={item}/>
           })}
         </div>
-        <Pagination {...pagination} size="small" simple />
+        <Pagination pageCount={Math.ceil(pagination.total / pagination.pageSize)}
+                    itemsPerPage={pagination.pageSize}
+                    totalItemCount={pagination.total} />
       </div>
     );
   }

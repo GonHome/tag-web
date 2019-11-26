@@ -35,7 +35,7 @@ const NoticePanel: React.FunctionComponent<IProps> = (props: IProps) => {
       onDismiss={dismissPanel}
       closeButtonAriaLabel="Close"
     >
-      <Card horizontal>
+      <Card horizontal className="user-card">
         <Card.Item fill>
           <Image src="/img/user_head.png" alt="Placeholder image." className='left-img' />
         </Card.Item>

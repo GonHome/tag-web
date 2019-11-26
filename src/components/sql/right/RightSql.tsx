@@ -22,7 +22,7 @@ export default class RightSql extends  React.Component<IProps> {
 
   render() {
     const { leftWidth, changeBasicInfo, basicInfo } = this.props.sql;
-    const { name, personCol } = basicInfo;
+    const { name, personCol, unitCol, caseCol, carCol2, carCol1, areaCol } = basicInfo;
     return (
       <div className="right-sql" style={{ width: leftWidth - 40 }}>
         <Stack>
@@ -37,7 +37,37 @@ export default class RightSql extends  React.Component<IProps> {
             label="指定身份证"
             options={this._showOptions()}
             selectedKey={personCol}
-            onChange={(event, item) => item ? changeBasicInfo({ name, personCol: item.key as string }) : null}
+            onChange={(event, item) => item ? changeBasicInfo({ ...basicInfo, personCol: item.key as string }) : null}
+          />
+          <Dropdown
+            label="指定车牌号"
+            options={this._showOptions()}
+            selectedKey={carCol1}
+            onChange={(event, item) => item ? changeBasicInfo({ ...basicInfo, carCol1: item.key as string }) : null}
+          />
+          <Dropdown
+            label="指定号牌种类"
+            options={this._showOptions()}
+            selectedKey={carCol2}
+            onChange={(event, item) => item ? changeBasicInfo({ ...basicInfo, carCol2: item.key as string }) : null}
+          />
+          <Dropdown
+            label="指定案件编号"
+            options={this._showOptions()}
+            selectedKey={caseCol}
+            onChange={(event, item) => item ? changeBasicInfo({ ...basicInfo, caseCol: item.key as string }) : null}
+          />
+          <Dropdown
+            label="指定单位名称"
+            options={this._showOptions()}
+            selectedKey={unitCol}
+            onChange={(event, item) => item ? changeBasicInfo({ ...basicInfo, unitCol: item.key as string }) : null}
+          />
+          <Dropdown
+            label="指定行政区划"
+            options={this._showOptions()}
+            selectedKey={areaCol}
+            onChange={(event, item) => item ? changeBasicInfo({ ...basicInfo, areaCol: item.key as string }) : null}
           />
         </Stack>
         <div className="button-group">

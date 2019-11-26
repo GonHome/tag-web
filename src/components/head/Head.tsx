@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { inject, observer } from 'mobx-react';
 import { CommandBarButton, IIconProps } from 'office-ui-fabric-react';
+import { Badge } from 'antd';
 import { panelKeys } from 'constants/headConstants';
 import UserPanel from './UserPanel';
 import NoticePanel from './NoticePanel';
@@ -19,6 +20,7 @@ interface IProps {
 
 interface IState {
   activePanel: panelKeys | undefined;
+  unReadNum: number;
 }
 @inject('system', 'user')
 @observer
@@ -26,16 +28,20 @@ export default class Head extends  React.Component<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
-    this.state = { activePanel: undefined };
+    this.state = { activePanel: undefined, unReadNum: 5 };
   }
 
   dismissPanel = () => {
     this.setState({ activePanel: undefined });
   };
 
+  private _readAll = () => {
+    this.setState({ unReadNum: 0 });
+  };
+
   render() {
     const { user } = this.props;
-    const { activePanel } = this.state;
+    const { activePanel, unReadNum } = this.state;
     return (
       <div className="head">
         <div className="button-head-group">
@@ -47,12 +53,14 @@ export default class Head extends  React.Component<IProps, IState> {
           />
           <span className='title'>标签系统</span>
           <div className="button-right-group">
-            <CommandBarButton
-              iconProps={ringIcon}
-              className={classNames({ active: panelKeys.NOTICE === activePanel } )}
-              title='预警信息'
-              onClick={() => this.setState({ activePanel: panelKeys.NOTICE })}
-            />
+            <Badge count={unReadNum}>
+              <CommandBarButton
+                iconProps={ringIcon}
+                className={classNames({ active: panelKeys.NOTICE === activePanel } )}
+                title='预警信息'
+                onClick={() => this.setState({ activePanel: panelKeys.NOTICE })}
+              />
+            </Badge>
             <CommandBarButton
               iconProps={userIcon}
               className={classNames({ active: panelKeys.USER === activePanel } )}
@@ -62,7 +70,7 @@ export default class Head extends  React.Component<IProps, IState> {
           </div>
         </div>
         <UserPanel activePanel={activePanel} dismissPanel={this.dismissPanel} user={user}/>
-        <NoticePanel activePanel={activePanel} dismissPanel={this.dismissPanel} user={user}/>
+        <NoticePanel activePanel={activePanel} dismissPanel={this.dismissPanel} user={user} readAll={this._readAll} unReadNum={unReadNum} />
         <MenuPanel activePanel={activePanel} dismissPanel={this.dismissPanel} user={user}/>
       </div>
     )

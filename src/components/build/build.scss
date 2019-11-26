@@ -197,8 +197,18 @@
       }
     }
   }
-  .font600 {
-    font-weight: 600;
+  .no-data {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    height: 100%;
+    .ms-Image {
+      height: 100%;
+      text-align: center;
+      img {
+        height: 100%;
+        display: inline-block;
+      }
+    }
   }
   .letter {
     letter-spacing: 1px;

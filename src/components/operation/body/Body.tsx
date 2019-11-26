@@ -3,6 +3,7 @@ import React from "react";
 import { Operation, System } from "../../../store";
 import RightBody from './right/RightBody';
 import LeftSide from './left/LeftSide';
+import { Image } from "office-ui-fabric-react";
 
 interface IProps {
   operation: Operation,
@@ -39,8 +40,10 @@ export default class Body extends  React.Component<IProps> {
 
   render() {
     const { system, operation } = this.props;
+    const { activeGraphId } = operation;
     const height = system.mainHeight - operation.toolbarHeight - 2;
     const leftWidth = operation.leftWidth + 2;
+    const width = system.width - operation.leftWidth - 4;
     return (
       <div className="body" style={{ height }}>
         <LeftSide operation={operation} height={height} />
@@ -50,7 +53,14 @@ export default class Body extends  React.Component<IProps> {
           onMouseDown={this.mouseDownMoveSide}
           onMouseUp={this.mouseUpMoveSide}
         />
-        <RightBody system={system} operation={operation} height={height} />
+        { activeGraphId
+          ?
+          <RightBody system={system} operation={operation} height={height} />
+          :
+          <div className="no-data" style={{ width, marginLeft: leftWidth }} >
+            <Image src='/img/no-data1.png'/>
+          </div>
+        }
       </div>
     );
   }

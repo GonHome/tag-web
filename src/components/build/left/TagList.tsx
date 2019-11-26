@@ -3,7 +3,7 @@ import React from "react";
 import { Build, System } from "store";
 import TagItem from './TagItem';
 import { SearchBox } from "office-ui-fabric-react";
-import { Pagination } from 'antd';
+import { Pagination } from '@uifabric/experiments';
 import { tagTypes } from "../../../constants/commonConstants";
 
 interface IProps {
@@ -15,9 +15,14 @@ interface IProps {
 @observer
 export default class TagList extends  React.Component<IProps> {
 
+  private _pageChange = (current: number) => {
+    const { pageChange } = this.props.build;
+    pageChange(current);
+  };
+
   render() {
     const { system, build, tagType } = this.props;
-    const { tagList } = build;
+    const { tagList, pagination } = build;
     const { mainHeight } = system;
     return (
       <div style={{ height: mainHeight - 82 }} className="tag-list">
@@ -30,7 +35,12 @@ export default class TagList extends  React.Component<IProps> {
             return <TagItem build={ build } tagName={tag} key={index} tagType={tagType} index={index}/>;
           })}
         </div>
-        <Pagination size="small" simple />
+        <Pagination pageCount={Math.ceil(pagination.total / pagination.pageSize)}
+                    itemsPerPage={pagination.pageSize}
+                    totalItemCount={pagination.total}
+                    selectedPageIndex={pagination.current}
+                    onPageChange={this._pageChange}
+        />
       </div>
     )
   }
