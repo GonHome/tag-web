@@ -429,3 +429,27 @@
   path: 'E:\\newspace\\tag-web\\src\\routers' }
 [2019-11-23T13:00:15.493] [INFO] Mock.router.ts - mockPath is E:\newspace\tag-web\mock\
 [2019-11-23T13:00:15.503] [WARN] src/init/initRouter - 加载路由prefix为:/mock
+[2019-11-25T08:53:40.272] [DEBUG] src/init/initRouter - projectPath:E:\newspace\tag-web
+[2019-11-25T08:53:40.286] [DEBUG] src/init/initRouter - extRouterPath:undefined
+[2019-11-25T08:53:40.657] [INFO] main.ts - mock server is started at port: 3333!
+[2019-11-25T08:53:41.531] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\src\routers
+[2019-11-25T08:53:41.558] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\node_modules\@zhili\server-mock\src\routers
+[2019-11-25T08:53:41.562] [ERROR] src/init/initRouter - { [Error: ENOENT: no such file or directory, scandir 'E:\newspace\tag-web\src\routers']
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'E:\\newspace\\tag-web\\src\\routers' }
+[2019-11-25T08:53:41.641] [INFO] Mock.router.ts - mockPath is E:\newspace\tag-web\mock\
+[2019-11-25T08:53:41.667] [WARN] src/init/initRouter - 加载路由prefix为:/mock
+[2019-11-25T10:22:07.526] [DEBUG] src/init/initRouter - projectPath:E:\newspace\tag-web
+[2019-11-25T10:22:07.541] [DEBUG] src/init/initRouter - extRouterPath:undefined
+[2019-11-25T10:22:07.556] [INFO] main.ts - mock server is started at port: 3333!
+[2019-11-25T10:22:07.563] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\src\routers
+[2019-11-25T10:22:07.565] [DEBUG] src/init/initRouter - 加载 routerPath 路径为: E:\newspace\tag-web\node_modules\@zhili\server-mock\src\routers
+[2019-11-25T10:22:07.586] [ERROR] src/init/initRouter - { [Error: ENOENT: no such file or directory, scandir 'E:\newspace\tag-web\src\routers']
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'scandir',
+  path: 'E:\\newspace\\tag-web\\src\\routers' }
+[2019-11-25T10:22:07.738] [INFO] Mock.router.ts - mockPath is E:\newspace\tag-web\mock\
+[2019-11-25T10:22:07.743] [WARN] src/init/initRouter - 加载路由prefix为:/mock
