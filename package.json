@@ -58,7 +58,7 @@
     "mobx-react": "^6.1.1",
     "mobx-react-router": "^4.0.7",
     "monaco-editor": "^0.17.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "node-sql-parser": "^1.6.6",
     "office-ui-fabric-react": "^7.56.3",
     "optimize-css-assets-webpack-plugin": "5.0.1",
